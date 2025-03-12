@@ -33,9 +33,9 @@ export function Sidebar() {
             <Link
               href="/dashboard"
               className={`${navLinkStyles} ${
-                pathname === "/dashboard"
-                  ? "bg-[#0967D2] text-white"
-                  : "text-[#717A84]"
+                pathname === '/dashboard'
+                  ? 'bg-[#0967D2] text-white'
+                  : 'text-[#717A84]'
               }`}
             >
               <Search className="h-5 w-5" />
@@ -45,9 +45,9 @@ export function Sidebar() {
             <Link
               href="/job-tracker"
               className={`${navLinkStyles} ${
-                pathname === "/job-tracker"
-                  ? "bg-[#0967D2] text-white"
-                  : "text-[#717A84]"
+                pathname === '/job-tracker'
+                  ? 'bg-[#0967D2] text-white'
+                  : 'text-[#717A84]'
               }`}
             >
               <Image
@@ -61,9 +61,9 @@ export function Sidebar() {
             <Link
               href="/resume-builder"
               className={`${navLinkStyles} ${
-                pathname === "/resume-builder"
-                  ? "bg-[#0967D2] text-white"
-                  : "text-[#717A84]"
+                pathname === '/resume-builder'
+                  ? 'bg-[#0967D2] text-white'
+                  : 'text-[#717A84]'
               }`}
             >
               <Image src="/Resume.svg" alt="file-text" width={16} height={16} />
@@ -72,9 +72,9 @@ export function Sidebar() {
             <Link
               href="/settings"
               className={`${navLinkStyles} ${
-                pathname === "/settings"
-                  ? "bg-[#0967D2] text-white"
-                  : "text-[#717A84]"
+                pathname === '/settings'
+                  ? 'bg-[#0967D2] text-white'
+                  : 'text-[#717A84]'
               }`}
             >
               <Image
@@ -93,9 +93,9 @@ export function Sidebar() {
             <Link
               href="/mentorship"
               className={`${navLinkStyles} ${
-                pathname === "/mentorship"
-                  ? "bg-[#0967D2] text-white"
-                  : "text-[#717A84]"
+                pathname === '/mentorship'
+                  ? 'bg-[#0967D2] text-white'
+                  : 'text-[#717A84]'
               }`}
             >
               <Image src="/call.svg" alt="headphones" width={16} height={16} />
@@ -104,9 +104,9 @@ export function Sidebar() {
             <Link
               href="/feedback"
               className={`${navLinkStyles} ${
-                pathname === "/feedback"
-                  ? "bg-[#0967D2] text-white"
-                  : "text-[#717A84]"
+                pathname === '/feedback'
+                  ? 'bg-[#0967D2] text-white'
+                  : 'text-[#717A84]'
               }`}
             >
               <Image
