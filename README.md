@@ -1,7 +1,3 @@
-# talentrah-frontend
-
-This repositiory contanis the frontend source code for the Talentrah AI web application
-
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
