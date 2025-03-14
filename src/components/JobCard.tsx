@@ -41,7 +41,6 @@ export function JobCard({
 
   const handleApply = () => {
     const params = new URLSearchParams({
-      jobId: id,
       jobTitle: title,
       company: company,
     });
