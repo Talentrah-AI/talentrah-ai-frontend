@@ -6,13 +6,6 @@ interface UserProfileData {
   // Add other fields as needed
 }
 
-// Define a type for user profile data
-interface UserProfileData {
-  name: string;
-  email: string;
-  // Add other fields as needed
-}
-
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api',
   headers: {
@@ -50,8 +43,8 @@ export const endpoints = {
     markAllAsRead: () => api.patch('/notifications/read-all'),
   },
   user: {
-    getProfile: () => api.get("/user/profile"),
-    updateProfile: (data: UserProfileData) => api.patch("/user/profile", data),
+    getProfile: () => api.get('/user/profile'),
+    updateProfile: (data: UserProfileData) => api.patch('/user/profile', data),
     updateLanguage: (language: string) =>
       api.patch('/user/language', { language }),
   },
