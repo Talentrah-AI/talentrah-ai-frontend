@@ -62,7 +62,7 @@ export function JobCard({
   };
 
   return (
-    <Card className="w-full h-[190px] p-[16px] rounded-xl bg-white mb-4">
+    <Card className="w-full h-[190px] w-[800px] p-[16px] rounded-xl bg-white mb-4">
       <div className="flex flex-col gap-4 h-full">
         <CardContent className="p-0">
           <div className="flex flex-col gap-[16px]">

@@ -135,6 +135,8 @@ export function Header() {
   };
 
   const isJobSetupPage = pathname === '/job-setup';
+  const isJobMatchedPage = pathname === '/job-matched';
+  const isDashboardPage = pathname === '/dashboard';
 
   return (
     <header className="fixed top-0 z-50 flex items-center justify-start bg-white border-opacity-50 w-full h-[64px] pl-4 pr-6 pt-4 pb-4 gap-2 border-b border-[#EFF0F2]">
@@ -262,19 +264,7 @@ export function Header() {
           </DropdownMenu>
 
           {/* Upgrade to Premium */}
-          {isJobSetupPage ? (
-            <Button
-              variant="ghost"
-              className="flex items-center gap-2 h-[32px] px-[12px] py-[8px] rounded-[12px] bg-white shadow-[0px_4px_15px_rgba(41,45,50,0.05)] border border-[#0967D2]"
-              onClick={handleUpgradeClick}
-              disabled={subscription?.isPremium}
-            >
-              <Crown className="h-4 w-4 text-[#0967D2]" />
-              <span className="font-gabarito font-normal text-[12px] leading-[16px] tracking-[0px] text-[#0967D2]">
-                Premium
-              </span>
-            </Button>
-          ) : (
+          {isDashboardPage ? (
             <Button
               variant="outline"
               className="w-[149.739px] h-[32px] px-[12px] py-[8px] gap-[10px] rounded-[12px] border-[#07A2A8] border-[0.5px]"
@@ -296,6 +286,18 @@ export function Header() {
                   Upgrade to premium
                 </span>
               )}
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              className="flex items-center gap-2 h-[32px] px-[12px] py-[8px] rounded-[12px] bg-white shadow-[0px_4px_15px_rgba(41,45,50,0.05)] border border-[#0967D2]"
+              onClick={handleUpgradeClick}
+              disabled={subscription?.isPremium}
+            >
+              <Crown className="h-4 w-4 text-[#0967D2]" />
+              <span className="font-gabarito font-normal text-[12px] leading-[16px] tracking-[0px] text-[#0967D2]">
+                Premium
+              </span>
             </Button>
           )}
         </div>
