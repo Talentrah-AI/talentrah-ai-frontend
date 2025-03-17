@@ -1,24 +1,59 @@
+# Talentrah AI Platform
+
+This repository contains the frontend source code for the Talentrah AI web application
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Package Manager
+
+This project uses [pnpm](https://pnpm.io/) as the package manager. Please ensure you have pnpm installed and use it for all package operations:
+
+```bash
+# Install pnpm if you don't have it
+npm install -g pnpm
+
+# Install dependencies
+pnpm install
+
+# Add a new package
+pnpm add <package-name>
+
+# Add a dev dependency
+pnpm add -D <package-name>
+```
+
+Do not use npm or yarn as this can lead to inconsistencies in dependencies and lock files.
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+```
+
+Then, run the development server:
+
+```bash
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Gabarito](https://vercel.com/font), the general font for the application.
+
+## Scripts
+
+The following scripts are available:
+
+```bash
+pnpm dev        # Start development server
+pnpm build      # Build for production
+pnpm start      # Start production server
+pnpm lint       # Run linting
+```
 
 ## Learn More
 
