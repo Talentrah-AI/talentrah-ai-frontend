@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, ChevronDown, Globe, Loader2, Plus } from 'lucide-react';
+import { Bell, ChevronDown, Globe, Loader2, Plus, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -21,6 +21,8 @@ import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import Image from 'next/image';
+import { useRouter, usePathname } from 'next/navigation';
+
 interface Notification {
   id: string;
   title: string;
@@ -45,6 +47,8 @@ const languages: Language[] = [
 export function Header() {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const pathname = usePathname();
 
   // Fetch notifications
   const { data: notifications = [], isLoading: isLoadingNotifications } =
@@ -126,6 +130,12 @@ export function Header() {
     }
   };
 
+  const handleCreateJobLoop = () => {
+    router.push('/job-setup?fromJobCard=true');
+  };
+
+  const isJobSetupPage = pathname === '/job-setup';
+
   return (
     <header className="fixed top-0 z-50 flex items-center justify-start bg-white border-opacity-50 w-full h-[64px] pl-4 pr-6 pt-4 pb-4 gap-2 border-b border-[#EFF0F2]">
       <div className="h-[32px] w-[1142px] flex items-center gap-4 justify-between">
@@ -137,6 +147,7 @@ export function Header() {
            rounded-[12px] bg-[#0967D2] hover:bg-[#0967D2]
            shadow-[0px_4px_15px_rgba(41,45,50,0.05)] 
             cursor-pointer"
+            onClick={handleCreateJobLoop}
           >
             <Plus className="h-[16px] w-[16px] text-white" />
             <span className="font-gabarito font-normal text-[12px] leading-[16px] tracking-[0px] text-white">
@@ -251,28 +262,42 @@ export function Header() {
           </DropdownMenu>
 
           {/* Upgrade to Premium */}
-          <Button
-            variant="outline"
-            className="w-[149.739px] h-[32px] px-[12px] py-[8px] gap-[10px] rounded-[12px] border-[#07A2A8] border-[0.5px]"
-            onClick={handleUpgradeClick}
-            disabled={subscription?.isPremium}
-          >
-            <Image
-              src="/Layer_2.svg"
-              alt="Premium Member"
-              width={13}
-              height={16}
-            />
-            {subscription?.isPremium ? (
-              <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#07A2A8]">
-                Premium Member
+          {isJobSetupPage ? (
+            <Button
+              variant="ghost"
+              className="flex items-center gap-2 h-[32px] px-[12px] py-[8px] rounded-[12px] bg-white shadow-[0px_4px_15px_rgba(41,45,50,0.05)] border border-[#0967D2]"
+              onClick={handleUpgradeClick}
+              disabled={subscription?.isPremium}
+            >
+              <Crown className="h-4 w-4 text-[#0967D2]" />
+              <span className="font-gabarito font-normal text-[12px] leading-[16px] tracking-[0px] text-[#0967D2]">
+                Premium
               </span>
-            ) : (
-              <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#07A2A8]">
-                Upgrade to premium
-              </span>
-            )}
-          </Button>
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              className="w-[149.739px] h-[32px] px-[12px] py-[8px] gap-[10px] rounded-[12px] border-[#07A2A8] border-[0.5px]"
+              onClick={handleUpgradeClick}
+              disabled={subscription?.isPremium}
+            >
+              <Image
+                src="/Layer_2.svg"
+                alt="Premium Member"
+                width={13}
+                height={16}
+              />
+              {subscription?.isPremium ? (
+                <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#07A2A8]">
+                  Premium Member
+                </span>
+              ) : (
+                <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#07A2A8]">
+                  Upgrade to premium
+                </span>
+              )}
+            </Button>
+          )}
         </div>
       </div>
     </header>

@@ -54,7 +54,7 @@ export function JobTabs() {
   const [activeTab, setActiveTab] = useState("recommended");
 
   return (
-    <div className="mb-4 rounded-[12px] bg-white p-4  flex flex-col gap-[10px]">
+    <div className="mb-6 rounded-[12px] bg-white p-4 w-[1142px] flex flex-col gap-[10px]">
       <div className="flex flex-row justify-between items-center mb-6">
         <div className="flex w-[375px] h-[36px] gap-[5px] rounded-[12px] p-[5px] bg-white shadow-md">
           <Tab
