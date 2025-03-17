@@ -88,7 +88,7 @@ export default function JobSetupPage() {
   const simulateFileUpload = () => {
     setIsUploading(true);
     setUploadProgress(0);
-    
+
     const interval = setInterval(() => {
       setUploadProgress(prev => {
         if (prev >= 100) {
@@ -139,7 +139,7 @@ export default function JobSetupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F8F9]">
+    <div className="min-h-screen bg-white">
       <div className="fixed top-0 right-0 left-[257px] z-10 bg-white">
         <Header />
       </div>
@@ -147,13 +147,13 @@ export default function JobSetupPage() {
         <aside className="w-[257px] bg-white">
           <Sidebar />
         </aside>
-        <main className="flex-1 pt-[64px]">
-          <div className="bg-[#F7F8F9] rounded-[24px] px-6 pt-6">
-            <h1 className="text-[16px] font-semibold text-[#08121D] mb-1">Set up your job search loop</h1>
-            <p className="text-[12px] text-[#717A84] mb-6">
-              Tell us what type of jobs you're looking for, and our AI will find and apply to the best matches for you—automatically!
-            </p>
-            <div className="max-w-[1142px]">
+        <main className="flex-1 pt-[65px]">
+          <div className="bg-[#F7F8F9] rounded-[24px] px-6 py-6 max-w-[1300px] w-full ml-0">
+            <div className="w-full max-w-[1200px] ml-0">
+              <h1 className="text-[16px] font-semibold text-[#08121D] mb-1">Set up your job search loop</h1>
+              <p className="text-[12px] text-[#717A84] mb-6">
+                Tell us what type of jobs you're looking for, and our AI will find and apply to the best matches for you—automatically!
+              </p>
               <div className="bg-white rounded-[12px] p-6">
                 <form className="space-y-6">
                   {/* Job Title */}
@@ -166,11 +166,12 @@ export default function JobSetupPage() {
                         options={jobTitles.filter(title => !formData.jobTitles.includes(title))}
                         placeholder="Enter/Choose job title"
                       />
+                      <p className="text-[12px] text-[#717A84] mt-1">You can choose more than one job title</p>
                       <div className="flex flex-wrap gap-2">
                         {formData.jobTitles.map((title) => (
                           <div
                             key={title}
-                            className="flex items-center gap-2 px-3 py-1 bg-[#F0F7FF] rounded-[4px] text-[12px] text-[#0967D2]"
+                            className="flex items-center gap-2 px-3 py-1 bg-[#0967D2] rounded-[4px] text-[12px] text-[#FFFFFF]"
                           >
                             <span>{title}</span>
                             <button
@@ -187,7 +188,6 @@ export default function JobSetupPage() {
                         ))}
                       </div>
                     </div>
-                    <p className="text-[12px] text-[#717A84] mt-1">You can choose more than one job title</p>
                   </div>
 
                   {/* Job Experience */}
@@ -244,11 +244,12 @@ export default function JobSetupPage() {
                         options={locations.filter(location => !formData.locations.includes(location))}
                         placeholder="Choose job location"
                       />
+                      <p className="text-[12px] text-[#717A84] mt-1">You can choose more than one location</p>
                       <div className="flex flex-wrap gap-2">
                         {formData.locations.map((location) => (
                           <div
                             key={location}
-                            className="flex items-center gap-2 px-3 py-1 bg-[#F0F7FF] rounded-[4px] text-[12px] text-[#0967D2]"
+                            className="flex items-center gap-2 px-3 py-1 bg-[#0967D2] rounded-[4px] text-[12px] text-[#FFFFFF]"
                           >
                             <span>{location}</span>
                             <button
@@ -265,7 +266,6 @@ export default function JobSetupPage() {
                         ))}
                       </div>
                     </div>
-                    <p className="text-[12px] text-[#717A84] mt-1">You can choose more than one location</p>
                   </div>
 
                   {/* Job Preference */}
@@ -300,9 +300,11 @@ export default function JobSetupPage() {
                       onDrop={handleDrop}
                     >
                       <div className="flex flex-col items-center">
-                        <div className="mb-4">
-                          <Plus className="h-12 w-12 text-[#717A84]" />
+                        <div className="mb-4 flex items-center justify-center bg-[#EFF0F2] hover:bg-[#D0D5DB] border border-[#CFD3D6] rounded-full h-[68px] w-[68px] transition-all">
+                          <Plus className="h-[32px] w-[32px] text-[#717A84]" />
                         </div>
+
+
                         <p className="mb-2 text-[14px] text-[#515D68]">
                           Drag and drop or upload from your computer
                         </p>
@@ -316,7 +318,7 @@ export default function JobSetupPage() {
                             Browse Your Computer
                           </button>
                         )}
-                        
+
                         <input
                           ref={fileInputRef}
                           id="file-upload"
@@ -332,9 +334,9 @@ export default function JobSetupPage() {
                         {isUploading && (
                           <div className="space-y-2 flex flex-col items-center w-full mt-4">
                             <div className="w-[80%] max-w-[400px]">
-                              <Progress 
-                                value={uploadProgress} 
-                                className="h-[10px] bg-[#E5E7EB]" 
+                              <Progress
+                                value={uploadProgress}
+                                className="h-[10px] bg-[#E5E7EB]"
                               />
                             </div>
                             <div className="flex items-center justify-between text-[14px] text-[#515D68] w-[80%] max-w-[400px]">
@@ -365,18 +367,17 @@ export default function JobSetupPage() {
                       Accepted file types: .PDF, .DOC, .DOCx not more than 5MB
                     </p>
                   </div>
-
-                  {/* Create Job Loop Button */}
-                  <div className="flex justify-end">
-                    <button
-                      type="submit"
-                      className="h-[40px] px-[12px] py-[8px] bg-[#CEE1F6] rounded-[12px] hover:bg-[#0967D2] flex items-center gap-2 text-[12px] group"
-                    >
-                      <Plus className="h-4 w-4 text-[#3A85DB] group-hover:text-white transition-colors" />
-                      <span className="text-[#3A85DB] group-hover:text-white transition-colors">Create job loop</span>
-                    </button>
-                  </div>
                 </form>
+              </div>
+              {/* Create Job Loop Button */}
+              <div className="flex justify-end mt-6">
+                <button
+                  type="submit"
+                  className="w-[258px] h-[40px] px-[12px] py-[4px] bg-[#CEE1F6] rounded-[12px] hover:bg-[#0967D2] flex items-center justify-center gap-2 text-[12px] leading-normal group"
+                >
+                  <Plus className="h-4 w-4 text-[#3A85DB] group-hover:text-white transition-colors" />
+                  <span className="text-[#3A85DB] group-hover:text-white transition-colors">Create job loop</span>
+                </button>
               </div>
             </div>
           </div>
