@@ -19,7 +19,7 @@ export function Sidebar() {
           <div>
             <Link href="/dashboard" className="">
               <Image
-                src="/Talentrah-2.svg"
+                src="/Talentrah 2.png"
                 alt="Talentra Logo"
                 width={116}
                 height={58}
