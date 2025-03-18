@@ -32,11 +32,10 @@ export function Sidebar() {
           <nav className="space-y-1">
             <Link
               href="/dashboard"
-              className={`${navLinkStyles} ${
-                pathname === '/dashboard'
+              className={`${navLinkStyles} ${pathname === '/dashboard'
                   ? 'bg-[#0967D2] text-white'
                   : 'text-[#717A84]'
-              }`}
+                }`}
             >
               <Search className="h-5 w-5" />
               <span>Jobs</span>
@@ -44,11 +43,10 @@ export function Sidebar() {
 
             <Link
               href="/job-tracker"
-              className={`${navLinkStyles} ${
-                pathname === '/job-tracker'
+              className={`${navLinkStyles} ${pathname === '/job-tracker'
                   ? 'bg-[#0967D2] text-white'
                   : 'text-[#717A84]'
-              }`}
+                }`}
             >
               <Image
                 src="/briefcase.svg"
@@ -60,22 +58,20 @@ export function Sidebar() {
             </Link>
             <Link
               href="/resume-builder"
-              className={`${navLinkStyles} ${
-                pathname === '/resume-builder'
+              className={`${navLinkStyles} ${pathname === '/resume-builder'
                   ? 'bg-[#0967D2] text-white'
                   : 'text-[#717A84]'
-              }`}
+                }`}
             >
               <Image src="/Resume.svg" alt="file-text" width={16} height={16} />
               <span>Resume builder</span>
             </Link>
             <Link
               href="/settings"
-              className={`${navLinkStyles} ${
-                pathname === '/settings'
+              className={`${navLinkStyles} ${pathname === '/settings'
                   ? 'bg-[#0967D2] text-white'
                   : 'text-[#717A84]'
-              }`}
+                }`}
             >
               <Image
                 src="/setting-2.svg"
@@ -92,22 +88,20 @@ export function Sidebar() {
           <div className=" space-y-2">
             <Link
               href="/mentorship"
-              className={`${navLinkStyles} ${
-                pathname === '/mentorship'
+              className={`${navLinkStyles} ${pathname === '/mentorship'
                   ? 'bg-[#0967D2] text-white'
                   : 'text-[#717A84]'
-              }`}
+                }`}
             >
               <Image src="/call.svg" alt="headphones" width={16} height={16} />
               <span>Mentorship</span>
             </Link>
             <Link
               href="/feedback"
-              className={`${navLinkStyles} ${
-                pathname === '/feedback'
+              className={`${navLinkStyles} ${pathname === '/feedback'
                   ? 'bg-[#0967D2] text-white'
                   : 'text-[#717A84]'
-              }`}
+                }`}
             >
               <Image
                 src="/message-question.svg"
