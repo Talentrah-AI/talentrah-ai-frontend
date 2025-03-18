@@ -139,7 +139,7 @@ export function Header() {
   const isDashboardPage = pathname === '/dashboard';
 
   return (
-    <header className="fixed top-0 z-50 flex items-center justify-start bg-white border-opacity-50 w-full h-[64px] pl-4 pr-6 pt-4 pb-4 gap-2 border-b border-[#EFF0F2]">
+    <header className="fixed top-0 z-50 flex items-center justify-start bg-white border-opacity-50 w-full h-[64px] pl-29 pr-6 pt-4 pb-4 gap-2 border-b border-[#EFF0F2]">
       <div className="h-[32px] w-[1142px] flex items-center gap-4 justify-between">
         <div className="flex"></div>
         <div className="flex items-start gap-4 w-[540px] justify-between">

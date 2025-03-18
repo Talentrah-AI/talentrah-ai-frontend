@@ -76,24 +76,29 @@ export default function JobMatchedPage() {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <div className="grid grid-cols-12 gap-6">
-        <div className="col-span-8 w-[824px] h-[946px] rounded-t-[24px] bg-[#F8F8F8] flex flex-col px-4">
-          <div className="w-full py-[15px] rounded-t-[24px]">
-            <JobTabs />
-          </div>
-          <div className="flex-1 overflow-y-auto">
-            <div className="space-y-4">
-              {matchedJobs.map((job) => (
-                <JobCard key={job.id} {...job} />
-              ))}
-            </div>
-          </div>
+  <div className="grid grid-cols-12 gap-6">
+    {/* Centered Job Listings Section */}
+    <div className="col-span-8 flex justify-center">
+      <div className="w-[824px] bg-[#F8F8F8] rounded-t-[24px]">
+        <div className="w-full py-[15px] rounded-t-[24px] flex justify-center">
+          <JobTabs />
         </div>
-
-        <div className="col-span-4">
-          <UserProfile />
+        <div className="px-4 flex flex-col items-center">
+          <div className="space-y-4 w-full flex flex-col items-center">
+            {matchedJobs.map((job) => (
+              <JobCard key={job.id} {...job} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
+
+    {/* User Profile on the Right */}
+    <div className="col-span-4 flex justify-end pr-10">
+      <UserProfile />
+    </div>
+  </div>
+</div>
+
   );
 } 
