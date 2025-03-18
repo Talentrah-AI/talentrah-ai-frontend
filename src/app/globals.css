@@ -43,6 +43,27 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --color-primary: #0967D2;
+  --color-blueShade: #010A15;
+  --color-greyDark: #414A53;
+  --color-lightGrey: #90989F;
+  --color-light-grey-01: #EFF0F2;
+  --color-light-grey-02: #CFD3D6;
+  --color-lightGrey-05: #717A84;
+  --color-dark-grey-01: #414A53;
+  --color-black: #08121D;
+  --color-lightOrange-04: #EEA16B;
+  --color-tWarning: #E36308;
+  --color-tGray: #515D68;
+  --color-tError: #E32908;
+  --color-darkGreen: #07A81A;
+  --color-background: #F8F8F8;
+  --color-sOrange: #09CBD2;
+  --shadow-card: 4px 8px 25px 0 rgba(63, 63, 60, 0.12);
+  --shadow-card2: 2px 4px 25px 0 rgba(0, 0, 0, 0.06);
+  --shadow-card3: 0 20px 50px 0 rgba(18, 17, 39, 0.08);
+  --shadow-nav: 0 4px 25px 0 rgba(0, 0, 0, 0.1);
 }
 
 :root {
@@ -121,6 +142,16 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-white text-foreground;
   }
+}
+html{
+  scroll-behavior: smooth;
+}
+section{
+  scroll-margin-top: 100px;
+}
+.bg-svg{
+  background-image: url("../assets/images/backgroundHero.svg");
+  background-position: center;
 }
