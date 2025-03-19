@@ -26,27 +26,31 @@ export default function DashboardPage() {
   return (
     <>
       <div
-        className={`transition-opacity duration-200 ${
-          showWelcomeModal ? "opacity-50" : ""
-        }`}
+        className={`transition-opacity duration-200 ${showWelcomeModal ? "opacity-50" : ""
+          }`}
       >
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto pl-3">
           <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-8 w-[824px] h-[946px] rounded-t-[24px] bg-[#F8F8F8] flex flex-col px-4">
-              <div className=" w-full  py-[15px] rounded-t-[24px]">
+            {/* Job List Container */}
+            <div className="col-span-8 w-[824px] rounded-t-[24px] bg-[#F8F8F8] flex flex-col px-4">
+              <div className="w-full py-[15px] rounded-t-[24px] flex justify-center">
                 <JobTabs />
+              </div>
+              <div className="w-full py-[15px] rounded-t-[24px]">
                 <AutoApply />
               </div>
-              <div className="flex-1 overflow-y-auto  ">
+              <div className="space-y-4 w-full flex flex-col items-center">
                 <JobList />
               </div>
             </div>
 
+            {/* User Profile */}
             <div className="col-span-4">
               <UserProfile />
             </div>
           </div>
         </div>
+
       </div>
 
       {showWelcomeModal && (

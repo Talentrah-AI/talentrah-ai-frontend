@@ -1,3 +1,4 @@
+// src/components/Sidebar.tsx
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -8,6 +9,9 @@ export function Sidebar() {
 
   const navLinkStyles = `flex items-center pt-[8px] pr-[10px] pb-[8px] pl-[10px] gap-[10px] rounded-[8px] font-['Gabarito'] text-[12px] leading-[16px] tracking-[0px] font-normal`;
 
+  // Define active routes for "Jobs"
+  const isJobsActive = pathname === '/dashboard' || pathname === '/job-matched';
+
   return (
     <div className="w-[257px] h-[1024px] flex flex-col pt-[24px] pr-[16px] pb-[24px] pl-[16px] gap-[10px]">
       <div className="flex flex-col w-[225px] h-[976px] gap-[16px]">
@@ -15,7 +19,7 @@ export function Sidebar() {
           <div>
             <Link href="/dashboard" className="">
               <Image
-                src="/Talentrah-2.svg"
+                src="/Talentrah 2.png"
                 alt="Talentra Logo"
                 width={116}
                 height={58}
@@ -33,9 +37,7 @@ export function Sidebar() {
             <Link
               href="/dashboard"
               className={`${navLinkStyles} ${
-                pathname === '/dashboard'
-                  ? 'bg-[#0967D2] text-white'
-                  : 'text-[#717A84]'
+                isJobsActive ? 'bg-[#0967D2] text-white' : 'text-[#717A84]'
               }`}
             >
               <Search className="h-5 w-5" />
@@ -88,8 +90,8 @@ export function Sidebar() {
           </nav>
         </div>
 
-        <div className="mt-auto flex flex-col ">
-          <div className=" space-y-2">
+        <div className="mt-auto flex flex-col">
+          <div className="space-y-2">
             <Link
               href="/mentorship"
               className={`${navLinkStyles} ${
@@ -121,16 +123,15 @@ export function Sidebar() {
 
           <div
             className="mt-4 flex items-center pt-[8px] pr-[10px] pb-[8px] pl-[10px] 
-           gap-[30px] rounded-[8px] shadow-sm drop-shadow-[0px_4px_15px_rgba(41,45,50,0.05)] cursor-pointer "
+            gap-[30px] rounded-[8px] shadow-sm drop-shadow-[0px_4px_15px_rgba(41,45,50,0.05)] cursor-pointer"
           >
             <Image
-              src="/avatar.svg"
+              src="/mercy.png"
               alt="avatar"
               width={30}
               height={30}
               className="rounded-full"
             />
-
             <div className="flex-1">
               <p className="font-gabarito font-normal text-[12px] leading-[16px] tracking-[0px] text-[#08121D]">
                 Mercy Benjamin

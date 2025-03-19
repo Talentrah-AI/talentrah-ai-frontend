@@ -62,32 +62,32 @@ export function JobCard({
   };
 
   return (
-    <Card className="w-[800px] h-[190px] p-[16px] rounded-xl bg-white mb-4 overflow-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:none]">
+    <Card className="w-full h-[190px] w-[800px] p-[16px] rounded-xl bg-white mb-4">
       <div className="flex flex-col gap-4 h-full">
         <CardContent className="p-0">
           <div className="flex flex-col gap-[16px]">
             <div className="flex items-start gap-[16px]">
-              <div className="w-[48px] h-[48px] rounded-[4px] bg-gray-100 flex items-center justify-center overflow-hidden">
+              <div className="min-w-[48px] h-[48px] rounded-[4px] bg-gray-100 flex items-center justify-center overflow-hidden">
                 {companyLogo ? (
                   <Image
                     src={companyLogo}
                     alt={`${company} logo`}
                     width={28}
                     height={28}
-                    className="w-28 h-28 object-cover"
+                    className="w-7 h-7 object-contain"
                   />
                 ) : (
                   <Building2 className="h-6 w-6 text-gray-400" />
                 )}
               </div>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <h3 className="font-gabarito font-normal text-[16px] leading-[20px] text-[#08121D] mb-2">
                   {title}
                 </h3>
-                <div className="flex flex-row items-center gap-[10px] font-gabarito font-normal text-[10px] leading-[12px] text-[#717A84]">
+                <div className="flex flex-wrap items-center gap-[10px] font-gabarito font-normal text-[10px] leading-[12px] text-[#717A84]">
                   <div className="flex items-center gap-[6px] border-r-[1px] border-r-gray-200 pr-[10px]">
-                    <MapPin className="h-4 w-4" />
-                    {location}
+                    <MapPin className="h-4 w-4 shrink-0" />
+                    <span className="truncate">{location}</span>
                   </div>
                   <div className="flex items-center gap-[6px] border-r-[1px] border-r-gray-200 pr-[10px]">
                     <Image
@@ -95,8 +95,9 @@ export function JobCard({
                       alt="Briefcase"
                       width={14}
                       height={14}
+                      className="shrink-0"
                     />
-                    {jobType}
+                    <span className="truncate">{jobType}</span>
                   </div>
                   {remote && (
                     <div className="flex items-center gap-[6px] border-r-[1px] border-r-gray-200 pr-[10px]">
@@ -105,8 +106,9 @@ export function JobCard({
                         alt="Remote"
                         width={14}
                         height={14}
+                        className="shrink-0"
                       />
-                      Remote
+                      <span>Remote</span>
                     </div>
                   )}
                   <div className="flex items-center gap-[6px] border-r-[1px] border-r-gray-200 pr-[10px]">
@@ -115,8 +117,9 @@ export function JobCard({
                       alt="Seniority Level"
                       width={14}
                       height={14}
+                      className="shrink-0"
                     />
-                    {seniorityLevel}
+                    <span className="truncate">{seniorityLevel}</span>
                   </div>
                   <div className="flex items-center gap-[6px]">
                     <Image
@@ -124,14 +127,15 @@ export function JobCard({
                       alt="Experience"
                       width={14}
                       height={14}
+                      className="shrink-0"
                     />
-                    {experience}
+                    <span className="truncate">{experience}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <p className="font-gabarito font-normal text-[12px] leading-[16px] text-[#31383E]">
+            <p className="font-gabarito font-normal text-[12px] leading-[16px] text-[#31383E] line-clamp-2">
               {description}
             </p>
           </div>
@@ -141,42 +145,44 @@ export function JobCard({
         <div className="border-[0.5px] border-[#EFF0F2]"></div>
 
         {/* Footer */}
-        <CardFooter className="w-full h-[34px] flex flex-row gap-[30px] p-0">
-          <div className="w-[400px] flex items-center gap-[10px]">
+        <CardFooter className="w-full h-[34px] flex items-center justify-between p-0">
+          <div className="flex items-center gap-[10px]">
             <Progress
               value={matchPercentage}
-              className="h-[8px] w-[200px] gap-[8px] flex-1 rounded-full"
+              className="h-[8px] w-[200px] gap-[8px] rounded-full"
               indicatorColor={getProgressColor(matchQuality)}
             />
             <span
               style={{ color: getProgressColor(matchQuality) }}
-              className="font-gabarito font-medium text-[11px] leading-[16px] tracking-[0px]"
+              className="font-gabarito font-medium text-[11px] leading-[16px] tracking-[0px] whitespace-nowrap"
             >
               {matchPercentage}%, {matchQuality} match
             </span>
           </div>
-          <div className="w-full flex justify-between items-center">
-            <div className="flex items-center gap-x-12 font-gabarito font-normal text-[10px] leading-[12px] text-[#717A84] mx-auto">
-              <span className="flex items-center gap-[4px]">
+          <div className="flex items-center gap-x-8">
+            <div className="flex items-center gap-x-8 font-gabarito font-normal text-[10px] leading-[12px] text-[#717A84]">
+              <span className="flex items-center gap-[4px] whitespace-nowrap">
                 <Image
                   src="/calendar.svg"
                   alt="calendar"
                   width={14}
                   height={14}
+                  className="shrink-0"
                 />
                 {daysAgo} days ago
               </span>
-              <span className="flex items-center gap-[4px] ml-[4px]">
+              <span className="flex items-center gap-[4px] whitespace-nowrap">
                 <Image
                   src="/profile-2user.svg"
                   alt="profile"
                   width={14}
                   height={14}
+                  className="shrink-0"
                 />
                 {applicants}+ applicants
               </span>
             </div>
-            <div className="flex items-center gap-[16px]">
+            <div className="flex items-center gap-[16px] shrink-0">
               <Button
                 variant="outline"
                 size="icon"
@@ -186,7 +192,7 @@ export function JobCard({
               </Button>
               <Button 
                 onClick={handleApply}
-                className="h-[36px] w-[100px] px-[16px] bg-[#2563EB] hover:bg-[#1D4ED8] cursor-pointer "
+                className="h-[36px] w-[100px] px-[16px] bg-[#2563EB] hover:bg-[#1D4ED8] cursor-pointer"
               >
                 <span className="font-[Gabarito] font-normal text-[13.46px] leading-[16.83px] tracking-[0px] text-white text-center">Apply</span>
               </Button>
