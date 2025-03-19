@@ -126,7 +126,7 @@ export function Sidebar() {
             gap-[30px] rounded-[8px] shadow-sm drop-shadow-[0px_4px_15px_rgba(41,45,50,0.05)] cursor-pointer"
           >
             <Image
-              src="/avatar.svg"
+              src="/mercy.png"
               alt="avatar"
               width={30}
               height={30}
