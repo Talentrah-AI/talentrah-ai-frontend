@@ -6,12 +6,12 @@ import ball from '@/assets/images/ball.png';
 import paper2 from '@/assets/images/paper2.png';
 import { steps } from '@/data/landing/steps';
 import { smartApply } from '@/data/landing/smartApply';
-import cv from '@/assets/images/cv.png';
+import cv from '@/assets/images/cv.webp';
 import mentor from '@/assets/images/mentor.png';
 import { mentorData } from '@/data/landing/mentor';
 import { Star, StarHalf } from 'lucide-react';
 import mercy from '@/assets/images/mercy.png';
-import dashboard2 from '@/assets/images/dashboard2.png';
+import dashboard2 from '@/assets/images/dashboard2.webp';
 import { FaqSection } from '@/components/landing/faqsection';
 import { Navbar } from '@/components/landing/navbar';
 import { Footer } from '@/components/landing/footer';
@@ -21,7 +21,10 @@ export default function Home() {
       <Navbar />
       <section className="flex flex-col items-center justify-start w-full min-h-screen gap-8 pb-24 bg-white">
         <HeroSection />
-        <section className="w-full flex flex-col justify-start items-start gap-[35px] max-w-[1240px] mx-auto xl:px-0 sm:px-6 px-6 py-10" id='features'>
+        <section
+          className="w-full flex flex-col justify-start items-start gap-[35px] max-w-[1240px] mx-auto xl:px-0 sm:px-6 px-6 py-10"
+          id="features"
+        >
           <h4 className="text-base font-normal text-lightGrey">Key features</h4>
           <section className="grid w-full grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-y-10 gap-x-16">
             {features.map((feature, index) => (
@@ -79,7 +82,10 @@ export default function Home() {
           </section>
         </section>
 
-        <section className="w-full py-10 flex flex-col justify-start items-center gap-12 max-w-[1275px] xl:px-0 px-5" id='how-it-works'>
+        <section
+          className="w-full py-10 flex flex-col justify-start items-center gap-12 max-w-[1275px] xl:px-0 px-5"
+          id="how-it-works"
+        >
           <div className="flex flex-col justify-start items-center gap-3 w-full max-w-[407px] text-center">
             <p className="text-xs font-normal uppercase text-lightGrey">
               HOW IT WORKS
@@ -105,9 +111,9 @@ export default function Home() {
                   <Image
                     src={step.image}
                     alt={step.title}
-                    width={340}
+                    width={354}
                     height={227}
-                    className="mx-auto"
+                    className="mx-auto w-full h-full"
                   />
                 </div>
                 <div className="flex flex-col items-start justify-start gap-2 px-4 py-2 lg:px-6 lg:py-4">
@@ -291,7 +297,10 @@ export default function Home() {
           </section>
         </section>
 
-        <section className="w-full py-10 flex flex-col justify-start items-center gap-10 max-w-[1275px] xl:px-0 px-5" id='faqs'>
+        <section
+          className="w-full py-10 flex flex-col justify-start items-center gap-10 max-w-[1275px] xl:px-0 px-5"
+          id="faqs"
+        >
           <div className="flex flex-col justify-start items-center gap-3 w-full max-w-[549px] text-center">
             <p className="text-xs font-normal uppercase text-lightGrey">
               FREQUENTLY ASKED QUESTIONS
@@ -359,7 +368,7 @@ export default function Home() {
         </section>
         <section className="flex items-start justify-start w-full px-6 xl:px-0">
           <section className="w-full max-w-[1280px] relative overflow-hidden mx-auto my-10 rounded-3xl bg-primary flex md:flex-row flex-col justify-between md:items-center items-start">
-            <div className="w-full max-w-[500px] md:pl-14 px-6 flex flex-col justify-start items-start gap-3 py-10">
+            <div className="w-full max-w-[500px] md:pl-14 px-6 flex flex-col justify-start items-start gap-3 py-10 relative z-10">
               <p className="text-white lg:text-[44px] sm:text-3xl text-xl font-bold leading-none z-10">
                 Ready to Get Hired Faster?
               </p>
@@ -372,9 +381,17 @@ export default function Home() {
                 Get started for free
               </button>
             </div>
-            <Image src={dashboard2} alt="dashboard" />
-            <div className="size-[358px] rounded-full bg-[#62A7F433] absolute -top-10 -left-44" />
-            <div className="size-[358px] rounded-full bg-[#62A7F433] absolute -bottom-[70%] left-[20%]" />
+            <div className='md:absolute relative right-0 bottom-0 lg:w-[600px] w-[450px] ml-auto z-5'>
+              <Image
+                src={dashboard2}
+                alt="dashboard"
+                width={620}
+                height={500}
+                className='w-auto h-auto'
+              />
+            </div>
+            <div className="size-[358px] rounded-full bg-[#62A7F433] absolute -top-10 -left-44 z-0" />
+            <div className="size-[358px] rounded-full bg-[#62A7F433] absolute -bottom-[70%] left-[20%] z-0" />
           </section>
         </section>
         <section className="w-full max-w-[1137px] flex md:flex-row flex-col justify-between items-start gap-6 xl:px:0 px-6">
@@ -458,5 +475,5 @@ export default function Home() {
       </section>
       <Footer />
     </>
-  )
+  );
 }

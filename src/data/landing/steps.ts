@@ -1,10 +1,10 @@
 import { StaticImageData } from "next/image"
-import loop from "@/assets/images/loop.png";
-import application from "@/assets/images/application.png";
-import analysis from "@/assets/images/analysis.png";
-import resume from "@/assets/images/resume.png";
-import coverLetter from "@/assets/images/cover-letter.png";
-import submit from "@/assets/images/submit.png";
+import loop from "@/assets/images/loop.webp";
+import application from "@/assets/images/application.webp";
+import analysis from "@/assets/images/analysis.webp";
+import resume from "@/assets/images/resume.webp";
+import coverLetter from "@/assets/images/cover-letter.webp";
+import submit from "@/assets/images/submit.webp";
 
 type stepsType = {
     image: StaticImageData,
