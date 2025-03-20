@@ -63,16 +63,16 @@ export const Footer = () => {
               ))}
             </div>
           </div>
-          <div className="flex flex-col justify-start items-start gap-2.5">
+          <div className="flex flex-col justify-start items-start gap-2.5 overflow-hidden">
             <p className="text-base font-medium leading-tight text-black">
               Email
             </p>
-            <div className="flex flex-col items-start justify-start gap-2">
+            <div className="flex flex-col items-start justify-start gap-2 overflow-hidden">
               {email.map((item, index) => (
                 <Link
                   href={item.link}
                   key={index}
-                  className="text-xs leading-tight text-lightGrey-05"
+                  className="text-xs leading-tight text-lightGrey-05 "
                 >
                   {item.title}
                 </Link>

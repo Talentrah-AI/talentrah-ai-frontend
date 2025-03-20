@@ -79,10 +79,10 @@ const NavMobile = ({isOpen}: NavMobileProps) => {
         </Link>
       ))}
       <section className="flex flex-col items-start justify-start w-full gap-4">
-        <Link href={"/"} className="text-sm font-normal text-white bg-primary border border-primary rounded-lg py-2.5 px-4 whitespace-nowrap w-full">
+        <Link href={"/"} className="text-sm font-normal text-white bg-primary border border-primary rounded-lg py-2.5 px-4 whitespace-nowrap w-full text-center">
           Get started for free
         </Link>
-        <Link href={"/"} className="text-sm font-normal text-primary border border-primary rounded-lg py-2.5 px-8 bg-transparent w-full">
+        <Link href={"/"} className="text-sm font-normal text-primary border border-primary rounded-lg py-2.5 px-8 bg-transparent w-full text-center">
           Login
         </Link>
       </section>

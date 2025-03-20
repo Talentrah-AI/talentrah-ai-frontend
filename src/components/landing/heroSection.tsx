@@ -22,7 +22,7 @@ export const HeroSection = () => {
         </div>
       </div>
       <div className="flex justify-start items-center gap-1 mt-[42px] mb-[37px]">
-        <Image src={threeImage} alt="users" className="sm:w-[98px] w-[69px] object-contain" width={98} height={48}/>
+        <Image src={threeImage} alt="users" className="sm:w-[98px] w-[69px] object-contain" width={98} height={48} priority/>
         <div className="flex flex-col justify-start items-start gap-0">
           <div className="flex justify-start items-center">
             <svg

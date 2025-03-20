@@ -243,7 +243,7 @@ export default function Home() {
               alt="cv"
               width={591}
               height={401}
-              className="md:w-[591px] w-full max-w-[335px]md:h-[401px] h-auto"
+              className="md:w-[591px] w-auto md:h-[401px] h-auto"
             />
           </section>
         </section>
