@@ -6,4 +6,4 @@ export default function JobMatchedLayout({
   children: React.ReactNode;
 }) {
   return <DashboardLayout>{children}</DashboardLayout>;
-} 
+}
