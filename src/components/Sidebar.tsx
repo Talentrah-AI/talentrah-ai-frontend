@@ -10,7 +10,7 @@ export function Sidebar() {
   const navLinkStyles = `flex items-center pt-[8px] pr-[10px] pb-[8px] pl-[10px] gap-[10px] rounded-[8px] font-['Gabarito'] text-[12px] leading-[16px] tracking-[0px] font-normal`;
 
   // Define active routes for "Jobs"
-  const isJobsActive = pathname === '/dashboard' || pathname === '/job-matched';
+  const isJobsActive = pathname === '/dashboard' || pathname === '/job-matched' || pathname === '/dashboard/premium-user-apply' || pathname === '/dashboard/resume-optimized';
 
   return (
     <div className="w-[257px] h-[1024px] flex flex-col pt-[24px] pr-[16px] pb-[24px] pl-[16px] gap-[10px]">
