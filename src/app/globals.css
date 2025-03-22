@@ -155,3 +155,6 @@ section{
   background-image: url("../assets/images/backgroundHero.svg");
   background-position: center;
 }
+.bg-login{
+  background-image: url('../assets/images/Left_Panel_Container.png');
+}
