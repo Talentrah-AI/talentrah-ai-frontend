@@ -64,6 +64,8 @@
   --shadow-card2: 2px 4px 25px 0 rgba(0, 0, 0, 0.06);
   --shadow-card3: 0 20px 50px 0 rgba(18, 17, 39, 0.08);
   --shadow-nav: 0 4px 25px 0 rgba(0, 0, 0, 0.1);
+  --color-Lreshade-01: #FCEAE6;
+  --color-Lblueshade-02: #E6F0FB;
 }
 
 :root {
