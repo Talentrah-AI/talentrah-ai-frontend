@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Suspense } from 'react';
-import { MapPin, ChevronUp, ChevronDown, Info, Pencil, Trash2 } from 'lucide-react'; // Added Pencil and Trash2 icons
+import { MapPin, ChevronUp, ChevronDown, Info } from 'lucide-react';
 import { CircularProgress } from '@/components/ui/circular-progress';
 import { useState } from 'react';
 
@@ -13,9 +13,7 @@ function ResumeOptimized() {
   const [isObjectiveOpen, setIsObjectiveOpen] = useState(false);
   const [isSkillsOpen, setIsSkillsOpen] = useState(false);
   const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('Summary'); // State to track the active tab
-
-  // State for Editor tab sections
+  const [activeTab, setActiveTab] = useState('Summary');
   const [isPersonalInfoEditorOpen, setIsPersonalInfoEditorOpen] = useState(false);
   const [isProfessionalSummaryOpen, setIsProfessionalSummaryOpen] = useState(false);
   const [isWorkExperienceOpen, setIsWorkExperienceOpen] = useState(false);
@@ -27,21 +25,49 @@ function ResumeOptimized() {
   const jobTitle = searchParams.get('jobTitle');
   const company = searchParams.get('company');
 
-  const handleBackToApply = () => {
-    router.push(`/dashboard/premium-user-apply?jobTitle=${jobTitle}&company=${company}`);
+  // Placeholder for fetching the external job application URL via API
+  const fetchJobApplicationUrl = async () => {
+    // Future API integration: Fetch the URL dynamically
+    // Example: const response = await fetch(`/api/jobs/${jobId}/apply`);
+    // const data = await response.json();
+    // return data.applicationUrl;
+    return 'https://example.com/apply'; // Placeholder URL
   };
 
-  // Function to handle tab clicks
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
+  // Placeholder for notifying the backend of the job application
+  const notifyApplicationSubmitted = async () => {
+    // Future API integration: Notify the backend
+    // Example: await fetch(`/api/jobs/${jobId}/apply`, { method: 'POST', body: JSON.stringify({ userId, jobId }) });
+    console.log('Application submitted to backend');
   };
 
-  // Placeholder function for "Change Resume" click
+  const handleApplyForJob = async () => {
+    try {
+      // Fetch the external job application URL
+      const applicationUrl = await fetchJobApplicationUrl();
+
+      // Notify the backend that the user has applied
+      await notifyApplicationSubmitted();
+
+      // Open the external URL in a new tab
+      window.open(applicationUrl, '_blank');
+
+      // Redirect to the dashboard with a query parameter to show the pop-up
+      router.push('/dashboard?showPopup=true');
+    } catch (error) {
+      console.error('Error during job application:', error);
+      // Optionally show an error message to the user
+    }
+  };
+
   const handleChangeResume = () => {
     console.log('Change Resume clicked');
   };
 
-  // Placeholder functions for edit and delete actions
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+  };
+
   const handleEditSection = (section: string) => {
     console.log(`Edit ${section} clicked`);
   };
@@ -124,9 +150,7 @@ function ResumeOptimized() {
             </div>
           </div>
           {/* Resume Part */}
-          {/* Resume Optimization Summary */}
           <div className="flex flex-col w-[707px] rounded-[12px] bg-[#FFFFFF] p-4 gap-4 flex flex-col items-center">
-            {/* Resume Preview */}
             <div className="p-4 ml-6 text-justify">
               <h3 className="font-gabarito font-bold text-[16px] text-[#000000] mb-2">
                 Juphili A. Lamanilao
@@ -141,7 +165,6 @@ function ResumeOptimized() {
                 Email: juphili@yahoo.com
               </p>
 
-              {/* Objective Enhanced */}
               <div className="mb-4">
                 <h4 className="flex items-center gap-2 font-gabarito font-normal text-[12px] text-[#717A84] mb-2">
                   <span className="w-5 h-5 bg-[#0967D2] text-white rounded-full flex items-center justify-center">01</span>
@@ -152,7 +175,6 @@ function ResumeOptimized() {
                 </p>
               </div>
 
-              {/* Professional Skills */}
               <div className="mb-4">
                 <h4 className="flex items-center gap-2 font-gabarito font-normal text-[12px] text-[#717A84] mb-2">
                   <span className="w-5 h-5 bg-[#0967D2] text-white rounded-full flex items-center justify-center">02</span>
@@ -163,7 +185,6 @@ function ResumeOptimized() {
                 </p>
               </div>
 
-              {/* Educational Background */}
               <div className="mb-4">
                 <h4 className="font-gabarito font-normal text-[12px] text-[#515D68] mb-2">
                   EDUCATIONAL BACKGROUND
@@ -179,7 +200,6 @@ function ResumeOptimized() {
                 </p>
               </div>
 
-              {/* Personal Information Enhanced */}
               <div className="mb-4">
                 <h4 className="flex items-center gap-2 font-gabarito font-normal text-[12px] text-[#717A84] mb-2">
                   <span className="w-5 h-5 bg-[#0967D2] text-white rounded-full flex items-center justify-center">03</span>
@@ -190,7 +210,6 @@ function ResumeOptimized() {
                 </p>
               </div>
 
-              {/* Seminars Attended */}
               <div>
                 <div className="mb-4">
                   <h4 className="flex items-center gap-2 font-gabarito font-normal text-[12px] text-[#717A84] mb-2 ml-7">
@@ -207,7 +226,6 @@ function ResumeOptimized() {
 
         {/* Right Section: Job Details and Optimization Summary */}
         <main className="w-[412px] flex flex-col gap-[12px]">
-          {/* Change Resume Section */}
           <div className="flex items-center gap-2 w-[412px] h-[36px] bg-[#FFF3E8] h-[62px] rounded-[12px] p-4 border border-[#FFA500]">
             <Info className="w-4 h-4 text-[#E36308]" />
             <p className="font-gabarito font-normal text-[12px] text-[#E36308]">
@@ -221,7 +239,6 @@ function ResumeOptimized() {
             </p>
           </div>
 
-          {/* Job Details Section */}
           <div className="flex flex-col w-[412px] h-[160px] rounded-[12px] bg-white p-4 gap-4">
             <h2 className="font-gabarito font-bold text-[16px] leading-[20px] text-black">
               📌 Job Details
@@ -234,7 +251,6 @@ function ResumeOptimized() {
             </p>
           </div>
 
-          {/* Resume Optimization Summary Section */}
           <div className="flex flex-col w-[412px] h-[473px] rounded-[12px] bg-white p-4 gap-4">
             <div className="flex items-center justify-between">
               <div className="w-[380px] h-[36px] bg-white shadow-md rounded-md flex items-center justify-center">
@@ -272,15 +288,11 @@ function ResumeOptimized() {
                     Template
                   </Button>
                 </div>
-
-
               </div>
             </div>
 
-            {/* Conditionally Render Content Based on Active Tab */}
             {activeTab === "Summary" && (
               <>
-                {/* Objective Enhanced */}
                 <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
                   <button
                     onClick={() => setIsObjectiveOpen(!isObjectiveOpen)}
@@ -305,7 +317,6 @@ function ResumeOptimized() {
                   )}
                 </div>
 
-                {/* Missing Skills Added */}
                 <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
                   <button
                     onClick={() => setIsSkillsOpen(!isSkillsOpen)}
@@ -330,7 +341,6 @@ function ResumeOptimized() {
                   )}
                 </div>
 
-                {/* Personal Information Enhanced */}
                 <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
                   <button
                     onClick={() => setIsPersonalInfoOpen(!isPersonalInfoOpen)}
@@ -359,7 +369,6 @@ function ResumeOptimized() {
 
             {activeTab === "Editor" && (
               <div className="flex flex-col gap-3">
-                {/* Personal Information */}
                 <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
                   <button
                     onClick={() => setIsPersonalInfoEditorOpen(!isPersonalInfoEditorOpen)}
@@ -376,17 +385,14 @@ function ResumeOptimized() {
                         className="w-4 h-4 text-[#717A84] cursor-pointer"
                         onClick={() => handleEditSection("Personal Information")}
                       />
-
                     </div>
                     <div className="flex items-center gap-2">
-
                       <img
                         src="/trash.svg"
                         alt="edit"
                         className="w-4 h-4 cursor-pointer"
                         onClick={() => handleDeleteSection("Personal Information")}
                       />
-
                       {isPersonalInfoEditorOpen ? (
                         <ChevronUp className="w-6 h-6 text-[#717A84]" />
                       ) : (
@@ -424,7 +430,6 @@ function ResumeOptimized() {
                   )}
                 </div>
 
-                {/* Professional Summary */}
                 <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
                   <button
                     onClick={() => setIsProfessionalSummaryOpen(!isProfessionalSummaryOpen)}
@@ -439,16 +444,15 @@ function ResumeOptimized() {
                         src="/edit.svg"
                         alt="Edit"
                         className="w-4 h-4 text-[#717A84] cursor-pointer"
-                        onClick={() => handleEditSection("Personal Information")}
+                        onClick={() => handleEditSection("Professional Summary")}
                       />
                     </div>
                     <div className="flex items-center gap-2">
-
                       <img
                         src="/trash.svg"
                         alt="edit"
                         className="w-4 h-4 cursor-pointer"
-                        onClick={() => handleDeleteSection("Personal Information")}
+                        onClick={() => handleDeleteSection("Professional Summary")}
                       />
                       {isProfessionalSummaryOpen ? (
                         <ChevronUp className="w-6 h-6 text-[#717A84]" />
@@ -468,12 +472,12 @@ function ResumeOptimized() {
                   )}
                 </div>
 
-                {/* Work Experience */}
                 <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
                   <button
                     onClick={() => setIsWorkExperienceOpen(!isWorkExperienceOpen)}
                     className="flex items-center justify-between w-full"
-                  > <div className="flex items-center justify-start gap-[5px] w-full">
+                  >
+                    <div className="flex items-center justify-start gap-[5px] w-full">
                       <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
                       <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
                         Work Experience
@@ -482,16 +486,15 @@ function ResumeOptimized() {
                         src="/edit.svg"
                         alt="Edit"
                         className="w-4 h-4 text-[#717A84] cursor-pointer"
-                        onClick={() => handleEditSection("Personal Information")}
+                        onClick={() => handleEditSection("Work Experience")}
                       />
                     </div>
                     <div className="flex items-center gap-2">
-
                       <img
                         src="/trash.svg"
                         alt="edit"
                         className="w-4 h-4 cursor-pointer"
-                        onClick={() => handleDeleteSection("Personal Information")}
+                        onClick={() => handleDeleteSection("Work Experience")}
                       />
                       {isWorkExperienceOpen ? (
                         <ChevronUp className="w-6 h-6 text-[#717A84]" />
@@ -529,12 +532,12 @@ function ResumeOptimized() {
                   )}
                 </div>
 
-                {/* Education */}
                 <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
                   <button
                     onClick={() => setIsEducationOpen(!isEducationOpen)}
                     className="flex items-center justify-between w-full"
-                  > <div className="flex items-center justify-start gap-[5px] w-full">
+                  >
+                    <div className="flex items-center justify-start gap-[5px] w-full">
                       <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
                       <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
                         Education
@@ -543,16 +546,15 @@ function ResumeOptimized() {
                         src="/edit.svg"
                         alt="Edit"
                         className="w-4 h-4 text-[#717A84] cursor-pointer"
-                        onClick={() => handleEditSection("Personal Information")}
+                        onClick={() => handleEditSection("Education")}
                       />
                     </div>
                     <div className="flex items-center gap-2">
-
                       <img
                         src="/trash.svg"
                         alt="edit"
                         className="w-4 h-4 cursor-pointer"
-                        onClick={() => handleDeleteSection("Personal Information")}
+                        onClick={() => handleDeleteSection("Education")}
                       />
                       {isEducationOpen ? (
                         <ChevronUp className="w-6 h-6 text-[#717A84]" />
@@ -585,12 +587,12 @@ function ResumeOptimized() {
                   )}
                 </div>
 
-                {/* Certification */}
                 <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
                   <button
                     onClick={() => setIsCertificationOpen(!isCertificationOpen)}
                     className="flex items-center justify-between w-full"
-                  > <div className="flex items-center justify-start gap-[5px] w-full">
+                  >
+                    <div className="flex items-center justify-start gap-[5px] w-full">
                       <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
                       <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
                         Certification
@@ -599,16 +601,15 @@ function ResumeOptimized() {
                         src="/edit.svg"
                         alt="Edit"
                         className="w-4 h-4 text-[#717A84] cursor-pointer"
-                        onClick={() => handleEditSection("Personal Information")}
+                        onClick={() => handleEditSection("Certification")}
                       />
                     </div>
                     <div className="flex items-center gap-2">
-
                       <img
                         src="/trash.svg"
                         alt="edit"
                         className="w-4 h-4 cursor-pointer"
-                        onClick={() => handleDeleteSection("Personal Information")}
+                        onClick={() => handleDeleteSection("Certification")}
                       />
                       {isCertificationOpen ? (
                         <ChevronUp className="w-6 h-6 text-[#717A84]" />
@@ -641,7 +642,6 @@ function ResumeOptimized() {
                   )}
                 </div>
 
-                {/* Add New Section Button */}
                 <button className="w-full p-2 border border-dashed border-[#2563EB] rounded-[8px] text-[#2563EB] font-gabarito font-normal text-[12px] flex items-center justify-center gap-2">
                   <span className="text-[16px]">+</span> Add new section
                 </button>
@@ -650,7 +650,6 @@ function ResumeOptimized() {
 
             {activeTab === "Template" && (
               <div className="flex flex-col gap-3">
-                {/* Placeholder for Template tab content */}
                 <p className="font-gabarito font-normal text-[12px] text-[#515D68]">
                   Template tab content will be added here.
                 </p>
@@ -658,16 +657,13 @@ function ResumeOptimized() {
             )}
           </div>
           <div className="flex flex-col w-[412px] h-[116px] rounded-[12px] bg-white p-4 gap-4">
-            {/* Feedback Section */}
             <div className="flex items-center justify-start gap-[5px] w-full">
               <img src="/message-question.svg" alt="message" className="w-4 h-4" />
               <h3 className="font-gabarito font-normal text-[12px] text-[#08121D]">
-
                 How do you like this analyzed resume?
               </h3>
             </div>
             <div className="flex gap-[20px] items-center justify-center">
-              {/* Like Button */}
               <Button
                 variant="outline"
                 className="flex items-center gap-x-2 font-gabarito font-normal w-[179px] h-[36px] text-[12px] text-[#08121D] bg-[#E6FAFB] border-[#3AD5DB] rounded-[8px] px-4 py-1"
@@ -676,7 +672,6 @@ function ResumeOptimized() {
                 Looks great
               </Button>
 
-              {/* Unlike Button */}
               <Button
                 variant="outline"
                 className="flex items-center gap-x-2 font-gabarito font-normal w-[179px] h-[36px] text-[12px] text-[#08121D] bg-[#FCEAE6] border-[#E95439] rounded-[8px] px-4 py-1"
@@ -708,7 +703,7 @@ function ResumeOptimized() {
             Generate cover letter
           </Button>
           <Button
-            onClick={handleBackToApply}
+            onClick={handleApplyForJob}
             className="font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-white px-[50px] py-[5px] rounded-[12px] bg-[#2563EB] hover:bg-[#1D4ED8]"
           >
             Apply for this job
