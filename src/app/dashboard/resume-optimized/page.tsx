@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Suspense } from 'react';
-import { MapPin, ChevronUp, ChevronDown, Info } from 'lucide-react'; // Added Info icon
+import { MapPin, ChevronUp, ChevronDown, Info, Pencil, Trash2 } from 'lucide-react'; // Added Pencil and Trash2 icons
 import { CircularProgress } from '@/components/ui/circular-progress';
 import { useState } from 'react';
 
@@ -14,6 +14,13 @@ function ResumeOptimized() {
   const [isSkillsOpen, setIsSkillsOpen] = useState(false);
   const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('Summary'); // State to track the active tab
+
+  // State for Editor tab sections
+  const [isPersonalInfoEditorOpen, setIsPersonalInfoEditorOpen] = useState(false);
+  const [isProfessionalSummaryOpen, setIsProfessionalSummaryOpen] = useState(false);
+  const [isWorkExperienceOpen, setIsWorkExperienceOpen] = useState(false);
+  const [isEducationOpen, setIsEducationOpen] = useState(false);
+  const [isCertificationOpen, setIsCertificationOpen] = useState(false);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -31,8 +38,16 @@ function ResumeOptimized() {
 
   // Placeholder function for "Change Resume" click
   const handleChangeResume = () => {
-    // Add navigation or logic to change the resume here
     console.log('Change Resume clicked');
+  };
+
+  // Placeholder functions for edit and delete actions
+  const handleEditSection = (section: string) => {
+    console.log(`Edit ${section} clicked`);
+  };
+
+  const handleDeleteSection = (section: string) => {
+    console.log(`Delete ${section} clicked`);
   };
 
   return (
@@ -192,7 +207,7 @@ function ResumeOptimized() {
 
         {/* Right Section: Job Details and Optimization Summary */}
         <main className="w-[412px] flex flex-col gap-[12px]">
-          {/* New Section: Change Resume */}
+          {/* Change Resume Section */}
           <div className="flex items-center gap-2 w-[412px] h-[36px] bg-[#FFF3E8] h-[62px] rounded-[12px] p-4 border border-[#FFA500]">
             <Info className="w-4 h-4 text-[#E36308]" />
             <p className="font-gabarito font-normal text-[12px] text-[#E36308]">
@@ -225,120 +240,429 @@ function ResumeOptimized() {
               <div className="w-[380px] h-[36px] bg-white shadow-md rounded-md flex items-center justify-center">
                 <div className="flex gap-[8px]">
                   <Button
-                    variant="outline"
-                    className={`w-[120px] h-[26px] font-gabarito font-normal text-[12px] rounded-[5px] transition-all ${activeTab === "Summary"
-                        ? "text-white bg-gradient-to-r from-[#0967D2] to-[#09CBD2] border-none"
-                        : "text-[#717A84]"
+                    className={`w-[120px] h-[26px] font-gabarito font-normal text-[12px] rounded-[5px] transition-all 
+      ${activeTab === "Summary"
+                        ? "text-white bg-gradient-to-r from-[#0967D2] to-[#09CBD2]"
+                        : "text-[#717A84] bg-transparent hover:bg-gray-200"
                       }`}
                     onClick={() => handleTabClick("Summary")}
                   >
                     Summary
                   </Button>
+
                   <Button
-                    variant="outline"
-                    className={`w-[120px] h-[26px] font-gabarito font-normal text-[12px] rounded-[5px] transition-all ${activeTab === "Editor"
-                        ? "text-white bg-gradient-to-r from-[#0967D2] to-[#09CBD2] border-none"
-                        : "text-[#717A84]"
+                    className={`w-[120px] h-[26px] font-gabarito font-normal text-[12px] rounded-[5px] transition-all 
+      ${activeTab === "Editor"
+                        ? "text-white bg-gradient-to-r from-[#0967D2] to-[#09CBD2]"
+                        : "text-[#717A84] bg-transparent hover:bg-gray-200"
                       }`}
                     onClick={() => handleTabClick("Editor")}
                   >
                     Editor
                   </Button>
+
                   <Button
-                    variant="outline"
-                    className={`w-[120px] h-[26px] font-gabarito font-normal text-[12px] rounded-[5px] transition-all ${activeTab === "Template"
-                        ? "text-white bg-gradient-to-r from-[#0967D2] to-[#09CBD2] border-none"
-                        : "text-[#717A84]"
+                    className={`w-[120px] h-[26px] font-gabarito font-normal text-[12px] rounded-[5px] transition-all 
+      ${activeTab === "Template"
+                        ? "text-white bg-gradient-to-r from-[#0967D2] to-[#09CBD2]"
+                        : "text-[#717A84] bg-transparent hover:bg-gray-200"
                       }`}
                     onClick={() => handleTabClick("Template")}
                   >
                     Template
                   </Button>
                 </div>
+
+
               </div>
             </div>
 
-            {/* Objective Enhanced */}
-            <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
-              <button
-                onClick={() => setIsObjectiveOpen(!isObjectiveOpen)}
-                className="flex items-center justify-between w-full"
-              >
-                <h4 className="flex items-center gap-2 font-gabarito font-normal text-[12px] text-[#08121D]">
-                  <span className="w-5 h-5 bg-[#0967D2] text-white rounded-full flex items-center justify-center">
-                    01
-                  </span>
-                  OBJECTIVE ENHANCED
-                </h4>
-                {isObjectiveOpen ? (
-                  <ChevronUp className="w-4 h-4 text-[#2563EB]" />
-                ) : (
-                  <ChevronDown className="w-4 h-4 text-[#2563EB]" />
-                )}
-              </button>
-              {isObjectiveOpen && (
-                <p className="mt-2 font-gabarito font-normal text-[12px] text-[#515D68]">
-                  Your objective has been refined to better align with the job description, emphasizing your relevant skills and goals.
-                </p>
-              )}
-            </div>
+            {/* Conditionally Render Content Based on Active Tab */}
+            {activeTab === "Summary" && (
+              <>
+                {/* Objective Enhanced */}
+                <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
+                  <button
+                    onClick={() => setIsObjectiveOpen(!isObjectiveOpen)}
+                    className="flex items-center justify-between w-full"
+                  >
+                    <h4 className="flex items-center gap-2 font-gabarito font-normal text-[12px] text-[#08121D]">
+                      <span className="w-5 h-5 bg-[#0967D2] text-white rounded-full flex items-center justify-center">
+                        01
+                      </span>
+                      OBJECTIVE ENHANCED
+                    </h4>
+                    {isObjectiveOpen ? (
+                      <ChevronUp className="w-6 h-6 text-[#717A84]" />
+                    ) : (
+                      <ChevronDown className="w-6 h-6 text-[#717A84]" />
+                    )}
+                  </button>
+                  {isObjectiveOpen && (
+                    <p className="mt-2 font-gabarito font-normal text-[12px] text-[#515D68]">
+                      Your career objective was refined to be more compelling and aligned with your target role.
+                    </p>
+                  )}
+                </div>
 
-            {/* Missing Skills Added */}
-            <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
-              <button
-                onClick={() => setIsSkillsOpen(!isSkillsOpen)}
-                className="flex items-center justify-between w-full"
-              >
-                <h4 className="flex items-center gap-2 font-gabarito font-normal text-[12px] text-[#08121D]">
-                  <span className="w-5 h-5 bg-[#0967D2] text-white rounded-full flex items-center justify-center">
-                    02
-                  </span>
-                  MISSING SKILLS ADDED
-                </h4>
-                {isSkillsOpen ? (
-                  <ChevronUp className="w-4 h-4 text-[#2563EB]" />
-                ) : (
-                  <ChevronDown className="w-4 h-4 text-[#2563EB]" />
-                )}
-              </button>
-              {isSkillsOpen && (
-                <p className="mt-2 font-gabarito font-normal text-[12px] text-[#515D68]">
-                  Added key skills like "user research" and "design systems" to improve your match score.
-                </p>
-              )}
-            </div>
+                {/* Missing Skills Added */}
+                <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
+                  <button
+                    onClick={() => setIsSkillsOpen(!isSkillsOpen)}
+                    className="flex items-center justify-between w-full"
+                  >
+                    <h4 className="flex items-center gap-2 font-gabarito font-normal text-[12px] text-[#08121D]">
+                      <span className="w-5 h-5 bg-[#0967D2] text-white rounded-full flex items-center justify-center">
+                        02
+                      </span>
+                      MISSING SKILLS ADDED
+                    </h4>
+                    {isSkillsOpen ? (
+                      <ChevronUp className="w-6 h-6 text-[#717A84]" />
+                    ) : (
+                      <ChevronDown className="w-6 h-6 text-[#717A84]" />
+                    )}
+                  </button>
+                  {isSkillsOpen && (
+                    <p className="mt-2 font-gabarito font-normal text-[12px] text-[#515D68]">
+                      Added key skills like "user research" and "design systems" to improve your match score.
+                    </p>
+                  )}
+                </div>
 
-            {/* Personal Information Enhanced */}
-            <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
-              <button
-                onClick={() => setIsPersonalInfoOpen(!isPersonalInfoOpen)}
-                className="flex items-center justify-between w-full"
-              >
-                <h4 className="flex items-center gap-2 font-gabarito font-normal text-[12px] text-[#08121D]">
-                  <span className="w-5 h-5 bg-[#0967D2] text-white rounded-full flex items-center justify-center">
-                    03
-                  </span>
-                  PERSONAL INFORMATION ENHANCED
-                </h4>
-                {isPersonalInfoOpen ? (
-                  <ChevronUp className="w-4 h-4 text-[#2563EB]" />
-                ) : (
-                  <ChevronDown className="w-4 h-4 text-[#2563EB]" />
-                )}
-              </button>
-              {isPersonalInfoOpen && (
-                <p className="mt-2 font-gabarito font-normal text-[12px] text-[#515D68]">
-                  Removed unnecessary personal details and enhanced the presentation of your contact information.
+                {/* Personal Information Enhanced */}
+                <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
+                  <button
+                    onClick={() => setIsPersonalInfoOpen(!isPersonalInfoOpen)}
+                    className="flex items-center justify-between w-full"
+                  >
+                    <h4 className="flex items-center gap-2 font-gabarito font-normal text-[12px] text-[#08121D]">
+                      <span className="w-5 h-5 bg-[#0967D2] text-white rounded-full flex items-center justify-center">
+                        03
+                      </span>
+                      PERSONAL INFORMATION ENHANCED
+                    </h4>
+                    {isPersonalInfoOpen ? (
+                      <ChevronUp className="w-6 h-6 text-[#717A84]" />
+                    ) : (
+                      <ChevronDown className="w-6 h-6 text-[#717A84]" />
+                    )}
+                  </button>
+                  {isPersonalInfoOpen && (
+                    <p className="mt-2 font-gabarito font-normal text-[12px] text-[#515D68]">
+                      Removed unnecessary personal details and enhanced the presentation of your contact information.
+                    </p>
+                  )}
+                </div>
+              </>
+            )}
+
+            {activeTab === "Editor" && (
+              <div className="flex flex-col gap-3">
+                {/* Personal Information */}
+                <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
+                  <button
+                    onClick={() => setIsPersonalInfoEditorOpen(!isPersonalInfoEditorOpen)}
+                    className="flex items-center justify-between w-full"
+                  >
+                    <div className="flex items-center justify-start gap-[5px] w-full">
+                      <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
+                      <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
+                        Personal Information
+                      </h4>
+                      <img
+                        src="/edit.svg"
+                        alt="Edit"
+                        className="w-4 h-4 text-[#717A84] cursor-pointer"
+                        onClick={() => handleEditSection("Personal Information")}
+                      />
+
+                    </div>
+                    <div className="flex items-center gap-2">
+
+                      <img
+                        src="/trash.svg"
+                        alt="edit"
+                        className="w-4 h-4 cursor-pointer"
+                        onClick={() => handleDeleteSection("Personal Information")}
+                      />
+
+                      {isPersonalInfoEditorOpen ? (
+                        <ChevronUp className="w-6 h-6 text-[#717A84]" />
+                      ) : (
+                        <ChevronDown className="w-6 h-6 text-[#717A84]" />
+                      )}
+                    </div>
+                  </button>
+                  {isPersonalInfoEditorOpen && (
+                    <div className="mt-3 flex flex-col gap-2">
+                      <input
+                        type="text"
+                        placeholder="Full Name"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue="Juphili A. Lamanilao"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Address"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue="Sangi Interior, Brgy. Pajo Lapu-Lapu City, Cebu"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Mobile"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue="+639084644623"
+                      />
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue="juphili@yahoo.com"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Professional Summary */}
+                <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
+                  <button
+                    onClick={() => setIsProfessionalSummaryOpen(!isProfessionalSummaryOpen)}
+                    className="flex items-center justify-between w-full"
+                  >
+                    <div className="flex items-center justify-start gap-[5px] w-full">
+                      <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
+                      <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
+                        Professional Summary
+                      </h4>
+                      <img
+                        src="/edit.svg"
+                        alt="Edit"
+                        className="w-4 h-4 text-[#717A84] cursor-pointer"
+                        onClick={() => handleEditSection("Personal Information")}
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+
+                      <img
+                        src="/trash.svg"
+                        alt="edit"
+                        className="w-4 h-4 cursor-pointer"
+                        onClick={() => handleDeleteSection("Personal Information")}
+                      />
+                      {isProfessionalSummaryOpen ? (
+                        <ChevronUp className="w-6 h-6 text-[#717A84]" />
+                      ) : (
+                        <ChevronDown className="w-6 h-6 text-[#717A84]" />
+                      )}
+                    </div>
+                  </button>
+                  {isProfessionalSummaryOpen && (
+                    <div className="mt-3">
+                      <textarea
+                        placeholder="Professional Summary"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68] h-[100px]"
+                        defaultValue="Chemical Engineering graduate with proficiency in Microsoft Office and programming languages like Turbo C and Matlab. Strong communication skills and a quick learner, capable of working independently or in a team."
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Work Experience */}
+                <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
+                  <button
+                    onClick={() => setIsWorkExperienceOpen(!isWorkExperienceOpen)}
+                    className="flex items-center justify-between w-full"
+                  > <div className="flex items-center justify-start gap-[5px] w-full">
+                      <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
+                      <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
+                        Work Experience
+                      </h4>
+                      <img
+                        src="/edit.svg"
+                        alt="Edit"
+                        className="w-4 h-4 text-[#717A84] cursor-pointer"
+                        onClick={() => handleEditSection("Personal Information")}
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+
+                      <img
+                        src="/trash.svg"
+                        alt="edit"
+                        className="w-4 h-4 cursor-pointer"
+                        onClick={() => handleDeleteSection("Personal Information")}
+                      />
+                      {isWorkExperienceOpen ? (
+                        <ChevronUp className="w-6 h-6 text-[#717A84]" />
+                      ) : (
+                        <ChevronDown className="w-6 h-6 text-[#717A84]" />
+                      )}
+                    </div>
+                  </button>
+                  {isWorkExperienceOpen && (
+                    <div className="mt-3 flex flex-col gap-2">
+                      <input
+                        type="text"
+                        placeholder="Job Title"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue=""
+                      />
+                      <input
+                        type="text"
+                        placeholder="Company"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue=""
+                      />
+                      <input
+                        type="text"
+                        placeholder="Duration"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue=""
+                      />
+                      <textarea
+                        placeholder="Description"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68] h-[80px]"
+                        defaultValue=""
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Education */}
+                <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
+                  <button
+                    onClick={() => setIsEducationOpen(!isEducationOpen)}
+                    className="flex items-center justify-between w-full"
+                  > <div className="flex items-center justify-start gap-[5px] w-full">
+                      <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
+                      <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
+                        Education
+                      </h4>
+                      <img
+                        src="/edit.svg"
+                        alt="Edit"
+                        className="w-4 h-4 text-[#717A84] cursor-pointer"
+                        onClick={() => handleEditSection("Personal Information")}
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+
+                      <img
+                        src="/trash.svg"
+                        alt="edit"
+                        className="w-4 h-4 cursor-pointer"
+                        onClick={() => handleDeleteSection("Personal Information")}
+                      />
+                      {isEducationOpen ? (
+                        <ChevronUp className="w-6 h-6 text-[#717A84]" />
+                      ) : (
+                        <ChevronDown className="w-6 h-6 text-[#717A84]" />
+                      )}
+                    </div>
+                  </button>
+                  {isEducationOpen && (
+                    <div className="mt-3 flex flex-col gap-2">
+                      <input
+                        type="text"
+                        placeholder="Degree"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue="Bachelor’s degree in Chemical Engineering"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Institution"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue="Cebu Institute of Technology (CIT)"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Duration"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue="2006 - present"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Certification */}
+                <div className="border-[0.5px] border-[#EFF0F2] rounded-[12px] p-3">
+                  <button
+                    onClick={() => setIsCertificationOpen(!isCertificationOpen)}
+                    className="flex items-center justify-between w-full"
+                  > <div className="flex items-center justify-start gap-[5px] w-full">
+                      <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
+                      <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
+                        Certification
+                      </h4>
+                      <img
+                        src="/edit.svg"
+                        alt="Edit"
+                        className="w-4 h-4 text-[#717A84] cursor-pointer"
+                        onClick={() => handleEditSection("Personal Information")}
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+
+                      <img
+                        src="/trash.svg"
+                        alt="edit"
+                        className="w-4 h-4 cursor-pointer"
+                        onClick={() => handleDeleteSection("Personal Information")}
+                      />
+                      {isCertificationOpen ? (
+                        <ChevronUp className="w-6 h-6 text-[#717A84]" />
+                      ) : (
+                        <ChevronDown className="w-6 h-6 text-[#717A84]" />
+                      )}
+                    </div>
+                  </button>
+                  {isCertificationOpen && (
+                    <div className="mt-3 flex flex-col gap-2">
+                      <input
+                        type="text"
+                        placeholder="Certification Name"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue=""
+                      />
+                      <input
+                        type="text"
+                        placeholder="Issuing Organization"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue=""
+                      />
+                      <input
+                        type="text"
+                        placeholder="Date Issued"
+                        className="w-full p-2 border border-[#EFF0F2] rounded-[8px] font-gabarito font-normal text-[12px] text-[#515D68]"
+                        defaultValue=""
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Add New Section Button */}
+                <button className="w-full p-2 border border-dashed border-[#2563EB] rounded-[8px] text-[#2563EB] font-gabarito font-normal text-[12px] flex items-center justify-center gap-2">
+                  <span className="text-[16px]">+</span> Add new section
+                </button>
+              </div>
+            )}
+
+            {activeTab === "Template" && (
+              <div className="flex flex-col gap-3">
+                {/* Placeholder for Template tab content */}
+                <p className="font-gabarito font-normal text-[12px] text-[#515D68]">
+                  Template tab content will be added here.
                 </p>
-              )}
-            </div>
+              </div>
+            )}
           </div>
           <div className="flex flex-col w-[412px] h-[116px] rounded-[12px] bg-white p-4 gap-4">
             {/* Feedback Section */}
             <div className="flex items-center justify-start gap-[5px] w-full">
-            <img src="/message-question.svg" alt="message" className="w-4 h-4" />
+              <img src="/message-question.svg" alt="message" className="w-4 h-4" />
               <h3 className="font-gabarito font-normal text-[12px] text-[#08121D]">
-              
+
                 How do you like this analyzed resume?
               </h3>
             </div>
@@ -361,9 +685,6 @@ function ResumeOptimized() {
                 Not what I expected
               </Button>
             </div>
-
-
-
           </div>
         </main>
       </section>
@@ -376,7 +697,7 @@ function ResumeOptimized() {
         <div className="flex gap-[26px] items-center">
           <Button
             variant="outline"
-            className="font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-[#0967D2] px-[50px] py-[5px] rounded-[12px]"
+            className="font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-[#0967D2] px-[50px] py-[5px] rounded-[12px] border-[#0967D2] border-[0.5px]"
           >
             Download resume
           </Button>
