@@ -7,7 +7,7 @@ env:
 on:
   push:
     branches:
-      - main
+      - main-test
 
 jobs:
   Deploy-Production:
@@ -31,10 +31,10 @@ jobs:
         run: npm install --global vercel@latest
 
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{secrets.VERCEL_TOKEN_PRODUCTION}}
+        run: vercel pull --yes --environment=preview --token=${{secrets.VERCEL_TOKEN}}
 
       - name: Build Project Artifacts
-        run: vercel build --prod --token=${{secrets.VERCEL_TOKEN_PRODUCTION}}
+        run: vercel build --token=${{secrets.VERCEL_TOKEN}}
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prod  --prebuilt --token=${{secrets.VERCEL_TOKEN_PRODUCTION}}
+        run: vercel deploy --prebuilt --token=${{secrets.VERCEL_TOKEN}}
