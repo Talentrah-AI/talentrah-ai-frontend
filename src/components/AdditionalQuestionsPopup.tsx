@@ -41,7 +41,7 @@ export const AdditionalQuestionsPopup: React.FC<AdditionalQuestionsPopupProps> =
               <span className="text-2xl">🚀</span>
               <h2 className="text-xl font-semibold text-gray-800">Additional Questions</h2>
             </div>
-            <span className="text-gray-800 text-xl font-semibold text-red-500">Required!</span>
+            <span className="text-gray-800 text-xl font-semibold">Required!</span>
           </div>
 
           {/* Description */}

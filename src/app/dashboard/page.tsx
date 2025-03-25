@@ -7,13 +7,18 @@ import { UserProfile } from "@/components/UserProfile";
 import { AutoApply } from "@/components/AutoApply";
 import { WelcomeModal } from "@/components/WelcomeModal";
 import { AdditionalQuestionsPopup } from "@/components/AdditionalQuestionsPopup";
-import { JobBoardQuestionsPopup } from "@/components/JobBoardQuestionsPopup"; // Import the new component
+import { JobBoardQuestionsPopup } from "@/components/JobBoardQuestionsPopup";
+import { ApplicationUpdatedPopup } from "@/components/ApplicationUpdatedPopup";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showQuestionsPopup, setShowQuestionsPopup] = useState(false);
-  const [showJobBoardQuestionsPopup, setShowJobBoardQuestionsPopup] = useState(false); // State for the new pop-up
+  const [showJobBoardQuestionsPopup, setShowJobBoardQuestionsPopup] = useState(false);
+  const [showApplicationUpdatedPopup, setShowApplicationUpdatedPopup] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     // Check if this is the first visit for the Welcome Modal
@@ -22,11 +27,8 @@ export default function DashboardPage() {
       setShowWelcomeModal(true);
     }
 
-    // Check if the user has seen the Additional Questions pop-up before
-    const hasSeenQuestionsPopup = localStorage.getItem("hasSeenQuestionsPopup");
-    if (!hasSeenQuestionsPopup) {
-      setShowQuestionsPopup(true);
-    }
+    // Show the Additional Questions pop-up on every page load
+    setShowQuestionsPopup(true);
   }, []);
 
   const handleCloseModal = () => {
@@ -36,11 +38,13 @@ export default function DashboardPage() {
 
   const handleCloseQuestionsPopup = () => {
     setShowQuestionsPopup(false);
+    // Optionally, you can still set this flag if needed for other logic
     localStorage.setItem("hasSeenQuestionsPopup", "true");
   };
 
   const handleConfirmQuestionsPopup = () => {
     setShowQuestionsPopup(false);
+    // Optionally, you can still set this flag if needed for other logic
     localStorage.setItem("hasSeenQuestionsPopup", "true");
     // Show the Job Board Questions pop-up after confirming the first pop-up
     setShowJobBoardQuestionsPopup(true);
@@ -50,18 +54,56 @@ export default function DashboardPage() {
     setShowJobBoardQuestionsPopup(false);
   };
 
-  const handleSubmitJobBoardQuestions = (answers: { reason: string; authorized: string }) => {
-    // Placeholder for handling the form submission
-    // Future integration: Send answers to an API
-    console.log("Job board questions submitted:", answers);
-    setShowJobBoardQuestionsPopup(false);
+  const handleSubmitJobBoardQuestions = async (answers: { reason: string; authorized: string }) => {
+    try {
+      // Placeholder for API integration: Send answers to the server
+      // Example API call:
+      // const response = await fetch('/api/submit-job-answers', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     userId: 'user-id-placeholder', // Replace with actual user ID
+      //     jobId: 'job-id-placeholder', // Replace with actual job ID
+      //     answers: {
+      //       reason: answers.reason,
+      //       authorized: answers.authorized,
+      //     },
+      //   }),
+      // });
+      // if (!response.ok) throw new Error('Failed to submit answers');
+
+      // Log the answers for now (remove this in production)
+      console.log("Job board questions submitted:", answers);
+
+      // Optionally store answers in localStorage for temporary data persistence
+      // This is a placeholder for actual database storage
+      localStorage.setItem("jobBoardAnswers", JSON.stringify(answers));
+
+      // Close the Job Board Questions pop-up and show the Application Updated pop-up
+      setShowJobBoardQuestionsPopup(false);
+      setShowApplicationUpdatedPopup(true);
+    } catch (error) {
+      console.error("Error submitting job board answers:", error);
+      // Optionally show an error message to the user
+      alert("Failed to submit your answers. Please try again.");
+    }
+  };
+
+  const handleCloseApplicationUpdatedPopup = () => {
+    setShowApplicationUpdatedPopup(false);
+    // Ensure the URL is clean (in case there are query parameters)
+    router.push("/dashboard");
   };
 
   return (
     <>
       <div
         className={`transition-opacity duration-200 ${
-          showWelcomeModal || showQuestionsPopup || showJobBoardQuestionsPopup ? "opacity-50" : ""
+          showWelcomeModal || showQuestionsPopup || showJobBoardQuestionsPopup || showApplicationUpdatedPopup
+            ? "opacity-50"
+            : ""
         }`}
       >
         <div className="max-w-7xl mx-auto pl-3">
@@ -105,6 +147,12 @@ export default function DashboardPage() {
         isOpen={showJobBoardQuestionsPopup}
         onClose={handleCloseJobBoardQuestionsPopup}
         onSubmit={handleSubmitJobBoardQuestions}
+      />
+
+      {/* Application Updated Pop-up */}
+      <ApplicationUpdatedPopup
+        isOpen={showApplicationUpdatedPopup}
+        onClose={handleCloseApplicationUpdatedPopup}
       />
     </>
   );
