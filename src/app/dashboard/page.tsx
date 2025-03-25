@@ -6,12 +6,14 @@ import { JobList } from "@/components/JobList";
 import { UserProfile } from "@/components/UserProfile";
 import { AutoApply } from "@/components/AutoApply";
 import { WelcomeModal } from "@/components/WelcomeModal";
-import { AdditionalQuestionsPopup } from "@/components/AdditionalQuestionsPopup"; // Import the new component
+import { AdditionalQuestionsPopup } from "@/components/AdditionalQuestionsPopup";
+import { JobBoardQuestionsPopup } from "@/components/JobBoardQuestionsPopup"; // Import the new component
 import { useState, useEffect } from "react";
 
 export default function DashboardPage() {
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
-  const [showQuestionsPopup, setShowQuestionsPopup] = useState(false); // State for the new pop-up
+  const [showQuestionsPopup, setShowQuestionsPopup] = useState(false);
+  const [showJobBoardQuestionsPopup, setShowJobBoardQuestionsPopup] = useState(false); // State for the new pop-up
 
   useEffect(() => {
     // Check if this is the first visit for the Welcome Modal
@@ -38,18 +40,28 @@ export default function DashboardPage() {
   };
 
   const handleConfirmQuestionsPopup = () => {
-    // Placeholder for handling the "Answer now" action
-    // Future integration: Redirect to a form or API call to answer questions
-    console.log("Proceeding to answer additional questions");
     setShowQuestionsPopup(false);
     localStorage.setItem("hasSeenQuestionsPopup", "true");
+    // Show the Job Board Questions pop-up after confirming the first pop-up
+    setShowJobBoardQuestionsPopup(true);
+  };
+
+  const handleCloseJobBoardQuestionsPopup = () => {
+    setShowJobBoardQuestionsPopup(false);
+  };
+
+  const handleSubmitJobBoardQuestions = (answers: { reason: string; authorized: string }) => {
+    // Placeholder for handling the form submission
+    // Future integration: Send answers to an API
+    console.log("Job board questions submitted:", answers);
+    setShowJobBoardQuestionsPopup(false);
   };
 
   return (
     <>
       <div
         className={`transition-opacity duration-200 ${
-          showWelcomeModal || showQuestionsPopup ? "opacity-50" : ""
+          showWelcomeModal || showQuestionsPopup || showJobBoardQuestionsPopup ? "opacity-50" : ""
         }`}
       >
         <div className="max-w-7xl mx-auto pl-3">
@@ -86,6 +98,13 @@ export default function DashboardPage() {
         isOpen={showQuestionsPopup}
         onClose={handleCloseQuestionsPopup}
         onConfirm={handleConfirmQuestionsPopup}
+      />
+
+      {/* Job Board Questions Pop-up */}
+      <JobBoardQuestionsPopup
+        isOpen={showJobBoardQuestionsPopup}
+        onClose={handleCloseJobBoardQuestionsPopup}
+        onSubmit={handleSubmitJobBoardQuestions}
       />
     </>
   );
