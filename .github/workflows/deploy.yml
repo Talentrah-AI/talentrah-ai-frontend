@@ -7,7 +7,7 @@ env:
 on:
   push:
     branches:
-      - dev
+      - develop
       - main
 
 jobs:
@@ -29,6 +29,9 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install
+        
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
 
       - name: Pull Vercel Environment Variables
         run: |
