@@ -54,7 +54,7 @@ export const legals: footerType = [
 ]
 export const email: footerType = [
     {
-        title: "support@talentra.com",
-        link: "mailto:support@talentra.com"
+        title: "support@talentrah.com",
+        link: "mailto:support@talentrah.com"
     }
 ]

@@ -3,10 +3,10 @@ import heroImage from "@/assets/images/heroImage.png";
 import Image from "next/image";
 export const HeroSection = () => {
   return (
-    <section className="w-full min-h-screen md:h-[1000px] h-[683px] flex flex-col justify-end items-center font-gabarito bg-svg relative px-6">
+    <section className="w-full xl:min-h-screen min-h-full md:h-[1000px] h-full flex flex-col md:justify-end justify-start items-center font-gabarito bg-svg relative px-6 md:pt-0 pt-32">
       <div className="w-full flex flex-col justify-start items-center gap-4">
         <h2 className="md:text-[44px] text-[26px] font-medium text-blueShade w-full max-w-[701px] text-center md:leading-12 leading-7">
-          Boost your chances with AI & human co-pilot job applications
+        Boost your chances with AI-Human co-pilot for job applications
         </h2>
         <p className="md:text-base sm:text-sm text-xs font-normal w-full max-w-[495px] text-center md:leading-5 leading-4 mb-4 text-greyDark">
           Leverage the power of AI and human expertise to optimize your resume,
