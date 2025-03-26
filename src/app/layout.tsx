@@ -10,7 +10,7 @@ const gabarito = Gabarito({
 });
 // Metadata for SEO
 const Base_url = process.env.NODE_ENV === "production"
-  ? "https://www.talentrah.com/" : "http://localhost:3000";
+  ? "https://www.talentrah.com" : "http://localhost:3000";
 export const metadata: Metadata = {
   title: 'Talentrah-ai',
   description: 'Your next career move starts here',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "Talentrah-ai",
     description:
       "Your next career move starts here",
-    url: "https://www.talentrah.com/",
+    url: "https://www.talentrah.com",
     siteName: "Talentrah-ai",
     images: [
       {
