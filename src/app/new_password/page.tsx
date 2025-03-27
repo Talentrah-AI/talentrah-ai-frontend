@@ -5,6 +5,8 @@ import { LogOut, EyeOff, Eye } from 'lucide-react';
 import Link from 'next/link';
 import Logo from '@/assets/images/logo.png';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { redirect } from 'next/dist/server/api-utils';
 
 export default function ResetPassword() {
   const [password, setPassword] = useState<string>('');
@@ -12,6 +14,7 @@ export default function ResetPassword() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [error, setError] = useState('');
+  const router = useRouter();
 
   const handleReset = () => {
     if (password !== confirmPassword) {
@@ -21,6 +24,7 @@ export default function ResetPassword() {
     setError('');
     // Proceed with API call or next step
     alert('Password successfully reset!');
+    router.push('/login');
   };
 
   return (
@@ -121,7 +125,7 @@ export default function ResetPassword() {
             className="w-full bg-blue-100 text-primary py-3 rounded-lg font-medium hover:bg-blue-200 transition cursor-pointer"
             onClick={handleReset}
           >
-            <Link href="/login">Reset password</Link>
+            Reset Password
           </button>
         </div>
         {/* </main> */}
