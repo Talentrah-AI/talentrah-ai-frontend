@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <section className="flex flex-col items-center justify-start w-full min-h-screen gap-8 pb-24 bg-white">
+      <main className="flex flex-col items-center justify-start w-full min-h-screen gap-8 pb-24 bg-white">
         <HeroSection />
         <section
           className="w-full flex flex-col justify-start items-start gap-[35px] max-w-[1240px] mx-auto xl:px-0 sm:px-6 px-6 py-10"
@@ -472,7 +472,7 @@ export default function Home() {
             </button>
           </section>
         </section>
-      </section>
+      </main>
       <Footer />
     </>
   );
