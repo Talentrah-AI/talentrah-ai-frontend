@@ -24,7 +24,7 @@ export const Navbar = () => {
   }, []);
   
   return (
-    <section
+    <nav
       className={`fixed left-[50%] -translate-x-[50%] w-[95%] flex justify-between items-center z-30 font-gabarito rounded-2xl py-2.5 px-4 transition-all duration-500 ${
         isScroll
           ? 'md:max-w-[876px] max-w-[90%] bg-white shadow-nav top-9'
@@ -59,7 +59,7 @@ export const Navbar = () => {
         {isOpen ? <X className="sm:size-7 size-5" /> : <AlignJustify className="sm:size-7 size-5" />}
       </div>
       <NavMobile isOpen={isOpen}/>
-    </section>
+    </nav>
   );
 };
 
