@@ -1,0 +1,84 @@
+name: Vercel Deployment Pipeline
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install
+        
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Variables
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN_PRODUCTION }}
+          else
+            vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+          fi
+
+      - name: Build Project
+        run: pnpm run build
+
+  deploy_to_development:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/develop'
+    environment: development
+    steps:
+      - name: Deploy to Development Environment
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN_DEVELOPMENT }}
+        run: |
+          npm install --global vercel@latest
+          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_DEVELOPMENT }}
+
+  deploy_to_staging:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    environment: staging
+    steps:
+      - name: Deploy to Staging Environment
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN_STAGING }}
+        run: |
+          npm install --global vercel@latest
+          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_STAGING }}
+
+  deploy_to_production:
+    runs-on: ubuntu-latest
+    needs: deploy_to_staging
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    steps:
+      - name: Deploy to Production Environment
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN_PRODUCTION }}
+        run: |
+          npm install --global vercel@latest
+          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN_PRODUCTION }}
