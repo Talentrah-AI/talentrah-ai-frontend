@@ -17,6 +17,11 @@ const config: Config = {
       },
     },
     extend: {
+      screens: {
+        xs: '375px',
+        'max-xs': { max: '374px' },
+        'sm-md': { min: '640px', max: '760px' },
+      },
       fontFamily: {
         sans: ['var(--font-gabarito)'],
       },

@@ -21,6 +21,9 @@ import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useSubscription } from '@/context/SubscriptionContext';
+
 interface Notification {
   id: string;
   title: string;
@@ -45,6 +48,8 @@ const languages: Language[] = [
 export function Header() {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const queryClient = useQueryClient();
+  const { isPremium } = useSubscription();
+  const router = useRouter();
 
   // Fetch notifications
   const { data: notifications = [], isLoading: isLoadingNotifications } =
@@ -66,13 +71,13 @@ export function Header() {
   });
 
   // Fetch subscription status
-  const { data: subscription } = useQuery({
-    queryKey: ['subscription'],
-    queryFn: async () => {
-      const response = await endpoints.subscription.getPlan();
-      return response.data;
-    },
-  });
+  // const { data: subscription } = useQuery({
+  //   queryKey: ['subscription'],
+  //   queryFn: async () => {
+  //     const response = await endpoints.subscription.getPlan();
+  //     return response.data;
+  //   },
+  // });
 
   // Mark notification as read
   const markAsReadMutation = useMutation({
@@ -117,13 +122,11 @@ export function Header() {
   };
 
   const handleUpgradeClick = async () => {
-    try {
-      // Implement your upgrade flow here
-      toast.success('Redirecting to upgrade page...');
-    } catch (error) {
-      toast.error('Failed to process upgrade request');
-      console.error(error);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('previousRoute', window.location.pathname);
     }
+    router.push('/pricing');
+    toast.success('Redirecting to upgrade page...');
   };
 
   return (
@@ -255,7 +258,7 @@ export function Header() {
             variant="outline"
             className="w-[149.739px] h-[32px] px-[12px] py-[8px] gap-[10px] rounded-[12px] border-[#07A2A8] border-[0.5px]"
             onClick={handleUpgradeClick}
-            disabled={subscription?.isPremium}
+            disabled={isPremium} // Use isPremium from SubscriptionContext
           >
             <Image
               src="/Layer_2.svg"
@@ -263,15 +266,9 @@ export function Header() {
               width={13}
               height={16}
             />
-            {subscription?.isPremium ? (
-              <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#07A2A8]">
-                Premium Member
-              </span>
-            ) : (
-              <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#07A2A8]">
-                Upgrade to premium
-              </span>
-            )}
+            <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#07A2A8]">
+              {isPremium ? 'Premium' : 'Upgrade to Premium'}
+            </span>
           </Button>
         </div>
       </div>

@@ -16,6 +16,11 @@ module.exports = {
       },
     },
     extend: {
+      screens: {
+        xs: '375px',
+        'max-xs': { max: '374px' },
+        'sm-md': { min: '640px', max: '760px' },
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

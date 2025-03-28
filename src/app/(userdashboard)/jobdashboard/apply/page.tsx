@@ -7,18 +7,49 @@
 'use client';
 
 // Import necessary components and utilities
+import ApplySkeleton from '@/components/ApplySkeleton';
+import ChangeResumeModal from '@/components/modal/ChangeResumeModal';
+import GenerateCoverLetterModal from '@/components/modal/GenerateCoverLetterModal';
+import PreviewResumeModal from '@/components/modal/PreviewResumeModal';
+import ResumeOptimizationModal from '@/components/modal/ResumeOptimizationModal';
 import { Button } from '@/components/ui/button';
-import { useSearchParams } from 'next/navigation';
-import Image from 'next/image';
-import { MapPin } from 'lucide-react';
 import { CircularProgress } from '@/components/ui/circular-progress';
-import { Suspense } from 'react';
+import { useModal } from '@/context/ModalContext';
+import { MapPin } from 'lucide-react';
+import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 
 function Apply() {
+  const [isLoading, setIsLoading] = useState(true);
+  const { openModal } = useModal();
+  // const [activeModal, setActiveModal] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
   // Extract job-related information from URL parameters
   const searchParams = useSearchParams();
   const jobTitle = searchParams.get('jobTitle');
   const company = searchParams.get('company');
+
+  // const openModal = (modalID: string) => {
+  //   setActiveModal(modalID);
+  // };
+
+  // const handleCloseModal = () => {
+  //   setActiveModal(null);
+  // };
+
+  if (isLoading) {
+    return <ApplySkeleton />; // Render ApplySkeleton when loading
+  }
 
   return (
     // Main container with custom dimensions and styling
@@ -274,11 +305,17 @@ function Apply() {
             />
             <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#E36308]">
               Want to use a different resume for this job?{' '}
-              <button className="font-[Gabarito] font-medium text-[12px] leading-[16px] tracking-[0px] underline decoration-solid decoration-[0%]">
+              <button
+                onClick={() => openModal(<ChangeResumeModal />)}
+                className="font-[Gabarito] font-medium text-[12px] leading-[16px] tracking-[0px] underline decoration-solid decoration-[0%] cursor-pointer"
+              >
                 Change Resume
               </button>
             </span>
           </div>
+          {/* {activeModal === 'changeResume' && (
+            <ChangeResumeModal onClose={handleCloseModal} />
+          )} */}
 
           {/* Job Details Section */}
           <div className="flex flex-col w-[412px] h-[775px] gap-[24px] p-[22px_16px] rounded-[12px] bg-white">
@@ -392,28 +429,55 @@ function Apply() {
       <div className="w-full flex items-center justify-between">
         {/* AI Cover Letter Generation Prompt */}
         <div className=" flex items-center gap-2 font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#515D68]">
-          🚀 Generate an AI-powered cover letter tailored to this job inseconds!
+          🚀 Generate an AI-powered cover letter tailored to this job in
+          seconds!
         </div>
         {/* Action Buttons */}
         <div className=" flex gap-[26px] items-center">
-          <p className="font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-[#0967D2]">
-            Preview resume
-          </p>
           <Button
+            onClick={() => openModal(<PreviewResumeModal />)}
+            variant="ghost"
+            className="font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-[#0967D2] cursor-pointer"
+          >
+            Preview resume
+          </Button>
+          <Button
+            onClick={() =>
+              openModal(
+                <GenerateCoverLetterModal
+                  jobTitle={jobTitle}
+                  company={company}
+                />
+              )
+            }
             variant="outline"
-            className="font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-[#0967D2] px-[50px] py-[5px] rounded-[12px] border-[#0967D2] border-[0.5px]"
+            className="font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-[#0967D2] px-[50px] py-[5px] rounded-[12px] border-[#0967D2] border-[0.5px] cursor-pointer"
           >
             Generate cover letter
           </Button>
           <Button
             variant="outline"
-            className="flex gap-[5px] p-[5px_50px] rounded-[12px] px-6 bg-[#2563EB] font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-white"
+            onClick={() => openModal(<ResumeOptimizationModal />)}
+            className="flex gap-[5px] p-[5px_50px] rounded-[12px] px-6 bg-[#2563EB] font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-white cursor-pointer"
           >
             <Image src="/optimize.svg" alt="optimize" width={24} height={24} />
             Optimize my resume
           </Button>
         </div>
       </div>
+      {/* {activeModal === 'generate' && (
+        <GenerateCoverLetterModal
+          onClose={handleCloseModal}
+          jobTitle={jobTitle}
+          company={company}
+        />
+      )}
+      {activeModal === 'optimize' && (
+        <ResumeOptimizationModal onClose={handleCloseModal} />
+      )}
+      {activeModal === 'preview' && (
+        <PreviewResumeModal onClose={handleCloseModal} />
+      )} */}
     </div>
   );
 }
