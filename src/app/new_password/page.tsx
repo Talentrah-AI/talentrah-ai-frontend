@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Logo from '@/assets/images/logo.png';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { redirect } from 'next/dist/server/api-utils';
+
 
 export default function ResetPassword() {
   const [password, setPassword] = useState<string>('');
