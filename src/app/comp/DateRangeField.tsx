@@ -12,7 +12,7 @@ export const DateRangeField = ({ form, index = 0 }: DateRangeFieldsProps) => {
     const isCurrentJob = form.watch(`${prefix}currentJob`);
 
     return (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="lg:grid grid-cols-2 gap-4">
             <div>
                 <FormInputField
                     form={form}

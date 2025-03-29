@@ -29,7 +29,7 @@ export const FormInputField = ({ form, field }: FormInputFieldProps) => {
                 <FormItem>
                     <div className="flex justify-between">
                         <FormLabel className="text-sm font-medium">
-                            {field.label} {field.required && <span className="text-red-500">*</span>}
+                            {field.label} 
                         </FormLabel>
                         {isFocused && <span className="text-xs text-gray-400">{field.required ? 'Required' : 'Optional'}</span>}
                     </div>

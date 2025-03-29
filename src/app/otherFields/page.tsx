@@ -83,7 +83,7 @@ export function FormInputField({ form, field, isGrouped = false }: FormFieldProp
                 <FormItem className={isGrouped ? "flex-1" : "w-full"}>
                     <FormLabel className="text-sm font-medium text-gray-700">
                         {field.label}
-                        {field.required && <span className="text-red-500 ml-1">*</span>}
+                        {/* {field.required && <span className="text-red-500 ml-1">*</span>} */}
                     </FormLabel>
                     <FormControl>
                         <Input

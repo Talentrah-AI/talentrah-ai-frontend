@@ -44,7 +44,7 @@ export default function GenericForm({ form, field }: GenericFormProps) {
                                 placeholder={field.placeholder}
                                 {...inputField}
 
-                                className={`text-black h-10 ${field.name === 'address' ? 'w-[206%] h-10' : ''}`}
+                                className={`text-black h-10 ${field.name === 'address' ? 'lg:w-[204%] h-10' : ''}`}
                             />
                             {field.type === 'password' && (
                                 <div

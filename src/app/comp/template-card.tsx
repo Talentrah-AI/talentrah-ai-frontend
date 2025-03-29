@@ -1,5 +1,4 @@
-
-"use client"
+"use client";
 
 import { useState } from "react"
 import Image from "next/image"
@@ -20,11 +19,16 @@ export function TemplateCard({ id, image, lock, type }: TemplateCardProps) {
     const [imageLoading, setImageLoading] = useState(true)
 
     const handleSelect = () => {
-        setIsLoading(true)
+        if (lock) {
+            alert("This template is locked!");
+            return;
+        }
+
+        setIsLoading(true);
         setTimeout(() => {
-            router.push("/personal-information")
-        }, 1000) // 
-    }
+            router.push("/personal-information");
+        }, 1000);
+    };
 
     return (
         <div
@@ -38,7 +42,7 @@ export function TemplateCard({ id, image, lock, type }: TemplateCardProps) {
                     alt={`${type === "premium" ? "Premium" : "Free"} Template ${id}`}
                     fill
                     className="object-cover"
-                    onLoadingComplete={() => setImageLoading(false)}
+                    onLoad={() => setImageLoading(false)}
                 />
                 {lock && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/80">

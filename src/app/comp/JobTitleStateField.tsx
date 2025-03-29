@@ -11,7 +11,7 @@ export const JobTitleStateField = ({ form, index = 0 }: JobTitleStateFieldsProps
     const prefix = index !== undefined ? `workExperiences.${index}.` : '';
 
     return (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="lg:grid grid-cols-2 gap-4">
             <FormInputField
                 form={form}
                 field={{
