@@ -1,5 +1,4 @@
-import Image from "next/image"
-import { Camera } from "lucide-react"
+
 
 interface ProfileViewProps {
   user: {

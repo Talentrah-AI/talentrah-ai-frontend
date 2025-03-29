@@ -16,7 +16,7 @@ interface ProfileEditProps {
     skills: string[]
     tools: string[]
   }
-  onSave: (data: any) => void
+  onSave: (data: unknown) => void
   onCancel: () => void
 }
 
@@ -136,7 +136,7 @@ const ProfileEdit = ({ user, onSave, onCancel }: ProfileEditProps) => {
             <button
               type="button"
               className="w-full px-3 py-2 border rounded-lg text-left flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onClick={() => {}}
+              onClick={() => { handleSelectCountry }}
             >
               {formData.country}
               <svg
