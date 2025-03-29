@@ -15,7 +15,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
+    pws: '',
   });
   const [errors, setErrors] = useState<errorsType>({});
   const [selectedLanguage, setSelectedLanguage] = useState(languages[0]); // for default to English
@@ -26,14 +26,14 @@ export default function App() {
 
     if (!formData.email) {
       newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    } else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email';
     }
 
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+    if (!formData.pws) {
+      newErrors.pws = 'Password is required';
+    } else if (formData.pws.length < 6) {
+      newErrors.pws = 'Password must be at least 6 characters';
     }
 
     setErrors(newErrors);
@@ -199,7 +199,7 @@ export default function App() {
 
               <div className="w-full flex flex-col justify-start items-start gap-1">
                 <label
-                  htmlFor="password"
+                  htmlFor="pws"
                   className="md:text-base text-sm font-normal text-black"
                 >
                   Password
@@ -209,7 +209,7 @@ export default function App() {
                     id="password"
                     name="password"
                     type={showPassword ? 'text' : 'password'}
-                    value={formData.password}
+                    value={formData.pws}
                     onChange={handleInputChange}
                     placeholder="************"
                     className={`w-full px-4 py-3 rounded-lg border md:text-base text-sm ${
