@@ -48,7 +48,7 @@ export const Navbar = () => {
         ))}
       </section>
       <section className="items-center justify-center hidden gap-6 md:flex">
-        <Link href={"/"} className="text-sm font-normal text-primary border border-primary rounded-lg py-2.5 px-8 bg-transparent cursor-pointer">
+        <Link href={"/login"} className="text-sm font-normal text-primary border border-primary rounded-lg py-2.5 px-8 bg-transparent cursor-pointer">
           Login
         </Link>
         <Link href={"/"} className="text-sm font-normal text-white bg-primary border border-primary rounded-lg py-2.5 px-4 whitespace-nowrap cursor-pointer">
