@@ -10,8 +10,6 @@ import { X } from 'lucide-react';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 
-
-
 const ChangeResumeModal: React.FC = () => {
   const { closeModal } = useModal();
   const [selectedResume, setSelectedResume] = useState('');
@@ -93,7 +91,15 @@ const ChangeResumeModal: React.FC = () => {
                 Don’t have other resumes on your board?{' '}
                 <span>
                   <span
+                    role="button"
+                    tabIndex={0}
                     onClick={handleUploadClick}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleUploadClick();
+                      }
+                    }}
                     className="font-medium underline decoration-solid decoration-[1px] decoration-offset-[0%] cursor-pointer"
                   >
                     Upload another

@@ -133,13 +133,20 @@ const handleExperienceLevelToggle = (level:string) => {
                 filteredOptions.map((option) => (
                   <div
                     key={option}
+                    role="button"
+                    tabIndex={0}
                     className={cn(
                       "cursor-pointer flex items-center justify-between p-2 rounded-md hover:bg-gray-100 transition"
                     )}
                     onClick={() => handleSelect(option)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault(); // Prevent any default actions
+                        handleSelect(option);
+                        }
+                    }}
                   >
                     {option}
-                    {/* <Check className="h-4 w-4 text-blue-500" /> */}
                   </div>
                 ))
               ) : (
@@ -179,11 +186,19 @@ const handleExperienceLevelToggle = (level:string) => {
                     {jobTypes.map((type) => (
                         <div
                         key={type}
+                        role="button"
+                        tabIndex={0}
                         className={cn(
                             "flex items-center transition cursor-pointer w-[149px] h-[30px] rounded-[8px] gap-[7px] p-[8px]",
                             selectedJobTypes.includes(type) ? "bg-[#E6F0FB]" : "bg-[#f8f8f8]"
                         )}
                         onClick={() => handleJobTypeToggle(type)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault(); // Prevent any default actions
+                            handleJobTypeToggle(type);
+                            }
+                        }}
                         >
                         <Checkbox checked={selectedJobTypes.includes(type)}  />
                         <span className="font-[Gabarito] font-normal text-[10px] leading-[12px] tracking-[0px] text-black">{type}</span>
@@ -202,11 +217,19 @@ const handleExperienceLevelToggle = (level:string) => {
                     {workModels.map((model) => (
                         <div
                         key={model}
+                        role="button"
+                        tabIndex={0}
                         className={cn(
                             "flex items-center transition cursor-pointer w-[149px] h-[30px] rounded-[8px] gap-[7px] p-[8px]",
                             selectedWorkModels.includes(model) ? "bg-[#E6F0FB]" : "bg-[#f8f8f8]"
                         )}
                         onClick={() => handleWorkModelToggle(model)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault(); // Prevent any default actions
+                            handleWorkModelToggle(model);
+                            }
+                        }}
                         >
                         <Checkbox checked={selectedWorkModels.includes(model)} />
                         <span className="font-[Gabarito] font-normal text-[10px] leading-[12px] tracking-[0px] text-black">{model}</span>
@@ -301,11 +324,19 @@ const handleExperienceLevelToggle = (level:string) => {
                     {experienceLevel.map((level) => (
                         <div
                         key={level}
+                        role="button"
+                        tabIndex={0}
                         className={cn(
                             "flex items-center transition cursor-pointer w-[149px] h-[30px] rounded-[8px] gap-[7px] p-[8px]",
                             selectedExperienceLevel.includes(level) ? "bg-[#E6F0FB]" : "bg-[#f8f8f8]"
                         )}
                         onClick={() => handleExperienceLevelToggle(level)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault(); // Prevent any default actions
+                            handleExperienceLevelToggle(level);
+                            }
+                        }}
                         >
                         <Checkbox checked={selectedExperienceLevel.includes(level)} />
                         <span className="font-[Gabarito] font-normal text-[10px] leading-[12px] tracking-[0px] text-black">{level}</span>
