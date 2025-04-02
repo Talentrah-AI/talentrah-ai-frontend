@@ -1,21 +1,19 @@
-
 'use client';
 
 import { useState } from "react";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-
-interface FieldProps {
-    name: string;
-    placeholder: string;
-    type: string;
-    label: string;
-    required?: boolean;
-}
+import { AppForm, WorkExperienceFieldPath } from "../shadcnFolder/props/types";
 
 interface FormTextareaFieldProps {
-    form: any;
-    field: FieldProps;
+    form: AppForm;
+    field: {
+        name: WorkExperienceFieldPath;
+        placeholder: string;
+        type: string;
+        label: string;
+        required?: boolean;
+    };
 }
 
 export const FormTextareaField = ({ form, field }: FormTextareaFieldProps) => {
@@ -36,16 +34,17 @@ export const FormTextareaField = ({ form, field }: FormTextareaFieldProps) => {
                     <FormControl>
                         <Textarea
                             placeholder={field.placeholder}
-                            {...formField}
+                            value={formField.value as string} // Explicitly type as string
+                            onChange={(e) => formField.onChange(e.target.value)}
                             onFocus={() => setIsFocused(true)}
                             onBlur={() => {
                                 setIsFocused(false);
                                 formField.onBlur();
                             }}
-                            className="rounded-md border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 min-h-[120px]"
+                            className="rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 min-h-[120px]"
                         />
                     </FormControl>
-                    <FormMessage className="text-xs text-red-500" />
+                    <FormMessage className="text-xs text-red-500 border-none" />
                 </FormItem>
             )}
         />

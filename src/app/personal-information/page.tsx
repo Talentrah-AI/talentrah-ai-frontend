@@ -285,14 +285,14 @@ export default function PersonalInformation() {
 
                                     <div className="flex flex-col sm:flex-row justify-center gap-3 w-full text-xs">
                                         <button
-                                            className="text-blue-600 border border-blue-600 bg-transparent cursor-pointer w-full sm:w-[120px] px-4 py-1.5 rounded-2xl"
+                                            className="text-blue-600 border border-blue-600 bg-transparent cursor-pointer w-full sm:w-[120px] px-4 py-2 rounded-2xl"
                                             onClick={handleSaveAndExit}
                                         >
                                             Save & Exit
                                         </button>
 
                                         <Link href="/work-experience" className="w-full sm:w-auto">
-                                            <button className="bg-[#CEE1F6] rounded-2xl cursor-pointer w-full sm:w-[120px] px-4 py-1.5">
+                                            <button className="bg-[#CEE1F6] rounded-2xl cursor-pointer w-full sm:w-[120px] px-4 py-2">
                                                 Next
                                             </button>
                                         </Link>

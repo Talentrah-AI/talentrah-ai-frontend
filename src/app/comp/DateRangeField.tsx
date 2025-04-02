@@ -1,15 +1,21 @@
 'use client';
 
 import { FormInputField } from "./FormInputField";
+import { AppForm } from "../shadcnFolder/props/types";
 
 interface DateRangeFieldsProps {
-    form: any;
-    index?: number;
+    form: AppForm;
+    index: number; // Changed from optional to required
 }
 
-export const DateRangeField = ({ form, index = 0 }: DateRangeFieldsProps) => {
-    const prefix = index !== undefined ? `workExperiences.${index}.` : '';
-    const isCurrentJob = form.watch(`${prefix}currentJob`);
+export const DateRangeField = ({ form, index }: DateRangeFieldsProps) => {
+    // Explicitly type the field names
+    const currentJobFieldName = `workExperiences.${index}.currentJob` as const;
+    const startDateFieldName = `workExperiences.${index}.startDate` as const;
+    const endDateFieldName = `workExperiences.${index}.endDate` as const;
+
+    // Watch the currentJob field with proper typing
+    const isCurrentJob = form.watch(currentJobFieldName);
 
     return (
         <div className="lg:grid grid-cols-2 gap-4">
@@ -17,7 +23,7 @@ export const DateRangeField = ({ form, index = 0 }: DateRangeFieldsProps) => {
                 <FormInputField
                     form={form}
                     field={{
-                        name: `${prefix}startDate`,
+                        name: startDateFieldName,
                         placeholder: "Choose date",
                         type: "date",
                         label: "From",
@@ -29,7 +35,7 @@ export const DateRangeField = ({ form, index = 0 }: DateRangeFieldsProps) => {
                 <FormInputField
                     form={form}
                     field={{
-                        name: `${prefix}endDate`,
+                        name: endDateFieldName,
                         placeholder: "Choose date",
                         type: "date",
                         label: "To",

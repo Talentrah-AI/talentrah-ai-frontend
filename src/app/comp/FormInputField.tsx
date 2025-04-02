@@ -1,21 +1,19 @@
-
 'use client';
 
 import { useState } from "react";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-interface FieldProps {
-    name: string;
-    placeholder: string;
-    type: string;
-    label: string;
-    required?: boolean;
-}
+import { AppForm, WorkExperienceFieldPath } from "../shadcnFolder/props/types";
 
 interface FormInputFieldProps {
-    form: any;
-    field: FieldProps;
+    form: AppForm;
+    field: {
+        name: WorkExperienceFieldPath;
+        placeholder: string;
+        type: string;
+        label: string;
+        required?: boolean;
+    };
 }
 
 export const FormInputField = ({ form, field }: FormInputFieldProps) => {
@@ -29,23 +27,25 @@ export const FormInputField = ({ form, field }: FormInputFieldProps) => {
                 <FormItem>
                     <div className="flex justify-between">
                         <FormLabel className="text-sm font-medium">
-                            {field.label} 
+                            {field.label}
                         </FormLabel>
                         {isFocused && <span className="text-xs text-gray-400">{field.required ? 'Required' : 'Optional'}</span>}
                     </div>
                     <FormControl>
                         <Input
                             placeholder={field.placeholder}
-                            {...formField}
+                            type={field.type}
+                            value={formField.value as string} // Explicitly type as string
+                            onChange={(e) => formField.onChange(e.target.value)}
                             onFocus={() => setIsFocused(true)}
                             onBlur={() => {
                                 setIsFocused(false);
                                 formField.onBlur();
                             }}
-                            className="rounded-md border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                            className=""
                         />
                     </FormControl>
-                    <FormMessage className="text-xs text-red-500" />
+                    <FormMessage className="text-xs border-none" />
                 </FormItem>
             )}
         />

@@ -81,7 +81,7 @@ export function AdditionalFields({ onCustomFieldsChange }: AdditionalFieldsProps
                     <h3 className="text-sm font-medium text-gray-500 mb-4">Custom Fields</h3>
 
                     <div className="space-y-4">
-                        {customFields.map((field, index) => (
+                        {customFields.map((field) => (
                             <div key={field.name} className="space-y-2">
                                 <div className="relative bg-white p-4 rounded-lg border border-gray-100 shadow-sm mb-2">
                                     <div className="flex justify-between items-center mb-2">
@@ -116,7 +116,7 @@ export function AdditionalFields({ onCustomFieldsChange }: AdditionalFieldsProps
             <button
                 type="button"
                 onClick={addCustomField}
-                className="w-full py-3 px-4 border-2 border-dashed border-blue-200 rounded-lg text-blue-600 hover:bg-blue-50 hover:border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all duration-200 flex items-center justify-center space-x-2"
+                className="w-full py-2 px-4 border-2 border-dashed border-blue-200 rounded-lg text-blue-600 hover:bg-blue-50 hover:border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all duration-200 flex items-center justify-center space-x-2"
             >
                 <PlusIcon size={18} />
                 <span className="font-medium">Add custom fields</span>

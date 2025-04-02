@@ -1,22 +1,21 @@
 "use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { LockKeyhole } from "lucide-react"
-import { LoadingSpinner } from "./loading-spinner"
+import { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { LockKeyhole } from "lucide-react";
+import { LoadingSpinner } from "./loading-spinner";
 
 interface TemplateCardProps {
-    id: string
-    image: string
-    lock?: string
-    type: "free" | "premium"
+    id: string;
+    image: string;
+    lock?: string;
+    type: "free" | "premium";
 }
 
 export function TemplateCard({ id, image, lock, type }: TemplateCardProps) {
-    const router = useRouter()
-    const [isLoading, setIsLoading] = useState(false)
-    const [imageLoading, setImageLoading] = useState(true)
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleSelect = () => {
         if (lock) {
@@ -42,7 +41,7 @@ export function TemplateCard({ id, image, lock, type }: TemplateCardProps) {
                     alt={`${type === "premium" ? "Premium" : "Free"} Template ${id}`}
                     fill
                     className="object-cover"
-                    onLoad={() => setImageLoading(false)}
+                    priority={true}  // Added priority for better loading
                 />
                 {lock && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/80">
@@ -51,5 +50,5 @@ export function TemplateCard({ id, image, lock, type }: TemplateCardProps) {
                 )}
             </div>
         </div>
-    )
+    );
 }

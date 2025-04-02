@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown, Settings, User, Plus, LayoutGrid, Bell, Search, Phone, MessageSquare, Crown, BriefcaseBusiness, Grid2x2, Globe, ChevronLeft, Bold, Italic, Underline, AlignJustify, AlignCenter, Gem, Folders, FileDown } from "lucide-react";
+import { ChevronDown, Settings, User, Plus, LayoutGrid, Bell, Search, Phone, MessageSquare, Crown, BriefcaseBusiness, Grid2x2, Globe, ChevronLeft, Bold, Italic, Underline, AlignJustify, AlignCenter, Folders, FileDown } from "lucide-react";
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
@@ -308,12 +308,14 @@ export default function UserCoverLetter() {
                                         </p>
 
                                         <p className="text-gray-700 mb-4">
-                                            In my current role at ProDews, I have successfully collaborated with cross-functional teams to deliver exceptional designs that prioritize user experience and drive business success. I have also actively contributed to the development of the company's design system, ensuring consistency and scalability across multiple projects.
+                                            In my current role at ProDews, I have successfully collaborated with cross-functional teams to deliver exceptional designs that prioritize user experience and drive business success. I have also actively contributed to the development of the company&apos;s design system, ensuring consistency and scalability across multiple projects.
                                         </p>
 
+
                                         <p className="text-gray-700 mb-4">
-                                            With a Bachelor's degree in Applied Science and certifications in Product, I believe I have the qualifications and expertise to excel in this role. I am proficient in industry standard tools such as Figma and have a deep passion for creating seamless products that elevate user satisfaction.
+                                            With a Bachelor&apos;s degree in Applied Science and certifications in Product, I believe I have the qualifications and expertise to excel in this role. I am proficient in industry-standard tools such as Figma and have a deep passion for creating seamless products that elevate user satisfaction.
                                         </p>
+
 
                                         <p className="text-gray-700 mb-4">
                                             I am confident that my skills and experience make me a strong candidate for this position. I am eager to bring my creative vision and problem-solving abilities to your team and contribute to the success of your projects. Thank you for considering my application.

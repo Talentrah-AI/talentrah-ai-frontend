@@ -374,7 +374,8 @@ const WorkExperience = () => {
                                             </div>
 
                                             {/* Flex container for form fields and image */}
-                                            <div className="flex flex-col lg:flex-row justify-between gap-4">
+
+                                            <div className="flex flex-wrap justify-center lg:justify-between gap-4 w-full">
                                                 <div className="w-[90%] lg:w-[60%]">
                                                     <WorkExperienceEntry
                                                         form={form}
@@ -389,15 +390,16 @@ const WorkExperience = () => {
                                                             alt="image"
                                                             width={250}
                                                             height={50}
-                                                            className=" md:w-auto"
+                                                            className="md:w-auto"
                                                         />
                                                     </div>
                                                 )}
                                             </div>
+
                                         </div>
                                     ))}
 
-                                    <div className="border border-dashed border-blue-300 rounded-lg p-4 mt-8 flex items-center justify-center flex-col hover:bg-blue-50 transition-colors cursor-pointer w-full lg:w-[60%]  ">
+                                    <div className="border border-dashed border-blue-300 rounded-lg p-3 mt-8 flex items-center justify-center flex-col hover:bg-blue-50 transition-colors cursor-pointer w-full lg:w-[60%]  ">
                                         <button
                                             type="button"
                                             onClick={addWorkExperience}

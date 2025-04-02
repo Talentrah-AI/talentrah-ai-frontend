@@ -1,30 +1,32 @@
-
 'use client';
 
 import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
+import { AppForm } from "../shadcnFolder/props/types";
 
 interface CurrentJobCheckboxProps {
-    form: any;
-    index?: number;
+    form: AppForm;
+    index: number; // Changed from optional to required since it's always provided
 }
 
-export const CurrentJobCheckbox = ({ form, index = 0 }: CurrentJobCheckboxProps) => {
-    const prefix = index !== undefined ? `workExperiences.${index}.` : '';
+export const CurrentJobCheckbox = ({ form, index }: CurrentJobCheckboxProps) => {
+    // Explicitly type the field name
+    const currentJobFieldName = `workExperiences.${index}.currentJob` as const;
+    const endDateFieldName = `workExperiences.${index}.endDate` as const;
 
     return (
         <FormField
             control={form.control}
-            name={`${prefix}currentJob`}
+            name={currentJobFieldName}
             render={({ field }) => (
                 <FormItem className="flex items-center space-x-2 space-y-0">
                     <FormControl>
                         <Checkbox
-                            checked={field.value}
-                            onCheckedChange={(checked) => {
+                            checked={field.value as boolean} // Explicitly type as boolean
+                            onCheckedChange={(checked: boolean) => {
                                 field.onChange(checked);
                                 if (checked) {
-                                    form.setValue(`${prefix}endDate`, '', { shouldValidate: true });
+                                    form.setValue(endDateFieldName, '', { shouldValidate: true });
                                 }
                             }}
                         />

@@ -5,15 +5,14 @@ import { FormInputField } from "./FormInputField";
 import { DateRangeField } from "./DateRangeField";
 import { CurrentJobCheckbox } from "./CurrentJobCheckbox";
 import { FormTextareaField } from "./FormTexatareaField";
+import { AppForm } from "../shadcnFolder/props/types";
 
 interface WorkExperienceEntryProps {
-    form: any;
+    form: AppForm;
     index: number;
 }
 
 export const WorkExperienceEntry = ({ form, index }: WorkExperienceEntryProps) => {
-    console.log("Index received in WorkExperienceEntry:", index);
-
     return (
         <div className="space-y-4">
             <FormInputField

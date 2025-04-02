@@ -1,31 +1,31 @@
 'use client';
 
 import { FormInputField } from "./FormInputField";
+import { AppForm, getWorkExperienceFieldName } from "../shadcnFolder/props/types";
 
 interface JobTitleStateFieldsProps {
-    form: any;
+    form: AppForm;
     index?: number;
 }
 
 export const JobTitleStateField = ({ form, index = 0 }: JobTitleStateFieldsProps) => {
-    const prefix = index !== undefined ? `workExperiences.${index}.` : '';
-
     return (
         <div className="lg:grid grid-cols-2 gap-4">
             <FormInputField
                 form={form}
                 field={{
-                    name: `${prefix}jobtitle`,
-                    placeholder: "Enter your job role",
+                    name: getWorkExperienceFieldName(index, 'jobtitle'),
+                    placeholder: "Enter job title",
                     type: "text",
-                    label: "Job title",
+                    label: "Job Title",
                     required: true
                 }}
             />
+
             <FormInputField
                 form={form}
                 field={{
-                    name: `${prefix}state`,
+                    name: getWorkExperienceFieldName(index, 'state'),
                     placeholder: "Enter state",
                     type: "text",
                     label: "State",

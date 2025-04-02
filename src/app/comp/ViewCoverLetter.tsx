@@ -46,21 +46,24 @@ export function ViewCoverLetter({ open, onOpenChange }: CoverLetterProps) {
 
                         <p>
                             In my current role at ProDews, I have successfully collaborated with cross-functional teams to deliver exceptional designs that prioritize user experience and drive business success.
-                            I have also actively contributed to the development of the company's design system, ensuring consistency and scalability across multiple projects.
+                            I have also actively contributed to the development of the company&apos;s design system, ensuring consistency and scalability across multiple projects.
                         </p>
 
                         <p>
-                            With a Bachelor's degree in Applied Science and certifications in Product, I believe I have the qualifications and expertise to excel in this role.
-                            I am proficient in industry standard tools such as Figma and have a deep passion for creating seamless products that elevate user satisfaction.
+                            With a Bachelor&apos;s degree in Applied Science and certifications in Product, I believe I have the qualifications and expertise to excel in this role.
+                            I am proficient in industry-standard tools such as Figma and have a deep passion for creating seamless products that elevate user satisfaction.
                         </p>
 
-                        <p>I am confident that my skills and experience make me a strong candidate for this position. I am eager to bring my creative vision and problem-solving abilities
-                            to your team and contribute to the success of your projects. Thank you for considering my application.</p>
+                        <p>
+                            I am confident that my skills and experience make me a strong candidate for this position. I am eager to bring my creative vision and problem-solving abilities
+                            to your team and contribute to the success of your projects. Thank you for considering my application.
+                        </p>
 
                         <p className='mt-3'>Sincerely,</p>
 
                         <p>Meere Dan</p>
                     </div>
+
                 </div>
 
                 <div className="mt-6 flex gap-4">

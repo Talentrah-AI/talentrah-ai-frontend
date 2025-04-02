@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -22,7 +21,7 @@ export function UploadResumeModal({ onFileSelect, open, onOpenChange, onContinue
         if (event.target.files && event.target.files[0]) {
             const selectedFile = event.target.files[0];
             setFile(selectedFile);
-            simulateUpload(selectedFile);
+            startUploadProgress();
 
             if (onFileSelect) {
                 onFileSelect(selectedFile);
@@ -30,7 +29,7 @@ export function UploadResumeModal({ onFileSelect, open, onOpenChange, onContinue
         }
     };
 
-    const simulateUpload = (selectedFile: File) => {
+    const startUploadProgress = () => {
         setIsUploading(true);
         setProgress(0);
 

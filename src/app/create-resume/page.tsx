@@ -19,7 +19,7 @@ export default function UserCreatedResume() {
     const [showUploadModal, setShowUploadModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [showNextModal, setShowNextModal] = useState(false);
+    // const [showNextModal, setShowNextModal] = useState(false);
     const [selectedOption, setSelectedOption] = useState('Date created');
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -37,7 +37,7 @@ export default function UserCreatedResume() {
 
     const handleUploadContinue = () => {
         setShowUploadModal(false); // Close upload modal
-        setShowNextModal(true); // Open next modal
+        // setShowNextModal(true); 
     };
 
     const options = [

@@ -22,10 +22,6 @@ export default function Dashboard() {
         }
     }
 
-    const handleIndex = () => {
-        handlePageChange(currentPage + 1)
-    }
-
     const options = [
         'Show all templates',
         'Accounting/Finance',

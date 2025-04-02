@@ -2,6 +2,7 @@
 
 import React from "react";
 import { CloudDownload, X } from 'lucide-react';
+import Image from "next/image";
 
 type ModalImageCvProps = {
     isOpen: boolean;
@@ -33,11 +34,14 @@ export function UpLoadCvImage({ isOpen, onClose, imageUrl }: ModalImageCvProps) 
 
                 {/* Image Container - Scrollable if needed */}
                 <div className="max-h-[70vh] overflow-auto p-2">
-                    <img
+                    <Image
                         src={imageUrl}
                         alt="Resume preview"
+                        width={800}  // Set appropriate width
+                        height={1000} // Set appropriate height
                         className="w-full h-auto rounded-sm"
-                        style={{ minWidth: '100%' }} // Prevents image from shrinking
+                        style={{ minWidth: '100%' }}
+                        priority={true} // If this image is above the fold
                     />
                 </div>
 

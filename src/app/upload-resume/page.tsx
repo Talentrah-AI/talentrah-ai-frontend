@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown, Settings, User, Plus, LayoutGrid, Bell, Search, Phone, MessageSquare, Crown, BriefcaseBusiness, Grid2x2, Globe, ChevronLeft, Bold, Italic, Underline, AlignJustify, AlignCenter, Gem, Folders, FileDown } from "lucide-react";
+import { ChevronDown, Settings, User, Plus, LayoutGrid, Bell, Search, Phone, MessageSquare, Crown, BriefcaseBusiness, Grid2x2, Globe, ChevronLeft, Bold, Italic, Underline, AlignJustify, AlignCenter} from "lucide-react";
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';

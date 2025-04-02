@@ -1,4 +1,3 @@
-
 'use client';
 
 import { format } from "date-fns";
@@ -10,80 +9,76 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { UseFormReturn } from "react-hook-form";
+import {
+    UseFormReturn,
+    Path,
+    Control,
+    FieldValues,
+    FieldPath,
+    FieldError,
+    ControllerRenderProps,
+} from "react-hook-form";
 import { useState } from "react";
+import { WorkExperienceFormValues } from "../shadcnFolder/props/types";
 
-interface FieldConfig {
-    name: string;
+// Base field configuration
+interface FieldConfig<T extends FieldValues> {
+    name: Path<T>;
     placeholder: string;
     type: string;
     label: string;
     required?: boolean;
 }
 
-interface FormFieldProps {
-    form: UseFormReturn<any>;
-    field: FieldConfig;
+// Form field props
+interface FormFieldProps<T extends FieldValues> {
+    form: UseFormReturn<T>;
+    field: FieldConfig<T>;
     isGrouped?: boolean;
 }
 
-export function DatePickerField({ form, fieldName, label, placeholder }: { form: UseFormReturn<any>; fieldName: string; label: string; placeholder: string }) {
-    return (
-        <FormField
-            control={form.control}
-            name={fieldName}
-            render={({ field }) => (
-                <FormItem className="flex-1">
-                    <FormLabel className="text-sm font-medium text-gray-700">
-                        {label}
-                        {fieldName === "start" || fieldName === "end" ? <span className="text-red-500 ml-1">*</span> : null}
-                    </FormLabel>
-                    <Popover>
-                        <PopoverTrigger asChild>
-                            <FormControl>
-                                <Button
-                                    variant="outline"
-                                    className={cn(
-                                        "w-full pl-3 text-left font-normal border border-gray-300 h-10 hover:bg-transparent hover:text-black",
-                                        !field.value && "text-muted-foreground"
-                                    )}
-                                >
-                                    {field.value ? (
-                                        field.value === "Present" ? "Present" : format(new Date(field.value), "MMM dd, yyyy")
-                                    ) : (
-                                        <span className="text-gray-400">{placeholder}</span>
-                                    )}
-                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                </Button>
-                            </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 animate-fade-in" align="start">
-                            <Calendar
-                                mode="single"
-                                selected={field.value && field.value !== "Present" ? new Date(field.value) : undefined}
-                                onSelect={(date) => field.onChange(date ? format(date, "yyyy-MM-dd") : "")}
-                                initialFocus
-                                className="rounded-md shadow-lg pointer-events-auto"
-                            />
-                        </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                </FormItem>
-            )}
-        />
-    );
+// Type-safe FormField wrapper props
+interface TypeSafeFormFieldProps<T extends FieldValues> {
+    control: Control<T>;
+    name: FieldPath<T>;
+    render: (props: {
+        field: ControllerRenderProps<T, FieldPath<T>>;
+        fieldState: {
+            error?: FieldError;
+        };
+    }) => React.ReactElement;
 }
 
-export function FormInputField({ form, field, isGrouped = false }: FormFieldProps) {
+// Type-safe FormField wrapper
+const TypeSafeFormField = <T extends FieldValues>({
+    control,
+    name,
+    render,
+}: TypeSafeFormFieldProps<T>) => {
     return (
         <FormField
+            control={control}
+            name={name}
+            render={({ field, fieldState }) => render({ field, fieldState })}
+        />
+    );
+};
+
+// Generic Input Field
+export function FormInputField<T extends FieldValues>({
+    form,
+    field,
+    isGrouped = false
+}: FormFieldProps<T>) {
+    return (
+        <TypeSafeFormField
             control={form.control}
             name={field.name}
             render={({ field: inputField }) => (
                 <FormItem className={isGrouped ? "flex-1" : "w-full"}>
                     <FormLabel className="text-sm font-medium text-gray-700">
                         {field.label}
-                        {/* {field.required && <span className="text-red-500 ml-1">*</span>} */}
+                        {field.required && <span className="text-red-500 ml-1">*</span>}
                     </FormLabel>
                     <FormControl>
                         <Input
@@ -100,52 +95,60 @@ export function FormInputField({ form, field, isGrouped = false }: FormFieldProp
     );
 }
 
-export function FormTextareaField({ form, field }: FormFieldProps) {
+// Date Picker Field props
+interface DatePickerFieldProps<T extends FieldValues> {
+    form: UseFormReturn<T>;
+    fieldName: FieldPath<T>;
+    label: string;
+    placeholder: string;
+}
+
+// Date Picker Field
+export function DatePickerField<T extends FieldValues>({
+    form,
+    fieldName,
+    label,
+    placeholder
+}: DatePickerFieldProps<T>) {
     return (
-        <FormField
+        <TypeSafeFormField
             control={form.control}
-            name={field.name}
-            render={({ field: textareaField }) => (
-                <FormItem className="w-full">
+            name={fieldName}
+            render={({ field }) => (
+                <FormItem className="flex-1">
                     <FormLabel className="text-sm font-medium text-gray-700">
-                        {field.label}
-                        {field.required && <span className="text-red-500 ml-1">*</span>}
+                        {label}
+                        <span className="text-red-500 ml-1">*</span>
                     </FormLabel>
-                    <FormControl>
-                        <div className="border border-gray-300 rounded-md hover:border-gray-400 transition-colors">
-                            <div className="flex border-b border-gray-200 p-1.5 bg-gray-50">
-                                <button type="button" className="p-1 text-gray-500 hover:text-gray-700 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z" /></svg>
-                                </button>
-                                <button type="button" className="p-1 text-gray-500 hover:text-gray-700 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 7V4h16v3" /><path d="M9 20h6" /><path d="M12 4v16" /></svg>
-                                </button>
-                                <button type="button" className="p-1 text-gray-500 hover:text-gray-700 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3" /></svg>
-                                </button>
-                                <button type="button" className="p-1 text-gray-500 hover:text-gray-700 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3" /><path d="M4 21h16" /></svg>
-                                </button>
-                                <button type="button" className="p-1 text-gray-500 hover:text-gray-700 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 8H3" /><path d="M21 12H3" /><path d="M21 16H3" /></svg>
-                                </button>
-                                <button type="button" className="p-1 text-gray-500 hover:text-gray-700 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 12H3" /><path d="M16 6H3" /><path d="M16 18H3" /><path d="M21 12h-4" /><path d="M21 6h-4" /><path d="M21 18h-4" /></svg>
-                                </button>
-                                <button type="button" className="p-1 text-gray-500 hover:text-gray-700 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" /><path d="M17 17h-3.5a2.5 2.5 0 0 1 0-5H20" /><path d="M22 12h-3" /></svg>
-                                </button>
-                                <button type="button" className="p-1 text-gray-500 hover:text-gray-700 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" x2="4" y1="22" y2="15" /></svg>
-                                </button>
-                            </div>
-                            <textarea
-                                className="w-full p-3 h-24 border-0 focus:ring-0 focus:outline-none resize-none"
-                                placeholder={field.placeholder}
-                                {...textareaField}
-                            ></textarea>
-                        </div>
-                    </FormControl>
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <FormControl>
+                                <Button
+                                    variant="outline"
+                                    className={cn(
+                                        "w-full pl-3 text-left font-normal border border-gray-300 h-10 hover:bg-transparent hover:text-black",
+                                        !field.value && "text-muted-foreground"
+                                    )}
+                                >
+                                    {field.value ? (
+                                        field.value === "Present" ? "Present" : format(new Date(field.value as string), "MMM dd, yyyy")
+                                    ) : (
+                                        <span className="text-gray-400">{placeholder}</span>
+                                    )}
+                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                </Button>
+                            </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 animate-fade-in" align="start">
+                            <Calendar
+                                mode="single"
+                                selected={field.value && field.value !== "Present" ? new Date(field.value as string) : undefined}
+                                onSelect={(date) => field.onChange(date ? format(date, "yyyy-MM-dd") : "")}
+                                initialFocus
+                                className="rounded-md shadow-lg pointer-events-auto"
+                            />
+                        </PopoverContent>
+                    </Popover>
                     <FormMessage />
                 </FormItem>
             )}
@@ -153,18 +156,55 @@ export function FormTextareaField({ form, field }: FormFieldProps) {
     );
 }
 
-export function DateRangeFields({ form }: { form: UseFormReturn<any> }) {
+// Work Experience Field Props
+interface WorkExperienceFieldProps {
+    form: UseFormReturn<WorkExperienceFormValues>;
+    index?: number;
+}
+
+// Job Title and State Fields
+export function JobTitleStateFields({ form, index = 0 }: WorkExperienceFieldProps) {
     return (
         <div className="flex gap-4 w-full">
-            <DatePickerField
+            <FormInputField<WorkExperienceFormValues>
                 form={form}
-                fieldName="startDate"
+                field={{
+                    name: `workExperiences.${index}.jobtitle`,
+                    placeholder: "Enter job title",
+                    type: "text",
+                    label: "Job Title",
+                    required: true
+                }}
+                isGrouped={true}
+            />
+            <FormInputField<WorkExperienceFormValues>
+                form={form}
+                field={{
+                    name: `workExperiences.${index}.state`,
+                    placeholder: "Enter state",
+                    type: "text",
+                    label: "State",
+                    required: false
+                }}
+                isGrouped={true}
+            />
+        </div>
+    );
+}
+
+// Date Range Fields
+export function DateRangeFields({ form, index = 0 }: WorkExperienceFieldProps) {
+    return (
+        <div className="flex gap-4 w-full">
+            <DatePickerField<WorkExperienceFormValues>
+                form={form}
+                fieldName={`workExperiences.${index}.startDate`}
                 label="From"
                 placeholder="Choose date"
             />
-            <DatePickerField
+            <DatePickerField<WorkExperienceFormValues>
                 form={form}
-                fieldName="endDate"
+                fieldName={`workExperiences.${index}.endDate`}
                 label="To"
                 placeholder="Choose date"
             />
@@ -172,27 +212,28 @@ export function DateRangeFields({ form }: { form: UseFormReturn<any> }) {
     );
 }
 
-export function CurrentJobCheckbox({ form }: { form: UseFormReturn<any> }) {
+// Current Job Checkbox
+export function CurrentJobCheckbox({ form, index = 0 }: WorkExperienceFieldProps) {
     const [isCurrentJob, setIsCurrentJob] = useState(false);
 
-    const handleCheckboxChange = (checked: boolean | string) => {
-        setIsCurrentJob(!!checked);
+    const handleCheckboxChange = (checked: boolean) => {
+        setIsCurrentJob(checked);
         if (checked) {
-            form.setValue("endDate", "Present");
+            form.setValue(`workExperiences.${index}.endDate`, "Present");
         } else {
-            form.setValue("endDate", "");
+            form.setValue(`workExperiences.${index}.endDate`, "");
         }
     };
 
     return (
         <div className="flex items-center space-x-2 mt-2">
             <Checkbox
-                id="currentJob"
+                id={`currentJob-${index}`}
                 checked={isCurrentJob}
                 onCheckedChange={handleCheckboxChange}
             />
             <label
-                htmlFor="currentJob"
+                htmlFor={`currentJob-${index}`}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
                 I currently work here
@@ -201,23 +242,7 @@ export function CurrentJobCheckbox({ form }: { form: UseFormReturn<any> }) {
     );
 }
 
-export function JobTitleStateFields({ form }: { form: UseFormReturn<any> }) {
-    return (
-        <div className="flex gap-4 w-full">
-            <FormInputField
-                form={form}
-                field={{ name: "jobtitle", placeholder: "Enter your job title", type: "text", label: "Job title", required: true }}
-                isGrouped={true}
-            />
-            <FormInputField
-                form={form}
-                field={{ name: "state", placeholder: "Enter state", type: "text", label: "State", required: false }}
-                isGrouped={true}
-            />
-        </div>
-    );
-}
-
+// Submit Button
 export function SubmitButton() {
     return (
         <Button

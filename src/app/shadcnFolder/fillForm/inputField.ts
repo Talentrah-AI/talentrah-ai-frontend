@@ -1,9 +1,9 @@
 
 'use client'
 
-import { database } from "../userForm/type"
+import { Field } from "../userForm/type"
 
-const fields: database[] = [
+const fields: Field[] = [
     {
         name: 'firstname',
         type: 'text',
