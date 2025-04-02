@@ -5,6 +5,7 @@ import { Search } from 'lucide-react';
 import { mockJobs } from '@/components/data/mockJobs';
 import { savedJobs } from '@/components/data/savedJobs';
 import { draftJobs } from '@/components/data/draftJobs';
+import Image from 'next/image';
 import {
   Select,
   SelectTrigger,
@@ -12,6 +13,7 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/ui/select2';
+import { Job } from '@/types/Jobs';
 
 interface Tab {
   id: string;
@@ -21,9 +23,9 @@ interface Tab {
 interface TabNavigationProps {
   onSearch?: (query: string) => void;
   onFilter?: (value: string) => void;
-  setFilteredJobs: (jobs: any[]) => void;
-  setTabJobs: (jobs: any[]) => void;
-  tabJobs: any[];
+  setFilteredJobs: (jobs: Job[]) => void;
+  setTabJobs: (jobs: Job[]) => void;
+  tabJobs: Job[];
 }
 
 const TabNavigation: React.FC<TabNavigationProps> = ({
@@ -34,7 +36,6 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState('applied');
   const [searchQuery, setSearchQuery] = useState('');
-
   const [filter, setFilter] = useState('All');
 
   const tabs: Tab[] = [
@@ -42,8 +43,8 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
     { id: 'saved', label: 'Saved jobs' },
     { id: 'draft', label: 'Draft' },
   ];
+
   useEffect(() => {
-    // Update tabJobs whenever activeTab changes
     if (activeTab === 'applied') {
       setTabJobs(mockJobs);
     } else if (activeTab === 'saved') {
@@ -51,7 +52,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
     } else if (activeTab === 'draft') {
       setTabJobs(draftJobs);
     }
-  }, [activeTab]);
+  }, [activeTab, setTabJobs]);
 
   useEffect(() => {
     const filtered = tabJobs.filter((job) => {
@@ -67,7 +68,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
     });
 
     setFilteredJobs(filtered);
-  }, [searchQuery, filter, tabJobs]);
+  }, [searchQuery, filter, tabJobs, setFilteredJobs]);
 
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 text-[#414A53]">
@@ -87,10 +88,9 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
         ))}
       </div>
 
-      <div className="flex w-[438px]  gap-4">
+      <div className="flex w-[438px] gap-4">
         <div className="flex items-center w-[438px] h-[32px] gap-1 text-sm border-none rounded-lg focus:outline-none !important focus:border-none bg-white rounded-[12px] focus:ring-0">
-          <Search className="  h-4 w-4 text-gray-400 m-[5px]" />
-          {/* <img src="/icons/search.png" alt="" /> */}
+          <Search className="h-4 w-4 text-gray-400 m-[5px]" />
           <input
             type="text"
             placeholder="Search"
@@ -99,13 +99,12 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
               setSearchQuery(e.target.value);
               onSearch?.(e.target.value);
             }}
-            className="  h-[32px] bg-white focus:border-none "
+            className="h-[32px] bg-white focus:border-none"
           />
         </div>
 
-        <div className="relative flex items-center text-sm border-none rounded-lg px-3 py-2 bg-white  w-[120px] h-[32px] overflow-hidden">
-          <img src="/icons/filter.png" alt="Filter" className="h-4 w-4 mr-2" />
-
+        <div className="relative flex items-center text-sm border-none rounded-lg px-3 py-2 bg-white w-[120px] h-[32px] overflow-hidden">
+          <Image src="/icons/filter.png" alt="icon" width={16} height={16} />
           <Select
             onValueChange={(value) => setFilter(value)}
             defaultValue="All"
@@ -113,14 +112,9 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
             <SelectTrigger>
               <SelectValue>{filter}</SelectValue>
             </SelectTrigger>
-
-            <SelectContent className="text-[#08121D] w-[181px] h-[166px] p-[4px]">
+            <SelectContent>
               {['All', 'Applied with AI', 'Applied manually'].map((option) => (
-                <SelectItem
-                  key={option}
-                  value={option}
-                  className="focus:text-[#08121D] w-[165px] h-[50px] rounded-[12px] border-[0.5px] gap-[10px] pt-[15px] pr-[20px] pb-[15px] pl-[20px] border-none"
-                >
+                <SelectItem key={option} value={option}>
                   {option}
                 </SelectItem>
               ))}

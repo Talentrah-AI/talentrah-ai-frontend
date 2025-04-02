@@ -1,26 +1,37 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { mockJobs } from '@/components/data/mockJobs'; // Adjust the path as necessary
-import JobCard from '@/components/JobTrackerCard'; // Adjust the path as necessary
+import React, { useState, useEffect, useCallback } from 'react';
+import { mockJobs } from '@/components/data/mockJobs';
+import JobCard from '@/components/JobTrackerCard';
 import TabNavigation from './TabNavigation';
 import Pagination from './Pagination';
+import { Job } from '@/types/Jobs';
 
 const itemsPerPage = 7;
 
 const JobListView: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [tabJobs, setTabJobs] = useState<any[]>(mockJobs);
-  const [filteredJobs, setFilteredJobs] = useState(tabJobs);
+  const [tabJobs, setTabJobs] = useState<Job[]>(mockJobs);
+  const [filteredJobs, setFilteredJobs] = useState<Job[]>(mockJobs);
+
+  // Memoized functions to prevent re-renders
+  const updateTabJobs = useCallback((jobs: Job[]) => {
+    setTabJobs(jobs);
+  }, []);
+
+  const updateFilteredJobs = useCallback((jobs: Job[]) => {
+    setFilteredJobs(jobs);
+  }, []);
 
   useEffect(() => {
     setFilteredJobs(tabJobs);
     setCurrentPage(1); // Reset to first page when tab changes
   }, [tabJobs]);
 
-  const handleDelete = (id: string) => {
-    setFilteredJobs(filteredJobs.filter((job) => job.id !== id));
-  };
-  // calculate total pages
+  const handleDelete = useCallback((id: string) => {
+    setFilteredJobs((prevJobs) => prevJobs.filter((job) => job.id !== id));
+  }, []);
+
+  // Calculate total pages
   const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
 
   // Get the jobs for the current page
@@ -33,10 +44,10 @@ const JobListView: React.FC = () => {
         <h1 className="font-gabarito font-500 text-[16px] leading-[20px] tracking-[0px] bg-custom text-custom text-black">
           My Jobs
         </h1>
-        <div className=" font-gabarito w-[1132px]">
+        <div className="font-gabarito w-[1132px]">
           <TabNavigation
-            setFilteredJobs={setFilteredJobs}
-            setTabJobs={setTabJobs}
+            setFilteredJobs={updateFilteredJobs} // Memoized function
+            setTabJobs={updateTabJobs} // Memoized function
             tabJobs={tabJobs}
           />
         </div>
@@ -49,7 +60,7 @@ const JobListView: React.FC = () => {
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
-        onPageChange={setCurrentPage} // Pass the function to change the page
+        onPageChange={setCurrentPage}
       />
     </div>
   );

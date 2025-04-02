@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 
 import Image from 'next/image';
-import { MoreVertical } from 'lucide-react';
+
 import { Card } from '@/components/ui/card2';
 import { Button } from '@/components/ui/button2';
 import { Badge } from '@/components/ui/badge2';
