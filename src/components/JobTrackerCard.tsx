@@ -184,7 +184,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
               align="end"
               className="bg-white text-[#08121D] [&>*:not(:last-child)]:border-b [&>*:not(:last-child)]:border-gray-300 border-[0.5px] border-solid border-[#EFF0F2] shadow-[0px_5px_15px_0px_#1B20201A] w-[242px] h-[166px] rounded-[10px] p-[8px]"
             >
-              <DropdownMenuItem>View resume used</DropdownMenuItem>
+              <DropdownMenuItem>View resume ed</DropdownMenuItem>
               <DropdownMenuItem>View cover letter used</DropdownMenuItem>
               <DropdownMenuItem onClick={handleDelete}>
                 Delete job
