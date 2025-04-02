@@ -185,9 +185,13 @@ const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
               align="end"
               className="bg-white text-[#08121D] [&>*:not(:last-child)]:border-b [&>*:not(:last-child)]:border-gray-300 border-[0.5px] border-solid border-[#EFF0F2] shadow-[0px_5px_15px_0px_#1B20201A] w-[242px] h-[166px] rounded-[10px] p-[8px]"
             >
+<<<<<<< HEAD
               <DropdownMenuItem onClick={() => openModal('resume')}>
                 View resume used
               </DropdownMenuItem>
+=======
+              <DropdownMenuItem>View resume ed</DropdownMenuItem>
+>>>>>>> 0558b91 (implementing the job-tracker page)
               <DropdownMenuItem>View cover letter used</DropdownMenuItem>
               <DropdownMenuItem onClick={handleDelete}>
                 Delete job
