@@ -9,6 +9,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Progress } from '@/components/ui/progress';
 import { toast } from 'sonner';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { useDialog } from '@/context/DialogContext'; // Import the hook
 
 // Sample data - Replace with actual data from your API
 const jobTitles = [
@@ -39,7 +40,6 @@ const locations = [
 export default function JobSetupPage() {
   const [selectedJobTitle, setSelectedJobTitle] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
-  const [isDialogOpen, setIsDialogOpen] = useState(true); // Dialog opens by default
   const router = useRouter();
   const searchParams = useSearchParams();
   const fromJobCard = searchParams.get('fromJobCard') === 'true';
@@ -48,6 +48,12 @@ export default function JobSetupPage() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { isDialogOpen, setIsDialogOpen } = useDialog(); // Use context
+
+  // Open dialog on initial load
+  useEffect(() => {
+    setIsDialogOpen(true);
+  }, [setIsDialogOpen]);
 
   const handleDialogClose = () => {
     setIsDialogOpen(false);
@@ -159,7 +165,7 @@ export default function JobSetupPage() {
       toast.error('Please select your job preference');
       return false;
     }
-    if (!    uploadedFile) {
+    if (!uploadedFile) {
       toast.error('Please upload your resume');
       return false;
     }
@@ -182,7 +188,7 @@ export default function JobSetupPage() {
   return (
     <>
       {isLoading && <LoadingSpinner />}
-      <div className={`h-full overflow-y-auto ${isDialogOpen ? 'blur-sm' : ''}`}>
+      <div className="h-full overflow-y-auto">
         <div className="bg-[#F7F8F9] rounded-[24px] px-6 py-6 max-w-[1300px] w-full mx-auto">
           <div className="w-full max-w-[1200px]">
             <h1 className="text-[16px] font-semibold text-[#08121D] mb-1">Set up your job search loop</h1>
@@ -419,7 +425,6 @@ export default function JobSetupPage() {
         </div>
       </div>
 
-      {/* Always show JobLoopDialog on initial load */}
       <JobLoopDialog
         isOpen={isDialogOpen}
         onClose={handleDialogClose}

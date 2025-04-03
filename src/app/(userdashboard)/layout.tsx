@@ -1,14 +1,13 @@
 import type { Metadata } from 'next';
 import { Gabarito } from 'next/font/google';
-// import './globals.css';
-import { Header } from '@/components/Header';
-import { Sidebar } from '@/components/Sidebar';
 import { ModalProvider } from '@/context/ModalContext';
 import { SubscriptionProvider } from '@/context/SubscriptionContext';
+import { DialogProvider } from '@/context/DialogContext';
 import { Toaster } from 'sonner';
 import '../globals.css';
 import { Providers } from '../providers';
 import GlobalModal from '@/components/GlobalModal';
+import ClientLayoutContent from './ClientLayoutContent'; // New client component
 
 const gabarito = Gabarito({
   subsets: ['latin'],
@@ -20,7 +19,7 @@ export const metadata: Metadata = {
   description: 'Your next career move starts here',
 };
 
-export default function userDashboardLayout({
+export default function UserDashboardLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -31,17 +30,10 @@ export default function userDashboardLayout({
         <Providers>
           <ModalProvider>
             <SubscriptionProvider>
-              <div className="flex h-screen">
-                <Sidebar />
-                <div className="flex-1 flex flex-col">
-                  <Header />
-                  <main className="flex-1 pt-[64px]">
-                    <div className="h-full overflow-y-auto">{children}</div>
-                    <GlobalModal />
-                  </main>
-                </div>
-              </div>
-              <Toaster />
+              <DialogProvider>
+                <ClientLayoutContent>{children}</ClientLayoutContent>
+                <Toaster />
+              </DialogProvider>
             </SubscriptionProvider>
           </ModalProvider>
         </Providers>
