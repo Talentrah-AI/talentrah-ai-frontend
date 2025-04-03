@@ -8,6 +8,7 @@ interface ModalProps {
 
 interface ModalContextType {
   isOpen: boolean;
+  modalType: string | null;
   modalContent: ReactNode | null;
   modalProps: ModalProps | null;
   openModal: (content: ReactNode, props?: ModalProps) => void;
@@ -18,6 +19,7 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [modalType, setModalType] = useState<string | null>(null);
   const [modalContent, setModalContent] = useState<ReactNode | null>(null);
   const [modalProps, setModalProps] = useState<ModalProps | null>(null);
 
@@ -35,7 +37,14 @@ export function ModalProvider({ children }: { children: ReactNode }) {
 
   return (
     <ModalContext.Provider
-      value={{ isOpen, modalContent, modalProps, openModal, closeModal }}
+      value={{
+        isOpen,
+        modalType,
+        modalContent,
+        modalProps,
+        openModal,
+        closeModal,
+      }}
     >
       {children}
     </ModalContext.Provider>

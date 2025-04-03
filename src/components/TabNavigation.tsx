@@ -43,8 +43,8 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
     { id: 'saved', label: 'Saved jobs' },
     { id: 'draft', label: 'Draft' },
   ];
-
   useEffect(() => {
+    // Update tabJobs whenever activeTab changes
     if (activeTab === 'applied') {
       setTabJobs(mockJobs);
     } else if (activeTab === 'saved') {
@@ -88,9 +88,10 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
         ))}
       </div>
 
-      <div className="flex w-[438px] gap-4">
+      <div className="flex w-[438px]  gap-4">
         <div className="flex items-center w-[438px] h-[32px] gap-1 text-sm border-none rounded-lg focus:outline-none !important focus:border-none bg-white rounded-[12px] focus:ring-0">
-          <Search className="h-4 w-4 text-gray-400 m-[5px]" />
+          <Search className="  h-4 w-4 text-gray-400 m-[5px]" />
+          {/* <img src="/icons/search.png" alt="" /> */}
           <input
             type="text"
             placeholder="Search"
@@ -112,9 +113,14 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
             <SelectTrigger>
               <SelectValue>{filter}</SelectValue>
             </SelectTrigger>
-            <SelectContent>
+
+            <SelectContent className="text-[#08121D] w-[181px] h-[166px] p-[4px]">
               {['All', 'Applied with AI', 'Applied manually'].map((option) => (
-                <SelectItem key={option} value={option}>
+                <SelectItem
+                  key={option}
+                  value={option}
+                  className="focus:text-[#08121D] w-[165px] h-[50px] rounded-[12px] border-[0.5px] gap-[10px] pt-[15px] pr-[20px] pb-[15px] pl-[20px] border-none"
+                >
                   {option}
                 </SelectItem>
               ))}
