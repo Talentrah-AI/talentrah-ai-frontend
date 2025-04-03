@@ -9,35 +9,39 @@ const gabarito = Gabarito({
   variable: '--font-gabarito',
 });
 // Metadata for SEO
-const Base_url = process.env.NODE_ENV === "production"
-  ? "https://www.talentrah.com" : "http://localhost:3000";
+const Base_url =
+  process.env.NODE_ENV === 'production'
+    ? 'https://www.talentrah.com'
+    : 'http://localhost:3000';
 export const metadata: Metadata = {
-  title: 'Talentrah-ai',
+  title: {
+    default: 'Talentrah AI',
+    template: '%s | Talentrah AI',
+  },
   description: 'Your next career move starts here',
   icons: {
-    icon: "/favicon.ico",
+    icon: '/favicon.ico',
   },
   metadataBase: new URL(Base_url),
   openGraph: {
-    title: "Talentrah-ai",
-    description:
-      "Your next career move starts here",
-    url: "https://www.talentrah.com",
-    siteName: "Talentrah-ai",
+    title: 'Talentrah AI',
+    description: 'Your next career move starts here',
+    url: 'https://www.talentrah.com',
+    siteName: 'Talentrah AI',
     images: [
       {
         url: `${Base_url}/opengraph-image.png`,
         width: 1200,
         height: 630,
-        alt: "Talentrah-ai",
+        alt: 'Talentrah AI',
       },
     ],
-    type: "website",
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Talentrah-ai",
-    description: "Your next career move starts here",
+    card: 'summary_large_image',
+    title: 'Talentrah AI',
+    description: 'Your next career move starts here',
     images: [`${Base_url}/opengraph-image.png`],
   },
   robots: {
