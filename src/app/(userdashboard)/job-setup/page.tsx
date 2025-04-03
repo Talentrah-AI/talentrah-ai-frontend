@@ -9,7 +9,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Progress } from '@/components/ui/progress';
 import { toast } from 'sonner';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
-import { useDialog } from '@/context/DialogContext'; // Import the hook
+import { useDialog } from '@/context/DialogContext';
 
 // Sample data - Replace with actual data from your API
 const jobTitles = [
@@ -48,9 +48,8 @@ export default function JobSetupPage() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { isDialogOpen, setIsDialogOpen } = useDialog(); // Use context
+  const { isDialogOpen, setIsDialogOpen } = useDialog();
 
-  // Open dialog on initial load
   useEffect(() => {
     setIsDialogOpen(true);
   }, [setIsDialogOpen]);
@@ -177,12 +176,13 @@ export default function JobSetupPage() {
 
     if (!validateForm()) return;
 
-    setIsLoading(true);
+    setIsLoading(true); // Show LoadingSpinner
 
+    // Simulate API call or processing
     setTimeout(() => {
-      setIsLoading(false);
-      router.push('/job-matched');
-    }, 3000);
+      setIsLoading(false); // Hide LoadingSpinner
+      router.push('/job-matched'); // Navigate to job-matched page
+    }, 3000); // 3-second delay for demonstration
   };
 
   return (
