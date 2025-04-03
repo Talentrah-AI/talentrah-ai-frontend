@@ -41,6 +41,7 @@ export const Footer = () => {
                   href={item.link}
                   key={index}
                   className="text-xs leading-tight text-lightGrey-05"
+                  target="_blank"
                 >
                   {item.title}
                 </Link>

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     siteName: "Talentrah-ai",
     images: [
       {
-        url: "/landing.png",
+        url: `${Base_url}/opengraph-image.png`,
         width: 1200,
         height: 630,
         alt: "Talentrah-ai",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Talentrah-ai",
     description: "Your next career move starts here",
-    images: ["/landing.png"],
+    images: [`${Base_url}/opengraph-image.png`],
   },
   robots: {
     index: true,
