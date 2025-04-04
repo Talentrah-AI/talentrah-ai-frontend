@@ -23,19 +23,20 @@ export const Navbar = ({ isDark }: { isDark?: boolean }) => {
       }
     };
   }, []);
+  // base class for navbar items
+  const baseNavClass =
+    'fixed left-[50%] -translate-x-[50%] w-[95%] flex justify-between items-center z-30 font-gabarito rounded-2xl py-2.5 px-4 transition-all duration-500';
+  //scroll class for navbar items
+  const scrollClass = isScroll
+    ? 'md:max-w-[876px] max-w-[90%] top-9'
+    : 'md:max-w-[1200px] max-w-full bg-transparent shadow-none top-3 border-none';
+  //dark class for navbar items
+  const themeClass = isDark
+    ? 'bg-[#02152A] shadow border border-[#042954]'
+    : 'bg-white shadow-nav border-none';
 
   return (
-    <nav
-      className={`fixed left-[50%] -translate-x-[50%] w-[95%] flex justify-between items-center z-30 font-gabarito rounded-2xl py-2.5 px-4 transition-all duration-500 ${
-        isScroll
-          ? `md:max-w-[876px] max-w-[90%] top-9 ${
-              isDark
-                ? 'bg-[#02152A] shadow border border-[#042954]'
-                : 'bg-white shadow-nav border-none'
-            }`
-          : 'md:max-w-[1200px] max-w-full bg-transparent shadow-none top-3 border-none'
-      }`}
-    >
+    <nav className={`${baseNavClass} ${scrollClass} ${themeClass}`}>
       <Link href={'/'}>
         <Image
           src={isDark ? logo_white : logo}
@@ -47,10 +48,10 @@ export const Navbar = ({ isDark }: { isDark?: boolean }) => {
         />
       </Link>
       <section className="items-center justify-center hidden gap-6 px-4 py-3 text-base font-normal md:flex">
-        {navbarItems.map((link, index) => (
+        {navbarItems.map((link) => (
           <Link
             href={link.link}
-            key={index}
+            key={link.link}
             className={`whitespace-nowrap ${isDark ? 'text-lightGrey-05' : 'text-black'}`}
           >
             {link.title}
@@ -71,9 +72,11 @@ export const Navbar = ({ isDark }: { isDark?: boolean }) => {
           Get started for free
         </Link>
       </section>
-      <div
+      <button
+        type="button"
         className="flex cursor-pointer md:hidden"
         onClick={() => setIsOpen((prev) => !prev)}
+        aria-label="Toggle navigation"
       >
         {isOpen ? (
           <X
@@ -84,7 +87,7 @@ export const Navbar = ({ isDark }: { isDark?: boolean }) => {
             className={`sm:size-7 size-5 ${isDark ? 'stroke-white' : 'stroke-black'}`}
           />
         )}
-      </div>
+      </button>
       <NavMobile isOpen={isOpen} isDark={isDark} />
     </nav>
   );
@@ -100,10 +103,10 @@ const NavMobile = ({ isOpen, isDark }: NavMobileProps) => {
       className={`absolute md:hidden flex flex-col items-start justify-start px-2 py-6 top-14 w-full rounded-[12px] shadow-card transition-all duration-300 ${isDark ? 'bg-[#02152A]' : 'bg-white'}`}
       style={{ right: isOpen ? 0 : '-200%' }}
     >
-      {navbarItems.map((link, index) => (
+      {navbarItems.map((link) => (
         <Link
           href={link.link}
-          key={index}
+          key={link.link}
           className={`whitespace-nowrap px-5 py-3.5 border-b-[0.5px] border-b-light-grey-02/50 w-full text-base ${isDark ? 'text-lightGrey-05' : 'text-black'}`}
         >
           {link.title}

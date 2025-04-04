@@ -41,9 +41,7 @@ export const metadata: Metadata = {
 };
 export default function WaitListLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
       <header className="w-full relative">
