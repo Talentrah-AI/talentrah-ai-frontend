@@ -15,6 +15,7 @@ import dashboard2 from '@/assets/images/dashboard2.webp';
 import { FaqSection } from '@/components/landing/faqsection';
 import { Navbar } from '@/components/landing/navbar';
 import { Footer } from '@/components/landing/footer';
+import Link from 'next/link';
 export default function Home() {
   return (
     <>
@@ -65,9 +66,12 @@ export default function Home() {
                 you stay organized, improve your chances, and apply to more jobs
                 with less effort.
               </p>
-              <button className="px-6 py-3 text-xs bg-white rounded-lg outline-none cursor-pointer text-primary md:text-base">
+              <Link
+                href={'/waitlist'}
+                className="px-6 py-3 text-xs bg-white rounded-lg outline-none cursor-pointer text-primary md:text-base"
+              >
                 Apply for a job
-              </button>
+              </Link>
             </div>
             <div className="relative">
               <Image src={paper} alt="paper" />
@@ -133,9 +137,12 @@ export default function Home() {
               </div>
             ))}
           </section>
-          <button className="px-5 py-2 text-sm text-white rounded-lg outline-none cursor-pointer bg-primary md:py-3 md:px-6 md:text-base">
+          <Link
+            href={'/waitlist'}
+            className="px-5 py-2 text-sm text-white rounded-lg outline-none cursor-pointer bg-primary md:py-3 md:px-6 md:text-base"
+          >
             Get started now
-          </button>
+          </Link>
         </section>
 
         <section className="flex flex-col-reverse items-center justify-center w-full gap-12 px-5 py-10 lg:flex-row lg:items-start lg:gap-28 sm:px-0">
@@ -214,9 +221,12 @@ export default function Home() {
                   </p>
                 </div>
               ))}
-              <button className="px-5 py-2 text-sm text-white rounded-lg outline-none cursor-pointer bg-primary md:py-3 md:px-6 md:text-base">
+              <Link
+                href={'/waitlist'}
+                className="px-5 py-2 text-sm text-white rounded-lg outline-none cursor-pointer bg-primary md:py-3 md:px-6 md:text-base"
+              >
                 Get started for free
-              </button>
+              </Link>
             </section>
           </section>
         </section>
@@ -234,9 +244,12 @@ export default function Home() {
                 fit your role and style. Whether you prefer a modern, creative,
                 or classic look, we&apos;ve got you covered
               </p>
-              <button className="px-5 py-2 mt-3 text-sm text-white rounded-lg outline-none cursor-pointer bg-primary md:py-3 md:px-6 md:text-base">
+              <Link
+                href={'/waitlist'}
+                className="px-5 py-2 mt-3 text-sm text-white rounded-lg outline-none cursor-pointer bg-primary md:py-3 md:px-6 md:text-base"
+              >
                 Choose a template
-              </button>
+              </Link>
             </section>
             <Image
               src={cv}
@@ -377,17 +390,20 @@ export default function Home() {
                 Let AI optimize your resume, match you with the right
                 opportunities, and apply in seconds.
               </p>
-              <button className="z-10 px-5 py-2 mt-3 text-sm bg-white rounded-lg outline-none cursor-pointer text-primary md:py-3 md:px-6 md:text-base">
+              <Link
+                href={'/waitlist'}
+                className="z-10 px-5 py-2 mt-3 text-sm bg-white rounded-lg outline-none cursor-pointer text-primary md:py-3 md:px-6 md:text-base"
+              >
                 Get started for free
-              </button>
+              </Link>
             </div>
-            <div className='md:absolute relative right-0 bottom-0 lg:w-[600px] w-[450px] ml-auto z-5'>
+            <div className="md:absolute relative right-0 bottom-0 lg:w-[600px] w-[450px] ml-auto z-5">
               <Image
                 src={dashboard2}
                 alt="dashboard"
                 width={620}
                 height={500}
-                className='w-auto h-auto'
+                className="w-auto h-auto"
               />
             </div>
             <div className="size-[358px] rounded-full bg-[#62A7F433] absolute -top-10 -left-44 z-0" />

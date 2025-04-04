@@ -59,13 +59,13 @@ export const Navbar = ({ isDark }: { isDark?: boolean }) => {
       </section>
       <section className="items-center justify-center hidden gap-6 md:flex">
         <Link
-          href={'/'}
+          href={'/waitlist'}
           className="text-sm font-normal text-primary border border-primary rounded-lg py-2.5 px-8 bg-transparent cursor-pointer"
         >
           Login
         </Link>
         <Link
-          href={'/'}
+          href={'/waitlist'}
           className="text-sm font-normal text-white bg-primary border border-primary rounded-lg py-2.5 px-4 whitespace-nowrap cursor-pointer"
         >
           Get started for free
@@ -111,13 +111,13 @@ const NavMobile = ({ isOpen, isDark }: NavMobileProps) => {
       ))}
       <section className="flex flex-col items-start justify-start w-full gap-4">
         <Link
-          href={'/'}
+          href={'/waitlist'}
           className="text-sm font-normal text-white bg-primary border border-primary rounded-lg py-2.5 px-4 whitespace-nowrap w-full text-center"
         >
           Get started for free
         </Link>
         <Link
-          href={'/'}
+          href={'/waitlist'}
           className="text-sm font-normal text-primary border border-primary rounded-lg py-2.5 px-8 bg-transparent w-full text-center"
         >
           Login
