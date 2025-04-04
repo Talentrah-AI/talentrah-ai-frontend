@@ -7,7 +7,6 @@ import Link from 'next/link';
 export default function Dashboard() {
   return (
     <div className="flex h-screen bg-white">
-      {/* Main Content Area */}
       <main className="flex-1 p-6 flex items-center justify-center">
         <div className="text-center max-w-md px-4">
           <div className="mx-auto w-16 h-20 mb-4">

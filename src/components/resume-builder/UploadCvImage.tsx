@@ -1,0 +1,60 @@
+'use client';
+
+import React from 'react';
+import { CloudDownload, X } from 'lucide-react';
+import Image from 'next/image';
+
+type ModalImageCvProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  imageUrl: string;
+};
+
+export function UpLoadCvImage({
+  isOpen,
+  onClose,
+  imageUrl,
+}: ModalImageCvProps) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center z-[9999] p-4">
+      <div
+        className="absolute inset-0 bg-black/80 backdrop"
+        onClick={onClose}
+      />
+
+      <div className="relative bg-white rounded-lg shadow-lg max-w-md w-full mx-auto">
+        <div className="flex justify-between items-center p-3 border-b">
+          <h2 className="text-md font-medium">Resume</h2>
+          <button
+            onClick={onClose}
+            className="p-1 rounded hover:bg-gray-100"
+            aria-label="Close"
+          >
+            <X size={18} className="text-gray-500 cursor-pointer" />
+          </button>
+        </div>
+
+        <div className="max-h-[70vh] overflow-auto p-2">
+          <Image
+            src={imageUrl}
+            alt="Resume preview"
+            width={800}
+            height={1000}
+            className="w-full h-auto rounded-sm"
+            style={{ minWidth: '100%' }}
+            priority={true}
+          />
+        </div>
+
+        <div className="p-2 ">
+          <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm font-medium flex justify-center gap-2.5 ">
+            <CloudDownload />
+            Download
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
