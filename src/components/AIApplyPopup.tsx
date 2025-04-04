@@ -5,6 +5,8 @@ interface AIApplyPopupProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
+  jobTitle: string;
+  location: string;
 }
 
 export function AIApplyPopup({ isOpen, onClose, onConfirm }: AIApplyPopupProps) {

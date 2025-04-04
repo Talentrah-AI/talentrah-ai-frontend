@@ -8,6 +8,7 @@ import { Suspense } from 'react';
 import { MapPin, ChevronUp, ChevronDown, Info } from 'lucide-react';
 import { CircularProgress } from '@/components/ui/circular-progress';
 import { useState } from 'react';
+import { JobDetailsModal } from '@/components/JobDetailsModal'; // Import the new modal
 
 function ResumeOptimized() {
   const [isObjectiveOpen, setIsObjectiveOpen] = useState(false);
@@ -19,44 +20,31 @@ function ResumeOptimized() {
   const [isWorkExperienceOpen, setIsWorkExperienceOpen] = useState(false);
   const [isEducationOpen, setIsEducationOpen] = useState(false);
   const [isCertificationOpen, setIsCertificationOpen] = useState(false);
+  const [isJobDetailsModalOpen, setIsJobDetailsModalOpen] = useState(false); // State for modal
 
   const searchParams = useSearchParams();
   const router = useRouter();
-  const jobTitle = searchParams.get('jobTitle');
-  const company = searchParams.get('company');
+  const jobTitle = searchParams.get('jobTitle') || 'Unknown Job';
+  const company = searchParams.get('company') || 'Unknown Company';
 
   // Placeholder for fetching the external job application URL via API
   const fetchJobApplicationUrl = async () => {
-    // Future API integration: Fetch the URL dynamically
-    // Example: const response = await fetch(`/api/jobs/${jobId}/apply`);
-    // const data = await response.json();
-    // return data.applicationUrl;
     return 'https://example.com/apply'; // Placeholder URL
   };
 
   // Placeholder for notifying the backend of the job application
   const notifyApplicationSubmitted = async () => {
-    // Future API integration: Notify the backend
-    // Example: await fetch(`/api/jobs/${jobId}/apply`, { method: 'POST', body: JSON.stringify({ userId, jobId }) });
     console.log('Application submitted to backend');
   };
 
   const handleApplyForJob = async () => {
     try {
-      // Fetch the external job application URL
       const applicationUrl = await fetchJobApplicationUrl();
-
-      // Notify the backend that the user has applied
       await notifyApplicationSubmitted();
-
-      // Open the external URL in a new tab
       window.open(applicationUrl, '_blank');
-
-      // Redirect to the dashboard with a query parameter to show the pop-up
       router.push('/jobdashboard?showPopup=true');
     } catch (error) {
       console.error('Error during job application:', error);
-      // Optionally show an error message to the user
     }
   };
 
@@ -247,7 +235,12 @@ function ResumeOptimized() {
               The position requires you to work closely with product managers and engineers to design user-centered experiences that meet business goals. You will be responsible for conducting user testing, analyzing feedback, and iterating on designs to enhance usability...
             </p>
             <p>
-              <span className="text-[#0967D2] font-gabarito font-normal text-[12px] cursor-pointer"> See all</span>
+              <span
+                className="text-[#0967D2] font-gabarito font-normal text-[12px] cursor-pointer"
+                onClick={() => setIsJobDetailsModalOpen(true)} // Open modal on click
+              >
+                See all
+              </span>
             </p>
           </div>
 
@@ -710,6 +703,14 @@ function ResumeOptimized() {
           </Button>
         </div>
       </div>
+
+      {/* Job Details Modal */}
+      <JobDetailsModal
+        isOpen={isJobDetailsModalOpen}
+        onClose={() => setIsJobDetailsModalOpen(false)}
+        jobTitle={jobTitle}
+        company={company}
+      />
     </div>
   );
 }
