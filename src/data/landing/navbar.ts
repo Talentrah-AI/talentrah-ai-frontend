@@ -9,14 +9,14 @@ export const navbarItems: navTypes = [
     },
     {
         title: "Features",
-        link: "#features"
+        link: "/#features"
     },
     {
         title: "How it works",
-        link: "#how-it-works"
+        link: "/#how-it-works"
     },
     {
         title: "FAQs",
-        link: "#faqs"
+        link: "/#faqs"
     },
 ]

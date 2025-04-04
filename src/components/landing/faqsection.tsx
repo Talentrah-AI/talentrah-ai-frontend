@@ -1,6 +1,7 @@
 'use client';
 import { faqBtn, faqs, faqType } from '@/data/landing/faq';
 import { Minus, Plus } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export const FaqSection = () => {
@@ -58,9 +59,12 @@ export const FaqSection = () => {
               Kindly contact our support team, we are always happy to help
             </p>
           </div>
-          <button className="px-6 py-3 text-base font-normal text-black border border-[#B0B5BB] bg-white rounded-xl whitespace-nowrap cursor-pointer">
+          <Link
+            href={'/waitlist'}
+            className="px-6 py-3 text-base font-normal text-black border border-[#B0B5BB] bg-white rounded-xl whitespace-nowrap cursor-pointer"
+          >
             Contact us
-          </button>
+          </Link>
         </section>
       </section>
     </section>
@@ -82,7 +86,7 @@ const FaqModal = ({ faq }: faqModalProps) => {
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <p>{faq.title}</p>
-        <div className='transition-all duration-300 group-hover:rotate-180'>
+        <div className="transition-all duration-300 group-hover:rotate-180">
           {!isOpen ? (
             <Plus className=" stroke-black size-5" />
           ) : (
