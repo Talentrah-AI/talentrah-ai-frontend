@@ -1,7 +1,6 @@
-// src/components/Header.tsx
 'use client';
 
-import { Bell, ChevronDown, Globe, Loader2, Plus } from 'lucide-react';
+import { Bell, ChevronDown, Globe, Loader2, Plus, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -22,8 +21,7 @@ import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useSubscription } from '@/context/SubscriptionContext';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface Notification {
   id: string;
@@ -49,17 +47,18 @@ const languages: Language[] = [
 export function Header() {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const queryClient = useQueryClient();
-  const { isPremium } = useSubscription();
   const router = useRouter();
+  const pathname = usePathname();
 
   // Fetch notifications
-  const { data: notifications = [], isLoading: isLoadingNotifications } = useQuery<Notification[]>({
-    queryKey: ['notifications'],
-    queryFn: async () => {
-      const response = await endpoints.notifications.list();
-      return response.data;
-    },
-  });
+  const { data: notifications = [], isLoading: isLoadingNotifications } =
+    useQuery<Notification[]>({
+      queryKey: ['notifications'],
+      queryFn: async () => {
+        const response = await endpoints.notifications.list();
+        return response.data;
+      },
+    });
 
   // Fetch user's current language
   const { data: userProfile } = useQuery({
@@ -70,9 +69,19 @@ export function Header() {
     },
   });
 
+  // Fetch subscription status
+  const { data: subscription } = useQuery({
+    queryKey: ['subscription'],
+    queryFn: async () => {
+      const response = await endpoints.subscription.getPlan();
+      return response.data;
+    },
+  });
+
   // Mark notification as read
   const markAsReadMutation = useMutation({
-    mutationFn: (notificationId: string) => endpoints.notifications.markAsRead(notificationId),
+    mutationFn: (notificationId: string) =>
+      endpoints.notifications.markAsRead(notificationId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
     },
@@ -98,7 +107,8 @@ export function Header() {
 
   const unreadCount = notifications.filter((n) => !n.read).length;
   const currentLanguage =
-    languages.find((lang) => lang.code === userProfile?.language) || languages[0];
+    languages.find((lang) => lang.code === userProfile?.language) ||
+    languages[0];
 
   const handleNotificationClick = (notification: Notification) => {
     if (!notification.read) {
@@ -111,37 +121,47 @@ export function Header() {
   };
 
   const handleUpgradeClick = async () => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('previousRoute', window.location.pathname);
+    try {
+      // Implement your upgrade flow here
+      toast.success('Redirecting to upgrade page...');
+    } catch (error) {
+      toast.error('Failed to process upgrade request');
+      console.error(error);
     }
-    router.push('/pricing');
-    toast.success('Redirecting to upgrade page...');
   };
 
-  // Handle navigation to job-setup page
-  const handleCreateJobLoopClick = () => {
-    router.push('/job-setup');
+  const handleCreateJobLoop = () => {
+    router.push('/job-setup?fromJobCard=true');
   };
+
+  const isJobSetupPage = pathname === '/job-setup';
+  const isJobMatchedPage = pathname === '/job-matched';
+  const isDashboardPage = pathname === '/dashboard';
 
   return (
-    <header className="fixed top-0 z-50 flex items-center justify-start bg-white border-opacity-50 w-full h-[64px] pl-4 pr-6 pt-4 pb-4 gap-2 border-b border-[#EFF0F2]">
+    <header className="fixed top-0 z-50 flex items-center justify-start bg-white border-opacity-50 w-full h-[64px] pl-29 pr-6 pt-4 pb-4 gap-2 border-b border-[#EFF0F2]">
       <div className="h-[32px] w-[1142px] flex items-center gap-4 justify-between">
         <div className="flex"></div>
         <div className="flex items-start gap-4 w-[540px] justify-between">
           {/* Create Job Loop Button */}
           <Button
-            className="h-[32px] px-[12px] py-[8px] rounded-[12px] bg-[#0967D2] hover:bg-[#0967D2] shadow-[0px_4px_15px_rgba(41,45,50,0.05)] cursor-pointer"
-            onClick={handleCreateJobLoopClick} // Add onClick handler
+            className="h-[32px] px-[12px] py-[8px] 
+           rounded-[12px] bg-[#0967D2] hover:bg-[#0967D2]
+           shadow-[0px_4px_15px_rgba(41,45,50,0.05)] 
+            cursor-pointer"
+            onClick={handleCreateJobLoop}
           >
             <Plus className="h-[16px] w-[16px] text-white" />
-            <span className="font-gabarito font-normal text-[12 худі
-            font-normal text-[12px] leading-[16px] tracking-[0px] text-white">
+            <span className="font-gabarito font-normal text-[12px] leading-[16px] tracking-[0px] text-white">
               Create job loop
             </span>
           </Button>
 
           {/* Notifications */}
-          <Sheet open={isNotificationsOpen} onOpenChange={setIsNotificationsOpen}>
+          <Sheet
+            open={isNotificationsOpen}
+            onOpenChange={setIsNotificationsOpen}
+          >
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
@@ -181,18 +201,24 @@ export function Header() {
                     <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
                   </div>
                 ) : notifications.length === 0 ? (
-                  <p className="text-center text-gray-500 py-8">No notifications yet</p>
+                  <p className="text-center text-gray-500 py-8">
+                    No notifications yet
+                  </p>
                 ) : (
                   notifications.map((notification) => (
                     <div
                       key={notification.id}
                       className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-                        !notification.read ? 'bg-blue-50 hover:bg-blue-100' : 'hover:bg-gray-50'
+                        !notification.read
+                          ? 'bg-blue-50 hover:bg-blue-100'
+                          : 'hover:bg-gray-50'
                       }`}
                       onClick={() => handleNotificationClick(notification)}
                     >
                       <h4 className="font-medium">{notification.title}</h4>
-                      <p className="text-sm text-gray-600">{notification.message}</p>
+                      <p className="text-sm text-gray-600">
+                        {notification.message}
+                      </p>
                       <time className="text-xs text-gray-500">
                         {new Date(notification.timestamp).toLocaleString()}
                       </time>
@@ -212,7 +238,7 @@ export function Header() {
                 className="flex items-center w-[98px] h-[32px] px-[12px] py-[8px] gap-[10px] rounded-[12px] bg-[#FFFFFF] shadow-[0px_4px_15px_0px_#292D320D]"
               >
                 <Globe className="h-[16px] w-[16px] text-[#717A84]" />
-                <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] text-[#414A53]">
+                <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#414A53]">
                   {currentLanguage.name}
                 </span>
                 <ChevronDown className="h-[12px] w-[12px] text-[#B0B5BB]" />
@@ -229,24 +255,51 @@ export function Header() {
                 >
                   <span>{language.flag}</span>
                   <span>{language.name}</span>
-                  {currentLanguage.code === language.code && <span className="ml-auto">✓</span>}
+                  {currentLanguage.code === language.code && (
+                    <span className="ml-auto">✓</span>
+                  )}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
 
           {/* Upgrade to Premium */}
-          <Button
-            variant="outline"
-            className="w-[149.739px] h-[32px] px-[12px] py-[8px] gap-[10px] rounded-[12px] border-[#07A2A8] border-[0.5px]"
-            onClick={handleUpgradeClick}
-            disabled={isPremium}
-          >
-            <Image src="/Layer_2.svg" alt="Premium Member" width={13} height={16} />
-            <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#07A2A8]">
-              {isPremium ? 'Premium' : 'Upgrade to Premium'}
-            </span>
-          </Button>
+          {isDashboardPage ? (
+            <Button
+              variant="outline"
+              className="w-[149.739px] h-[32px] px-[12px] py-[8px] gap-[10px] rounded-[12px] border-[#07A2A8] border-[0.5px]"
+              onClick={handleUpgradeClick}
+              disabled={subscription?.isPremium}
+            >
+              <Image
+                src="/Layer_2.svg"
+                alt="Premium Member"
+                width={13}
+                height={16}
+              />
+              {subscription?.isPremium ? (
+                <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#07A2A8]">
+                  Premium Member
+                </span>
+              ) : (
+                <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#07A2A8]">
+                  Upgrade to premium
+                </span>
+              )}
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              className="flex items-center gap-2 h-[32px] px-[12px] py-[8px] rounded-[12px] bg-white shadow-[0px_4px_15px_rgba(41,45,50,0.05)] border border-[#0967D2]"
+              onClick={handleUpgradeClick}
+              disabled={subscription?.isPremium}
+            >
+              <Crown className="h-4 w-4 text-[#0967D2]" />
+              <span className="font-gabarito font-normal text-[12px] leading-[16px] tracking-[0px] text-[#0967D2]">
+                Premium
+              </span>
+            </Button>
+          )}
         </div>
       </div>
     </header>

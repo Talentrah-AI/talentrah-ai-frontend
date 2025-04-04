@@ -55,7 +55,7 @@ export function JobCard({
     // Simulate processing (replaceable with API call later)
     setTimeout(() => {
       setIsLoading(false);
-      router.push(`/dashboard/premium-user-apply?${params.toString()}`);
+      router.push(`/jobdashboard/premium-user-apply?${params.toString()}`); // Fixed route
     }, 2000); // 2-second delay
 
     // Future API Integration Example:
@@ -69,7 +69,7 @@ export function JobCard({
       .then(response => response.json())
       .then(() => {
         setIsLoading(false);
-        router.push(`/dashboard/premium-user-apply?${params.toString()}`);
+        router.push(`/jobdashboard/premium-user-apply?${params.toString()}`);
       })
       .catch(error => {
         console.error('Error applying:', error);

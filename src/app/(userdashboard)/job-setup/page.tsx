@@ -11,7 +11,6 @@ import { toast } from 'sonner';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { useDialog } from '@/context/DialogContext';
 
-// Sample data - Replace with actual data from your API
 const jobTitles = [
   'UI/UX Designer',
   'Product Designer',
@@ -176,13 +175,16 @@ export default function JobSetupPage() {
 
     if (!validateForm()) return;
 
-    setIsLoading(true); // Show LoadingSpinner
+    setIsLoading(true);
 
-    // Simulate API call or processing
+    // Simulate API call
     setTimeout(() => {
-      setIsLoading(false); // Hide LoadingSpinner
-      router.push('/job-matched'); // Navigate to job-matched page
-    }, 3000); // 3-second delay for demonstration
+      setIsLoading(false);
+      // Navigate to jobdashboard with query parameters
+      const jobTitle = formData.jobTitles[0]; // Take the first job title as an example
+      const location = formData.locations[0]; // Take the first location as an example
+      router.push(`/jobdashboard?showPopup=true&jobTitle=${encodeURIComponent(jobTitle)}&location=${encodeURIComponent(location)}`);
+    }, 3000);
   };
 
   return (
@@ -352,7 +354,6 @@ export default function JobSetupPage() {
                       <p className="mb-2 text-[14px] text-[#515D68]">
                         Drag and drop or upload from your computer
                       </p>
-
                       {!isUploading && !uploadedFile && (
                         <button
                           type="button"
@@ -362,7 +363,6 @@ export default function JobSetupPage() {
                           Browse Your Computer
                         </button>
                       )}
-
                       <input
                         ref={fileInputRef}
                         id="file-upload"
@@ -374,7 +374,6 @@ export default function JobSetupPage() {
                           if (file) handleFileUpload(file);
                         }}
                       />
-
                       {isUploading && (
                         <div className="space-y-2 flex flex-col items-center w-full mt-4">
                           <div className="w-[80%] max-w-[400px]">
@@ -385,7 +384,6 @@ export default function JobSetupPage() {
                           </div>
                         </div>
                       )}
-
                       {uploadedFile && !isUploading && (
                         <div className="flex items-center justify-between w-full mt-4">
                           <div className="flex items-center gap-2">
@@ -410,7 +408,6 @@ export default function JobSetupPage() {
                 </div>
               </form>
             </div>
-            {/* Create Job Loop Button */}
             <div className="flex justify-end mt-6">
               <button
                 type="submit"
@@ -424,7 +421,6 @@ export default function JobSetupPage() {
           </div>
         </div>
       </div>
-
       <JobLoopDialog
         isOpen={isDialogOpen}
         onClose={handleDialogClose}
