@@ -1,9 +1,8 @@
 'use client';
 import React from 'react';
 import { useState } from 'react';
-
+import { useModal } from '@/context/ModalContext';
 import Image from 'next/image';
-
 import { Card } from '@/components/ui/card2';
 import { Button } from '@/components/ui/button2';
 import { Badge } from '@/components/ui/badge2';
@@ -22,6 +21,8 @@ interface JobCardProps {
   job: Job;
   onDelete: (id: string) => void;
 }
+
+const { openModal } = useModal();
 
 const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -184,7 +185,9 @@ const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
               align="end"
               className="bg-white text-[#08121D] [&>*:not(:last-child)]:border-b [&>*:not(:last-child)]:border-gray-300 border-[0.5px] border-solid border-[#EFF0F2] shadow-[0px_5px_15px_0px_#1B20201A] w-[242px] h-[166px] rounded-[10px] p-[8px]"
             >
-              <DropdownMenuItem>View resume ed</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => openModal('resume')}>
+                View resume used
+              </DropdownMenuItem>
               <DropdownMenuItem>View cover letter used</DropdownMenuItem>
               <DropdownMenuItem onClick={handleDelete}>
                 Delete job

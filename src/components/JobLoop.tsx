@@ -4,9 +4,12 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import EmptyState from './EmptyState';
 import JobListView from './JobListView';
+import { useModal } from '@/context/ModalContext';
+import PreviewResumeModal from '@/components/modal/PreviewResumeModal';
 
 const JobLoop = () => {
   const [hasJobLoop, setHasJobLoop] = useState(false);
+  const { isOpen, modalType } = useModal(); // Access modal state
 
   const handleCreateJobLoop = () => {
     // Simulate API call success
@@ -30,6 +33,8 @@ const JobLoop = () => {
       ) : (
         <JobListView />
       )}
+      {/* Conditionally render the modal when "View resume used" is clicked */}
+      {isOpen && modalType === 'resume' && <PreviewResumeModal />}
     </div>
   );
 };
