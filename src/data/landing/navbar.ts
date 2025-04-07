@@ -1,22 +1,22 @@
 type navTypes = {
     title: string,
-    link: string
+    href: string
 }[]
 export const navbarItems: navTypes = [
     {
         title: "Home",
-        link: "/"
+        href: "/"
     },
     {
         title: "Features",
-        link: "/#features"
+        href: "/#features"
     },
     {
         title: "How it works",
-        link: "/#how-it-works"
+        href: "/#how-it-works"
     },
     {
         title: "FAQs",
-        link: "/#faqs"
+        href: "/#faqs"
     },
 ]
