@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { LockKeyhole } from 'lucide-react';
 import { LoadingSpinner } from './loading-spinner';
+import { LockTemplate } from './LockTemplate';
 
 interface TemplateCardProps {
   id: string;
@@ -16,16 +17,17 @@ interface TemplateCardProps {
 export function TemplateCard({ id, image, lock, type }: TemplateCardProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [padlock, setPadLock] = useState(false);
 
   const handleSelect = () => {
     if (lock) {
-      alert('This template is locked!');
+      setPadLock(true);
       return;
     }
 
     setIsLoading(true);
     setTimeout(() => {
-      router.push('/personal-information');
+      router.push('/resume-builder/Bio-Data-Form');
     }, 1000);
   };
 
@@ -49,6 +51,8 @@ export function TemplateCard({ id, image, lock, type }: TemplateCardProps) {
           </div>
         )}
       </div>
+
+      <LockTemplate open={padlock} onOpenChange={setPadLock} />
     </div>
   );
 }

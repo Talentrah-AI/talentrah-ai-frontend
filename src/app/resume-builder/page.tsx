@@ -42,7 +42,10 @@ export default function Dashboard() {
             details, and land your next job with confidence!
           </p>
           <div className="flex flex-col space-y-3 lg:flex-row lg:space-y-0 lg:space-x-3 lg:items-center lg:justify-center">
-            <Link href="/cv-template" className="w-full lg:w-auto">
+            <Link
+              href="/resume-builder/choose-template"
+              className="w-full lg:w-auto"
+            >
               <Button
                 variant="outline"
                 className="w-full lg:w-[180px] border-blue-600 text-blue-600 cursor-pointer "
@@ -51,10 +54,12 @@ export default function Dashboard() {
                 Create resume
               </Button>
             </Link>
-            <Button className="w-full lg:w-[180px] bg-blue-600 hover:bg-blue-700 cursor-pointer ">
-              <Cloud className="w-4 h-4 mr-2" />
-              Upload Resume
-            </Button>
+            <Link href="/uploads-resume">
+              <Button className="w-full lg:w-[180px] bg-blue-600 hover:bg-blue-700 cursor-pointer ">
+                <Cloud className="w-4 h-4 mr-2" />
+                Upload Resume
+              </Button>
+            </Link>
           </div>
         </div>
       </main>

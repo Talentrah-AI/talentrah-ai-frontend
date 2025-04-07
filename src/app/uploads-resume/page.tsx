@@ -147,21 +147,21 @@ export default function UserCreatedResume() {
             <nav className="flex-1 space-y-1">
               <Link
                 href="#"
-                className="flex items-center px-3 py-2 text-sm text-gray-600 rounded-md hover:bg-gray-100"
+                className="flex items-center px-3 py-2 text-sm text-gray-600 rounded-md hover:bg-gray-100 w-50"
               >
                 <Search className="w-4 h-4 mr-3" />
                 <p className="text-[13px]">Home</p>
               </Link>
               <Link
                 href="#"
-                className="flex items-center px-3 py-2 text-sm text-gray-600 rounded-md hover:bg-gray-100"
+                className="flex items-center px-3 py-2 text-sm text-gray-600 rounded-md hover:bg-gray-100 w-50 "
               >
                 <BriefcaseBusiness className="w-4 h-4 mr-3" />
                 <p className="text-[13px]">Job tracker</p>
               </Link>
               <Link
                 href="#"
-                className="flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md w-52 ml-2 "
+                className="flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md w-50 ml-2 "
               >
                 <Settings className="w-4 h-4 mr-3" />
                 <p className="text-[13px]">Resume Builder</p>
@@ -231,7 +231,7 @@ export default function UserCreatedResume() {
                       </Link>
                     </div>
                     <div className="flex items-center">
-                      <Link href="/generate-cover-letter">
+                      <Link href="/uploads-resume/cover-letters">
                         <button className="px-4 py-2 w-[170px] text-blue-800 text-[13px] border border-blue-800 rounded-2xl cursor-pointer ">
                           Generate cover letter
                         </button>
@@ -380,7 +380,7 @@ export default function UserCreatedResume() {
                     </button>
                     <Link
                       className="cursor-pointer  w-full"
-                      href="/cover-letter"
+                      href="/uploads-resume/cover-letters"
                     >
                       <button className="px-4 py-1.5 text-[] text-blue-800 border border-blue-800 rounded-2xl cursor-pointer w-full  ">
                         Generate cover letter
@@ -392,7 +392,7 @@ export default function UserCreatedResume() {
                     <button className="px-4 py-1 text-white rounded-md bg-gradient-to-r from-[#0967d2] to-[#09cbd2]">
                       Resume
                     </button>
-                    <Link className="cursor-pointer" href="/my-cover-letter">
+                    <Link className="cursor-pointer" href="">
                       <button className="px-3 py-1.5 bg-white text-[13px] border-gray-300 rounded-md ml-2 cursor-pointer">
                         Cover Letter
                       </button>

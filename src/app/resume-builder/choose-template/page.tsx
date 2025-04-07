@@ -22,8 +22,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { TemplateCard } from '@/components/resume-builder/template-card';
-import '../cv-template/top/style.css';
+// import '../cv-template/top/style.css';
 import templatesForCv from '@/data/cv/templates';
+import { Avatar } from '@/components/ui/avatar';
+import Image from 'next/image';
 
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -141,7 +143,7 @@ export default function Dashboard() {
             </button>
           </div>
 
-          <nav className="flex-1 space-y-1">
+          <nav className="flex-1 space-y-1 ">
             <Link
               href="#"
               className="flex items-center px-3 py-2 text-sm text-gray-600 rounded-md w-52 hover:bg-gray-100"
@@ -174,14 +176,42 @@ export default function Dashboard() {
               <MessageSquare className="w-4 h-4 text-gray-500" />
               <span className="text-sm text-gray-600">Feedback</span>
             </div>
-            <div className="flex items-center pt-3">
-              <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-white">
-                <User className="w-4 h-4" />
+
+            {/* Profile */}
+            <div className="flex items-center justify-between mt-4 p-2">
+              <div className="flex items-center">
+                <Avatar className="h-8 w-8">
+                  <Image
+                    src="https://i.pravatar.cc/100?img=32"
+                    alt="Mercy Benjamin"
+                    width={100}
+                    height={100}
+                    className="rounded-full" // optional - if you want rounded avatar
+                  />
+                </Avatar>
+                <div className="ml-2">
+                  <div className="text-sm font-medium">Mercy Benjamin</div>
+                  <div className="text-xs text-gray-500">
+                    mercybenj01@gmail.com
+                  </div>
+                </div>
               </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium">Peter Hanson</p>
-                <p className="text-xs text-gray-500">peter.hanson@gmail.com</p>
-              </div>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-4 h-4"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </Button>
             </div>
           </div>
         </div>
@@ -366,7 +396,7 @@ export default function Dashboard() {
                 <div className="w-full md:w-auto flex justify-center md:justify-start">
                   <div className="flex gap-2">
                     <button
-                      className="border p-1 rounded-[10px] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                      className="border p-1 rounded-[10px] w-[30px] h-[30px] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                       onClick={() => handlePageChange(currentPage - 1)}
                       disabled={currentPage === 0}
                     >
@@ -390,7 +420,7 @@ export default function Dashboard() {
                     )}
 
                     <button
-                      className="border p-1 rounded-[10px] disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="border p-1 rounded-[10px] w-[30px] h-[30px] disabled:opacity-50 disabled:cursor-not-allowed"
                       onClick={() => handlePageChange(currentPage + 1)}
                       disabled={currentPage === templatesForCv.length - 1}
                     >

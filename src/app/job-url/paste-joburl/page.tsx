@@ -52,15 +52,16 @@ export default function Upload() {
   };
 
   const handleUploadContinue = () => {
-    setShowUploadModal(false);
+    setShowUploadModal(false); // Close upload modal
   };
 
   return (
     <>
       <div className="min-h-screen bg-[#F8F8F8] pb-8 ">
         <div className="flex ">
+          {/* Mobile Header */}
           <div className="lg:hidden fixed top-0 left-0 right-0 bg-white z-50 border-b">
-            <div className="flex items-center justify-between p-2">
+            <div className="flex items-center justify-between p-4">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="text-gray-600 cursor-pointer"
@@ -81,11 +82,13 @@ export default function Upload() {
             </div>
           </div>
 
+          {/* Mobile Sidebar */}
           {isMobileMenuOpen && (
             <div className="w-60 lg:hidden fixed inset-0 bg-opacity-50 z-40 bg-white">
               <div className="flex flex-col h-full  mt-5 pt-3 pb-3 ">
                 {' '}
                 {/* This makes top & bottom align properly */}
+                {/* Navigation (Top) */}
                 <nav className="flex-1 mt-9 space-y-1">
                   <Link
                     href="#"
@@ -109,6 +112,7 @@ export default function Upload() {
                     <p className="text-[13px]">Resume Builder</p>
                   </Link>
                 </nav>
+                {/* User Profile (Bottom) */}
                 <div className="p-4 space-y-3 text-[13px]">
                   <div className="flex items-center space-x-2">
                     <Phone className="w-4 h-4 text-gray-500" />
@@ -134,6 +138,7 @@ export default function Upload() {
             </div>
           )}
 
+          {/* Desktop Sidebar */}
           <div className="hidden lg:flex lg:w-60  lg:flex-col bg-white ">
             <div className="p-4 flex items-center justify-between">
               <div className="flex items-center">
@@ -156,6 +161,7 @@ export default function Upload() {
                 href="#"
                 className="flex items-center px-3 py-2 text-sm text-gray-600 rounded-md w-52 hover:bg-gray-100"
               >
+                {/* <User className="w-4 h-4 mr-3" /> */}
                 <BriefcaseBusiness className="w-4 h-4 mr-3" />
                 <p className="text-[13px]">Job tracker</p>
               </Link>
@@ -191,7 +197,9 @@ export default function Upload() {
             </div>
           </div>
 
+          {/* Main Content */}
           <div className="flex-1 flex flex-col bg-[#F8F8F8] lg:mt-0 mt-14">
+            {/* Desktop Header */}
             <header className="h-14 border-b lg:flex items-center justify-between px-4 bg-white hidden">
               <div></div>
               <div className="flex items-center space-x-7 text-[13px]">
@@ -220,6 +228,8 @@ export default function Upload() {
               </div>
             </header>
 
+            {/* Main Content Area */}
+
             <div className="mt-2.5">
               <div className="bg-white w-[98%] m-auto py-4 px-3 rounded-2xl ">
                 <div className="flex ">
@@ -243,7 +253,7 @@ export default function Upload() {
                     </p>
                   </div>
 
-                  <Link href="">
+                  <Link href="/my-cover-letter">
                     <Button className="w-[175px] mt-7 text-[13px] font-semibold text-white bg-[#0967D2] hover:bg-blue-700 rounded-2xl cursor-pointer ">
                       View cover letter history
                     </Button>
@@ -252,7 +262,9 @@ export default function Upload() {
               </div>
 
               <div className="w-[98%] mx-auto mt-6 flex flex-wrap gap-10 lg:gap-4 lg:flex-nowrap ">
+                {/* Left Panel (Resume Section) */}
                 <div className="w-full lg:w-[53%] min-h-[77vh] lg:min-h-[90vh] bg-white rounded-2xl p-4">
+                  {/* Resume Section */}
                   <div className="mb-4 relative">
                     <div className="relative">
                       <label htmlFor="resume-input">Resume</label>
@@ -271,6 +283,7 @@ export default function Upload() {
                         <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                       </div>
 
+                      {/* Dropdown Options */}
                       {showOptions && (
                         <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
                           {resumeOptions.map((resume, index) => (
@@ -294,6 +307,7 @@ export default function Upload() {
                     </div>
                   </div>
 
+                  {/* Role Section */}
                   <div className="mb-4">
                     <div className="relative">
                       <label htmlFor="role-input">Role</label>
@@ -305,7 +319,9 @@ export default function Upload() {
                       />
                     </div>
                     <div className="flex justify-between mt-1 text-[13.6px] text-blue-600">
-                      <p className="">Paste job URL</p>
+                      <Link href="">
+                        <p className="">Paste job URL</p>
+                      </Link>
                       <p className="text-[#414a53]">Paste a JD</p>
                     </div>
                   </div>
@@ -321,6 +337,7 @@ export default function Upload() {
                   </div>
                 </div>
 
+                {/* Right Panel (Empty) */}
                 <div className="w-full lg:w-[45%] min-h-[73vh] lg:min-h-[90vh] bg-white rounded-2xl p-4">
                   <h1>Preview resume</h1>
                 </div>
