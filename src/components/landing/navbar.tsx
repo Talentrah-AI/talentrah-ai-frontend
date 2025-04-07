@@ -23,17 +23,15 @@ export const Navbar = ({ isDark }: { isDark?: boolean }) => {
       }
     };
   }, []);
-  // base class for navbar items
+  // Base class for navbar items
   const baseNavClass =
     'fixed left-[50%] -translate-x-[50%] w-[95%] flex justify-between items-center z-30 font-gabarito rounded-2xl py-2.5 px-4 transition-all duration-500';
-
-  // scroll class for navbar items
+  // Dark mode class
+  const darkModeClass = 'bg-[#02152A] shadow border border-[#042954]';
+  const lightModeClass = 'bg-white shadow-nav border-none';
+  // Scroll class for navbar items
   const scrollClass = isScroll
-    ? `md:max-w-[876px] max-w-[90%] top-9 ${
-        isDark
-          ? 'bg-[#02152A] shadow border border-[#042954]'
-          : 'bg-white shadow-nav border-none'
-      }`
+    ? `md:max-w-[876px] max-w-[90%] top-9 ${isDark ? darkModeClass : lightModeClass}`
     : 'md:max-w-[1200px] max-w-full bg-transparent shadow-none top-3 border-none';
 
   return (
