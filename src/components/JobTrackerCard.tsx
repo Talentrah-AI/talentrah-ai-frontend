@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/dropdown-menu2';
 import { formatDistanceToNow } from 'date-fns';
 import { Job } from '@/types/Jobs';
-
 import { cn } from '@/lib/utils';
 
 interface JobCardProps {
@@ -22,10 +21,9 @@ interface JobCardProps {
   onDelete: (id: string) => void;
 }
 
-const { openModal } = useModal();
-
 const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { openModal } = useModal(); // Moved inside the component
 
   const handleDelete = () => {
     setIsOpen(true); // Only update state, no JSX here
@@ -39,10 +37,10 @@ const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
     <>
       {isOpen && (
         <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-          <div className="w-[533px] h-[197px] rounded-[22px] border border-[#F1F5FA] bg-white px-7 py-[15px]  flex flex-col gap-[32px] text-[#08121D] ">
-            <h2 className="text-lg ">Delete Job?</h2>
+          <div className="w-[533px] h-[197px] rounded-[22px] border border-[#F1F5FA] bg-white px-7 py-[15px] flex flex-col gap-[32px] text-[#08121D]">
+            <h2 className="text-lg">Delete Job?</h2>
             <p>Are you sure you want to delete this job?</p>
-            <div className="flex   w-[473px] h-[45px] gap-[14px]">
+            <div className="flex w-[473px] h-[45px] gap-[14px]">
               <Button
                 className="w-[229.5px] h-[45px] rounded-[12px] border-[0.5px] gap-[5px] pt-[5px] pr-[37px] pb-[5px] pl-[37px] bg-white text-[#08121D] focus:text-[#0967D2]"
                 onClick={() => setIsOpen(false)}
@@ -90,21 +88,21 @@ const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
               )}
             </div>
             <div className="flex flex-col">
-              <div className="flex items-center gap-2 ">
+              <div className="flex items-center gap-2">
                 <h3 className="font-gabarito font-normal text-base leading-5 tracking-normal text-[#08121D]">
                   {job.title}
                 </h3>
                 <Badge
                   className={`${getStatusColor(
                     job.status
-                  )}  h-[22px]  rounded-[38px] pt-[5px] pr-[10px] pb-[5px] pl-[10px] font-gabarito font-normal text-[10px] leading-[12px] tracking-[0px]`}
+                  )} h-[22px] rounded-[38px] pt-[5px] pr-[10px] pb-[5px] pl-[10px] font-gabarito font-normal text-[10px] leading-[12px] tracking-[0px]`}
                 >
                   {job.status}
                 </Badge>
               </div>
 
               <div className="flex flex-wrap gap-4 mt-3">
-                <Badge className="font-gabarito font-normal text-[10px] leading-[12px] text-gray-700 bg-white  gap-1">
+                <Badge className="font-gabarito font-normal text-[10px] leading-[12px] text-gray-700 bg-white gap-1">
                   <Image
                     src="/icons/location.png"
                     alt="Location"
@@ -114,7 +112,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
                   {job.location}
                 </Badge>
 
-                <Badge className="font-gabarito font-normal text-[10px] leading-[12px] text-gray-700 bg-white  gap-1">
+                <Badge className="font-gabarito font-normal text-[10px] leading-[12px] text-gray-700 bg-white gap-1">
                   <Image
                     src="/icons/clock.png"
                     alt="Type"
@@ -123,7 +121,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
                   />
                   {job.type}
                 </Badge>
-                <Badge className="font-gabarito font-normal text-[10px] leading-[12px] text-gray-700 bg-white  gap-1">
+                <Badge className="font-gabarito font-normal text-[10px] leading-[12px] text-gray-700 bg-white gap-1">
                   <Image
                     src="/icons/briefcase.png"
                     alt="Type"
@@ -145,7 +143,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
                 )}
 
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                  <div className="font-gabarito font-normal text-[10px] leading-[12px] text-gray-700  flex items-center gap-2">
+                  <div className="font-gabarito font-normal text-[10px] leading-[12px] text-gray-700 flex items-center gap-2">
                     <Image
                       src="/icons/calendar.png"
                       alt="Method"
@@ -161,7 +159,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
                       width={16}
                       height={16}
                     />
-                    <span className="flex items-center gap-2 font-gabarito font-normal text-[10px] leading-[12px] text-gray-700 ">
+                    <span className="flex items-center gap-2 font-gabarito font-normal text-[10px] leading-[12px] text-gray-700">
                       Date applied {formattedDate}
                     </span>
                   </div>
@@ -205,7 +203,9 @@ function getStatusColor(status: Job['status']): string {
     case 'Applied with AI':
       return 'bg-blue-50 text-blue-700 hover:bg-blue-50';
     case 'Applied manually':
-      return 'bg-[#FCEFE6] text-[#E36308] ';
+      return 'bg-[#FCEFE6] text-[#E36308]';
+    default:
+      return ''; // Add a default case to handle unexpected statuses
   }
 }
 

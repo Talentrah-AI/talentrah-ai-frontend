@@ -17,7 +17,7 @@ export function Sidebar() {
       <div className="flex flex-col w-[225px] h-[976px] gap-[16px]">
         <div className="flex justify-between items-center">
           <div>
-            <Link href="/dashboard" className="">
+            <Link href="/jobdashboard" className="">
               <Image
                 src="/Talentrah 2.png"
                 alt="Talentra Logo"
@@ -35,7 +35,7 @@ export function Sidebar() {
         <div className="flex flex-col flex-1">
           <nav className="space-y-1">
             <Link
-              href="/dashboard"
+              href="/jobdashboard"
               className={`${navLinkStyles} ${
                 isJobsActive ? 'bg-[#0967D2] text-white' : 'text-[#717A84]'
               }`}

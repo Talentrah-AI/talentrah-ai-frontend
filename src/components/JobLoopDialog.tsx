@@ -1,4 +1,3 @@
-import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -24,7 +23,7 @@ export function JobLoopDialog({ isOpen, onClose, onSetup }: JobLoopDialogProps) 
         </DialogHeader>
         <div>
           <p className="text-[14px] leading-[20px] text-[#515D68]">
-            Job Loop is where you set your job preferences, like role, industry, and location. Based on your choices, we'll show you a list of jobs that match, so you can easily find the right opportunities!
+            Job Loop is where you set your job preferences, like role, industry, and location. Based on your choices, we will show you a list of jobs that match, so you can easily find the right opportunities!
           </p>
           <div className="mt-6">
             <Button

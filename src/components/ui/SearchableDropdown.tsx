@@ -8,7 +8,7 @@ interface SearchableDropdownProps {
   placeholder?: string;
 }
 
-export function SearchableDropdown({ value, onChange, options, placeholder }: SearchableDropdownProps) {
+export function SearchableDropdown({ onChange, options, placeholder }: SearchableDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);

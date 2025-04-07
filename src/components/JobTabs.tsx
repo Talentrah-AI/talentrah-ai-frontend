@@ -5,12 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 import { usePathname } from "next/navigation";
 
-interface TabProps {
-  label: string;
-  isActive: boolean;
-  onClick: () => void;
-}
-
 interface FilterBadgeProps {
   label: string;
   onRemove: () => void;
@@ -34,21 +28,6 @@ function FilterBadge({ label, onRemove }: FilterBadgeProps) {
   );
 }
 
-function Tab({ label, isActive, onClick }: TabProps) {
-  return (
-    <button
-      className={`${
-        isActive
-          ? " px-[10px] py-[5px] gap-[5px] rounded-[6px]   bg-gradient-to-r from-[#0967D2] to-[#09CBD2] font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-white"
-          : " px-[10px] py-[5px]  gap-[5px] rounded-[6px] font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#717A84]"
-      }`}
-      onClick={onClick}
-    >
-      {label}
-    </button>
-  );
-}
-
 export function JobTabs() {
   const pathname = usePathname();
   const isJobMatchedPage = pathname === "/job-matched";
@@ -57,7 +36,6 @@ export function JobTabs() {
 
   return (
     <div className="bg-[#FFFFFF] rounded-[12px] p-4 w-[800px]">
-
       {/* Tabs row */}
       <div className="flex justify-between items-center mb-4">
         {/* Tabs */}
@@ -93,13 +71,12 @@ export function JobTabs() {
             Most recent
           </button>
           <button
-           className={`px-3 py-1.5 rounded-md text-[12px] font-medium transition-colors flex items-center justify-center text-center whitespace-nowrap ${ 
-            activeTab === "saved-jobs"
-              ? "bg-gradient-to-r from-[#0967D2] to-[#09CBD2] text-white"
-              : "text-[#717A84] hover:bg-gray-100"
-          }`}
-          
-            onClick={() => setActiveTab("saved-jobs")}            
+            className={`px-3 py-1.5 rounded-md text-[12px] font-medium transition-colors flex items-center justify-center text-center whitespace-nowrap ${
+              activeTab === "saved-jobs"
+                ? "bg-gradient-to-r from-[#0967D2] to-[#09CBD2] text-white"
+                : "text-[#717A84] hover:bg-gray-100"
+            }`}
+            onClick={() => setActiveTab("saved-jobs")}
           >
             Saved jobs
           </button>
@@ -107,20 +84,16 @@ export function JobTabs() {
 
         {/* Advance filters button */}
         <div className="flex gap-2 bg-white rounded-xl shadow-md w-[150px] h-[36px] p-4">
-        <div className="flex items-center gap-2 text-[#414A53]">
-          <Image src="/sort.svg" alt="sort" width={16} height={16} />
-          <span className="text-[14px] font-medium">
-            Advance filters
-          </span>
+          <div className="flex items-center gap-2 text-[#414A53]">
+            <Image src="/sort.svg" alt="sort" width={16} height={16} />
+            <span className="text-[14px] font-medium">Advance filters</span>
+          </div>
         </div>
-      </div>
       </div>
 
       {/* Filters section */}
       <div className="flex items-center gap-2">
-        <span className="text-[#414A53] font-medium text-[12px]">
-          Filters
-        </span>
+        <span className="text-[#414A53] font-medium text-[12px]">Filters</span>
         <div className="flex flex-wrap gap-2">
           <FilterBadge label="UI/UX Designer" onRemove={() => {}} />
           <FilterBadge label="Product Designer" onRemove={() => {}} />
