@@ -6,9 +6,6 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
 
-// interface ResumeOptimizationModalProps {
-//   onClose: () => void;
-// }
 
 const ResumeOptimizationModal: React.FC = () => {
   const { closeModal } = useModal();

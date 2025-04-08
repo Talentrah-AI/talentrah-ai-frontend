@@ -23,7 +23,6 @@ import { Suspense, useEffect, useState } from 'react';
 function Apply() {
   const [isLoading, setIsLoading] = useState(true);
   const { openModal } = useModal();
-  // const [activeModal, setActiveModal] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,13 +38,7 @@ function Apply() {
   const jobTitle = searchParams.get('jobTitle');
   const company = searchParams.get('company');
 
-  // const openModal = (modalID: string) => {
-  //   setActiveModal(modalID);
-  // };
-
-  // const handleCloseModal = () => {
-  //   setActiveModal(null);
-  // };
+ 
 
   if (isLoading) {
     return <ApplySkeleton />; // Render ApplySkeleton when loading
@@ -313,9 +306,7 @@ function Apply() {
               </button>
             </span>
           </div>
-          {/* {activeModal === 'changeResume' && (
-            <ChangeResumeModal onClose={handleCloseModal} />
-          )} */}
+          
 
           {/* Job Details Section */}
           <div className="flex flex-col w-[412px] h-[775px] gap-[24px] p-[22px_16px] rounded-[12px] bg-white">
@@ -465,19 +456,7 @@ function Apply() {
           </Button>
         </div>
       </div>
-      {/* {activeModal === 'generate' && (
-        <GenerateCoverLetterModal
-          onClose={handleCloseModal}
-          jobTitle={jobTitle}
-          company={company}
-        />
-      )}
-      {activeModal === 'optimize' && (
-        <ResumeOptimizationModal onClose={handleCloseModal} />
-      )}
-      {activeModal === 'preview' && (
-        <PreviewResumeModal onClose={handleCloseModal} />
-      )} */}
+     
     </div>
   );
 }

@@ -1,10 +1,6 @@
 'use client';
 
-<<<<<<< HEAD
-import { Bell, ChevronDown, Globe, Loader2, Plus } from 'lucide-react';
-=======
 import { Bell, ChevronDown, Globe, Loader2, Plus, Crown } from 'lucide-react';
->>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -25,12 +21,7 @@ import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import Image from 'next/image';
-<<<<<<< HEAD
-import { useRouter } from 'next/navigation';
-import { useSubscription } from '@/context/SubscriptionContext';
-=======
 import { useRouter, usePathname } from 'next/navigation';
->>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
 
 interface Notification {
   id: string;
@@ -56,13 +47,8 @@ const languages: Language[] = [
 export function Header() {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const queryClient = useQueryClient();
-<<<<<<< HEAD
-  const { isPremium } = useSubscription();
-  const router = useRouter();
-=======
   const router = useRouter();
   const pathname = usePathname();
->>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
 
   // Fetch notifications
   const { data: notifications = [], isLoading: isLoadingNotifications } =
@@ -84,15 +70,6 @@ export function Header() {
   });
 
   // Fetch subscription status
-<<<<<<< HEAD
-  // const { data: subscription } = useQuery({
-  //   queryKey: ['subscription'],
-  //   queryFn: async () => {
-  //     const response = await endpoints.subscription.getPlan();
-  //     return response.data;
-  //   },
-  // });
-=======
   const { data: subscription } = useQuery({
     queryKey: ['subscription'],
     queryFn: async () => {
@@ -100,7 +77,6 @@ export function Header() {
       return response.data;
     },
   });
->>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
 
   // Mark notification as read
   const markAsReadMutation = useMutation({
@@ -145,17 +121,6 @@ export function Header() {
   };
 
   const handleUpgradeClick = async () => {
-<<<<<<< HEAD
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('previousRoute', window.location.pathname);
-    }
-    router.push('/pricing');
-    toast.success('Redirecting to upgrade page...');
-  };
-
-  return (
-    <header className="fixed top-0 z-50 flex items-center justify-start bg-white border-opacity-50 w-full h-[64px] pl-4 pr-6 pt-4 pb-4 gap-2 border-b border-[#EFF0F2]">
-=======
     try {
       // Implement your upgrade flow here
       toast.success('Redirecting to upgrade page...');
@@ -173,7 +138,6 @@ export function Header() {
 
   return (
     <header className="fixed top-0 z-50 flex items-center justify-start bg-white border-opacity-50 w-full h-[64px] pl-29 pr-6 pt-4 pb-4 gap-2 border-b border-[#EFF0F2]">
->>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
       <div className="h-[32px] w-[1142px] flex items-center gap-4 justify-between">
         <div className="flex"></div>
         <div className="flex items-start gap-4 w-[540px] justify-between">
@@ -183,10 +147,7 @@ export function Header() {
            rounded-[12px] bg-[#0967D2] hover:bg-[#0967D2]
            shadow-[0px_4px_15px_rgba(41,45,50,0.05)] 
             cursor-pointer"
-<<<<<<< HEAD
-=======
             onClick={handleCreateJobLoop}
->>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
           >
             <Plus className="h-[16px] w-[16px] text-white" />
             <span className="font-gabarito font-normal text-[12px] leading-[16px] tracking-[0px] text-white">
@@ -301,24 +262,6 @@ export function Header() {
           </DropdownMenu>
 
           {/* Upgrade to Premium */}
-<<<<<<< HEAD
-          <Button
-            variant="outline"
-            className="w-[149.739px] h-[32px] px-[12px] py-[8px] gap-[10px] rounded-[12px] border-[#07A2A8] border-[0.5px]"
-            onClick={handleUpgradeClick}
-            disabled={isPremium} // Use isPremium from SubscriptionContext
-          >
-            <Image
-              src="/Layer_2.svg"
-              alt="Premium Member"
-              width={13}
-              height={16}
-            />
-            <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#07A2A8]">
-              {isPremium ? 'Premium' : 'Upgrade to Premium'}
-            </span>
-          </Button>
-=======
           {isDashboardPage ? (
             <Button
               variant="outline"
@@ -355,7 +298,6 @@ export function Header() {
               </span>
             </Button>
           )}
->>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
         </div>
       </div>
     </header>
