@@ -22,10 +22,9 @@ interface JobCardProps {
   onDelete: (id: string) => void;
 }
 
-const { openModal } = useModal();
-
 const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { openModal } = useModal();
 
   const handleDelete = () => {
     setIsOpen(true); // Only update state, no JSX here

@@ -6,7 +6,7 @@ import { DialogProvider } from '@/context/DialogContext';
 import { Toaster } from 'sonner';
 import '../globals.css';
 import { Providers } from '../providers';
-import GlobalModal from '@/components/GlobalModal';
+
 import ClientLayoutContent from './ClientLayoutContent'; // New client component
 
 const gabarito = Gabarito({

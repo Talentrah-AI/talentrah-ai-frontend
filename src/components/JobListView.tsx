@@ -4,7 +4,6 @@ import { mockJobs } from '@/components/data/mockJobs';
 import JobCard from '@/components/JobTrackerCard';
 import TabNavigation from './TabNavigation';
 import Pagination from './Pagination';
-import { useModal } from '@/context/ModalContext';
 import { Job } from '@/types/Jobs';
 
 const itemsPerPage = 7;
