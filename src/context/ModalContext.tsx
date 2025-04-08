@@ -8,6 +8,10 @@ interface ModalProps {
 
 interface ModalContextType {
   isOpen: boolean;
+<<<<<<< HEAD
+=======
+  modalType: string | null;
+>>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
   modalContent: ReactNode | null;
   modalProps: ModalProps | null;
   openModal: (content: ReactNode, props?: ModalProps) => void;
@@ -18,6 +22,10 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+<<<<<<< HEAD
+=======
+  const [modalType] = useState<string | null>(null);
+>>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
   const [modalContent, setModalContent] = useState<ReactNode | null>(null);
   const [modalProps, setModalProps] = useState<ModalProps | null>(null);
 
@@ -35,7 +43,18 @@ export function ModalProvider({ children }: { children: ReactNode }) {
 
   return (
     <ModalContext.Provider
+<<<<<<< HEAD
       value={{ isOpen, modalContent, modalProps, openModal, closeModal }}
+=======
+      value={{
+        isOpen,
+        modalType,
+        modalContent,
+        modalProps,
+        openModal,
+        closeModal,
+      }}
+>>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
     >
       {children}
     </ModalContext.Provider>

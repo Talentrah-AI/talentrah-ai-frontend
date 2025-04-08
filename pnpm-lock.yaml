@@ -77,6 +77,15 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+<<<<<<< HEAD
+=======
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      framer-motion:
+        specifier: ^12.6.3
+        version: 12.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+>>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
       lucide-react:
         specifier: ^0.479.0
         version: 0.479.0(react@19.1.0)
@@ -4666,6 +4675,24 @@ snapshots:
 
   minimist@1.2.8: {}
 
+<<<<<<< HEAD
+=======
+  motion-dom@12.6.3:
+    dependencies:
+      motion-utils: 12.6.3
+
+  motion-utils@12.6.3: {}
+
+<<<<<<< HEAD
+=======
+  motion-dom@12.6.3:
+    dependencies:
+      motion-utils: 12.6.3
+
+  motion-utils@12.6.3: {}
+
+>>>>>>> c051388 (Implementing the job-tracker page)
+>>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
   ms@2.1.3: {}
 
   nanoid@3.3.11: {}
@@ -4782,6 +4809,16 @@ snapshots:
 
   picomatch@4.0.2: {}
 
+<<<<<<< HEAD
+=======
+  pnpm@10.7.1: {}
+
+<<<<<<< HEAD
+=======
+  pnpm@10.7.1: {}
+
+>>>>>>> c051388 (Implementing the job-tracker page)
+>>>>>>> b7a5e52850faecb387c63a04dac16b6be2b06078
   possible-typed-array-names@1.1.0: {}
 
   postcss-value-parser@4.2.0: {}
