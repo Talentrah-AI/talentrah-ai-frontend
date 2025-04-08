@@ -134,9 +134,7 @@ export function Header() {
     router.push('/job-setup?fromJobCard=true');
   };
 
-  const isJobSetupPage = pathname === '/job-setup';
-  const isJobMatchedPage = pathname === '/job-matched';
-  const isDashboardPage = pathname === '/dashboard';
+  const isDashboardPage = pathname === '/jobdashboard';
 
   return (
     <header className="fixed top-0 z-50 flex items-center justify-start bg-white border-opacity-50 w-full h-[64px] pl-29 pr-6 pt-4 pb-4 gap-2 border-b border-[#EFF0F2]">

@@ -1,7 +1,6 @@
 // src/app/(userdashboard)/job-matched/page.tsx
 'use client';
 
-import { useState } from 'react';
 import { JobCard } from '@/components/JobCard';
 import { JobTabs } from '@/components/JobTabs';
 import { UserProfile } from '@/components/UserProfile';
@@ -76,12 +75,10 @@ export default function JobMatchedPage() {
   ];
 
   return (
-    <div className="h-full overflow-y-auto">
-      <div className="bg-[#F7F8F9] rounded-[24px] px-6 py-6 max-w-[1300px] w-full mx-auto">
-        <div className="w-full max-w-[1200px] mx-auto">
+    <div className="max-w-7xl mx-auto pl-3">
           <div className="grid grid-cols-12 gap-6">
-            {/* Centered Job Listings Section */}
-            <div className="col-span-8 flex justify-center">
+            {/* Job List Container */}
+            <div className="col-span-8 w-[824px] rounded-t-[24px] bg-[#F8F8F8] flex flex-col px-4">
               <div className="w-[824px] bg-[#F8F8F8] rounded-t-[24px]">
                 <div className="w-full py-[15px] rounded-t-[24px] flex justify-center">
                   <JobTabs />
@@ -102,7 +99,5 @@ export default function JobMatchedPage() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 }

@@ -5,7 +5,7 @@ import { JobTabs } from "@/components/JobTabs";
 import { JobList } from "@/components/JobList";
 import { UserProfile } from "@/components/UserProfile";
 import { AutoApply } from "@/components/AutoApply";
-import { WelcomeModal } from "@/components/WelcomeModal";
+import { WelcomeModal } from "@/components/modal/WelcomeModal";
 import { AIApplyPopup } from "@/components/AIApplyPopup";
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -13,12 +13,15 @@ import { useSearchParams, useRouter } from "next/navigation";
 export default function DashboardPage() {
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showAIApplyPopup, setShowAIApplyPopup] = useState(false);
+  const [activeTab, setActiveTab] = useState<
+    "recommended" | "saved" | "top-matched" | "recent"
+  >("recommended");
 
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const jobTitle = searchParams.get("jobTitle") || "Unknown Job"; // Default if not provided
-  const location = searchParams.get("location") || "Unknown Location"; // Default if not provided
+  const jobTitle = searchParams.get("jobTitle") || "Unknown Job";
+  const location = searchParams.get("location") || "Unknown Location";
 
   useEffect(() => {
     // Check if this is the first visit for the Welcome Modal
@@ -61,13 +64,13 @@ export default function DashboardPage() {
             {/* Job List Container */}
             <div className="col-span-8 w-[824px] rounded-t-[24px] bg-[#F8F8F8] flex flex-col px-4">
               <div className="w-full py-[15px] rounded-t-[24px] flex justify-center">
-                <JobTabs />
+                <JobTabs activeTab={activeTab} setActiveTab={setActiveTab} />
               </div>
               <div className="w-full py-[15px] rounded-t-[24px]">
                 <AutoApply />
               </div>
               <div className="space-y-4 w-full flex flex-col items-center">
-                <JobList />
+                <JobList activeTab={activeTab} />
               </div>
             </div>
 
@@ -90,8 +93,8 @@ export default function DashboardPage() {
         isOpen={showAIApplyPopup}
         onClose={handleCloseAIApplyPopup}
         onConfirm={handleConfirmAIApply}
-        jobTitle={jobTitle} // Pass jobTitle to the popup
-        location={location} // Pass location to the popup
+        jobTitle={jobTitle}
+        location={location}
       />
     </>
   );

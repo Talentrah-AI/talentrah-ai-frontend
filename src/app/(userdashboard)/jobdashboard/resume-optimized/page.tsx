@@ -329,7 +329,7 @@ function ResumeOptimized() {
                   </button>
                   {isSkillsOpen && (
                     <p className="mt-2 font-gabarito font-normal text-[12px] text-[#515D68]">
-                      Added key skills like "user research" and "design systems" to improve your match score.
+                      Added key skills like user research and design systems to improve your match score.
                     </p>
                   )}
                 </div>
@@ -368,22 +368,26 @@ function ResumeOptimized() {
                     className="flex items-center justify-between w-full"
                   >
                     <div className="flex items-center justify-start gap-[5px] w-full">
-                      <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
+                      <Image src="/Frame.svg" alt="Frame dots" width={5} height={5} />
                       <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
                         Personal Information
                       </h4>
-                      <img
+                      <Image
                         src="/edit.svg"
                         alt="Edit"
-                        className="w-4 h-4 text-[#717A84] cursor-pointer"
+                        width={14}
+                        height={14}
+                        className="cursor-pointer"
                         onClick={() => handleEditSection("Personal Information")}
                       />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <img
+                       </div>
+                      <div className="flex items-center gap-2">
+                      <Image
                         src="/trash.svg"
-                        alt="edit"
-                        className="w-4 h-4 cursor-pointer"
+                        alt="Delete"
+                        width={14}
+                        height={14}
+                        className="cursor-pointer"
                         onClick={() => handleDeleteSection("Personal Information")}
                       />
                       {isPersonalInfoEditorOpen ? (
@@ -429,23 +433,27 @@ function ResumeOptimized() {
                     className="flex items-center justify-between w-full"
                   >
                     <div className="flex items-center justify-start gap-[5px] w-full">
-                      <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
+                      <Image src="/Frame.svg" alt="Frame dots" width={5} height={5} />
                       <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
                         Professional Summary
                       </h4>
-                      <img
+                      <Image
                         src="/edit.svg"
                         alt="Edit"
-                        className="w-4 h-4 text-[#717A84] cursor-pointer"
-                        onClick={() => handleEditSection("Professional Summary")}
+                        width={14}
+                        height={14}
+                        className="cursor-pointer"
+                        onClick={() => handleEditSection("Professional summary")}
                       />
                     </div>
                     <div className="flex items-center gap-2">
-                      <img
+                    <Image
                         src="/trash.svg"
-                        alt="edit"
-                        className="w-4 h-4 cursor-pointer"
-                        onClick={() => handleDeleteSection("Professional Summary")}
+                        alt="Delete"
+                        width={14}
+                        height={14}
+                        className="cursor-pointer"
+                        onClick={() => handleDeleteSection("Professional summary")}
                       />
                       {isProfessionalSummaryOpen ? (
                         <ChevronUp className="w-6 h-6 text-[#717A84]" />
@@ -471,23 +479,27 @@ function ResumeOptimized() {
                     className="flex items-center justify-between w-full"
                   >
                     <div className="flex items-center justify-start gap-[5px] w-full">
-                      <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
+                    <Image src="/Frame.svg" alt="Frame dots" width={5} height={5} />
                       <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
                         Work Experience
                       </h4>
-                      <img
+                      <Image
                         src="/edit.svg"
                         alt="Edit"
-                        className="w-4 h-4 text-[#717A84] cursor-pointer"
-                        onClick={() => handleEditSection("Work Experience")}
+                        width={14}
+                        height={14}
+                        className="cursor-pointer"
+                        onClick={() => handleEditSection("Work experience")}
                       />
                     </div>
                     <div className="flex items-center gap-2">
-                      <img
+                    <Image
                         src="/trash.svg"
-                        alt="edit"
-                        className="w-4 h-4 cursor-pointer"
-                        onClick={() => handleDeleteSection("Work Experience")}
+                        alt="Delete"
+                        width={14}
+                        height={14}
+                        className="cursor-pointer"
+                        onClick={() => handleDeleteSection("Work experience")}
                       />
                       {isWorkExperienceOpen ? (
                         <ChevronUp className="w-6 h-6 text-[#717A84]" />
@@ -531,22 +543,26 @@ function ResumeOptimized() {
                     className="flex items-center justify-between w-full"
                   >
                     <div className="flex items-center justify-start gap-[5px] w-full">
-                      <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
+                    <Image src="/Frame.svg" alt="Frame dots" width={5} height={5} />
                       <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
                         Education
                       </h4>
-                      <img
+                      <Image
                         src="/edit.svg"
                         alt="Edit"
-                        className="w-4 h-4 text-[#717A84] cursor-pointer"
+                        width={14}
+                        height={14}
+                        className="cursor-pointer"
                         onClick={() => handleEditSection("Education")}
                       />
                     </div>
                     <div className="flex items-center gap-2">
-                      <img
+                    <Image
                         src="/trash.svg"
-                        alt="edit"
-                        className="w-4 h-4 cursor-pointer"
+                        alt="Delete"
+                        width={14}
+                        height={14}
+                        className="cursor-pointer"
                         onClick={() => handleDeleteSection("Education")}
                       />
                       {isEducationOpen ? (
@@ -586,22 +602,26 @@ function ResumeOptimized() {
                     className="flex items-center justify-between w-full"
                   >
                     <div className="flex items-center justify-start gap-[5px] w-full">
-                      <img src="/Frame.svg" alt="Frame dots" className="w-2 h-2" />
+                    <Image src="/Frame.svg" alt="Frame dots" width={5} height={5} />
                       <h4 className="font-gabarito font-normal text-[12px] text-[#08121D] uppercase">
                         Certification
                       </h4>
-                      <img
+                      <Image
                         src="/edit.svg"
                         alt="Edit"
-                        className="w-4 h-4 text-[#717A84] cursor-pointer"
+                        width={14}
+                        height={14}
+                        className="cursor-pointer"
                         onClick={() => handleEditSection("Certification")}
                       />
                     </div>
                     <div className="flex items-center gap-2">
-                      <img
+                    <Image
                         src="/trash.svg"
-                        alt="edit"
-                        className="w-4 h-4 cursor-pointer"
+                        alt="Delete"
+                        width={14}
+                        height={14}
+                        className="cursor-pointer"
                         onClick={() => handleDeleteSection("Certification")}
                       />
                       {isCertificationOpen ? (
@@ -651,7 +671,7 @@ function ResumeOptimized() {
           </div>
           <div className="flex flex-col w-[412px] h-[116px] rounded-[12px] bg-white p-4 gap-4">
             <div className="flex items-center justify-start gap-[5px] w-full">
-              <img src="/message-question.svg" alt="message" className="w-4 h-4" />
+              <Image src="/message-question.svg" alt="message" width={16} height={16} />
               <h3 className="font-gabarito font-normal text-[12px] text-[#08121D]">
                 How do you like this analyzed resume?
               </h3>
@@ -661,7 +681,7 @@ function ResumeOptimized() {
                 variant="outline"
                 className="flex items-center gap-x-2 font-gabarito font-normal w-[179px] h-[36px] text-[12px] text-[#08121D] bg-[#E6FAFB] border-[#3AD5DB] rounded-[8px] px-4 py-1"
               >
-                <img src="/like.svg" alt="Like" className="w-4 h-4" />
+                <Image src="/like.svg" alt="Like" width={16} height={16} />
                 Looks great
               </Button>
 
@@ -669,7 +689,7 @@ function ResumeOptimized() {
                 variant="outline"
                 className="flex items-center gap-x-2 font-gabarito font-normal w-[179px] h-[36px] text-[12px] text-[#08121D] bg-[#FCEAE6] border-[#E95439] rounded-[8px] px-4 py-1"
               >
-                <img src="/dislike.svg" alt="Unlike" className="w-4 h-4" />
+                <Image src="/dislike.svg" alt="Unlike" width={16} height={16} />
                 Not what I expected
               </Button>
             </div>

@@ -126,11 +126,11 @@ function Apply() {
                     <ul className="space-y-3">
                       <li className="flex items-center gap-2 font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#515D68]">
                         <Image src="/Ellipse.svg" alt="" width={16} height={16} />
-                        Missing important keywords like "user research", "design systems", and "accessibility standards"
+                        Missing important keywords like user research, design systems, and accessibility standards.
                       </li>
                       <li className="flex items-center gap-2 font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#515D68]">
                         <Image src="/Ellipse.svg" alt="" width={16} height={16} />
-                        Your resume lacks measurable achievements (e.g., "Redesigned a checkout flow, improving conversion rates by 15%")
+                        Your resume lacks measurable achievements (e.g., Redesigned a checkout flow, improving conversion rates by 15%)
                       </li>
                       <li className="flex items-center gap-2 font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#515D68]">
                         <Image src="/Ellipse.svg" alt="" width={16} height={16} />
@@ -156,7 +156,7 @@ function Apply() {
                         <Image src="/Ellipse.svg" alt="" width={16} height={16} />
                         <div>
                           <span className="text-black">Unrelated Certifications: </span>
-                          <span>Your certification in Social Media Marketing doesn't align with UI/UX design.</span>
+                          <span>Your certification in Social Media Marketing doesn’t align with UI/UX design.</span>
                         </div>
                       </li>
                       <li className="flex items-start gap-2 font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#515D68]">

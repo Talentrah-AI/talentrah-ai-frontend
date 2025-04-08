@@ -23,10 +23,11 @@ interface JobCardProps {
   daysAgo: number;
   applicants: number;
   companyLogo: string;
+  isSaved?: boolean;
+  onSave?: () => void;
 }
 
 export function JobCard({
-  id,
   title,
   company,
   location,
@@ -40,9 +41,10 @@ export function JobCard({
   daysAgo,
   applicants,
   companyLogo,
+  isSaved = false,
+  onSave,
 }: JobCardProps) {
   const router = useRouter();
-  const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleApply = () => {
@@ -55,31 +57,8 @@ export function JobCard({
     // Simulate processing (replaceable with API call later)
     setTimeout(() => {
       setIsLoading(false);
-      router.push(`/jobdashboard/premium-user-apply?${params.toString()}`); // Fixed route
-    }, 2000); // 2-second delay
-
-    // Future API Integration Example:
-    /*
-    setIsLoading(true);
-    fetch('/api/apply', {
-      method: 'POST',
-      body: JSON.stringify({ jobTitle, company }),
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then(response => response.json())
-      .then(() => {
-        setIsLoading(false);
-        router.push(`/jobdashboard/premium-user-apply?${params.toString()}`);
-      })
-      .catch(error => {
-        console.error('Error applying:', error);
-        setIsLoading(false);
-      });
-    */
-  };
-
-  const handleLike = () => {
-    setIsLiked(!isLiked);
+      router.push(`/jobdashboard/premium-user-apply?${params.toString()}`);
+    }, 2000);
   };
 
   const getProgressColor = (quality: "Excellent" | "Good" | "Fair") => {
@@ -97,7 +76,6 @@ export function JobCard({
 
   return (
     <div className="relative">
-      {/* Job Card Content */}
       <div
         className={`transition-all duration-200 ${
           isLoading ? "blur-sm opacity-50" : ""
@@ -112,7 +90,7 @@ export function JobCard({
                     {companyLogo ? (
                       <Image
                         src={companyLogo}
-                        alt={`${company} logo`}
+                        alt={company}
                         width={28}
                         height={28}
                         className="w-7 h-7 object-contain"
@@ -127,23 +105,16 @@ export function JobCard({
                     </h3>
                     <div className="flex flex-wrap items-center gap-[10px] font-gabarito font-normal text-[10px] leading-[12px] text-[#717A84]">
                       <div className="flex items-center gap-[6px] border-r-[1px] border-r-gray-200 pr-[10px]">
-                        <MapPin className="h-4 w-4 shrink-0" />
+                        <MapPin className="h-3.5 w-3.5 shrink-0" />
                         <span className="truncate">{location}</span>
                       </div>
                       <div className="flex items-center gap-[6px] border-r-[1px] border-r-gray-200 pr-[10px]">
-                        <Image
-                          src="/briefcase.svg"
-                          alt="Briefcase"
-                          width={14}
-                          height={14}
-                          className="shrink-0"
-                        />
                         <span className="truncate">{jobType}</span>
                       </div>
                       {remote && (
                         <div className="flex items-center gap-[6px] border-r-[1px] border-r-gray-200 pr-[10px]">
                           <Image
-                            src="/clock.svg"
+                            src="/globe.svg"
                             alt="Remote"
                             width={14}
                             height={14}
@@ -225,13 +196,13 @@ export function JobCard({
                   <Button
                     variant="outline"
                     size="icon"
-                    onClick={handleLike}
+                    onClick={onSave}
                     className={`w-[38px] h-[34px] p-[6px_8px] gap-[10px] rounded-[8px] border ${
-                      isLiked ? 'border-[#9DEAED] bg-[#E6FAFB]' : 'border-[#9DEAED] bg-[#E6FAFB]'
+                      isSaved ? 'border-[#9DEAED] bg-[#E6FAFB]' : 'border-[#9DEAED] bg-[#E6FAFB]'
                     }`}
                   >
                     <Heart
-                      className={`h-4 w-4 ${isLiked ? 'text-[#07A2A8] fill-[#07A2A8]' : 'text-[#07A2A8]'}`}
+                      className={`h-4 w-4 ${isSaved ? 'text-[#07A2A8] fill-[#07A2A8]' : 'text-[#07A2A8]'}`}
                     />
                   </Button>
                   <Button
@@ -240,7 +211,7 @@ export function JobCard({
                     disabled={isLoading}
                   >
                     <span className="font-[Gabarito] font-normal text-[13.46px] leading-[16.83px] tracking-[0px] text-white text-center">
-                      {isLoading ? "Applying..." : "Apply"}
+                      {isLoading ? 'Applying...' : 'Apply'}
                     </span>
                   </Button>
                 </div>
@@ -250,7 +221,6 @@ export function JobCard({
         </Card>
       </div>
 
-      {/* Loading Spinner Overlay */}
       {isLoading && <LoadingSpinner message="" />}
     </div>
   );

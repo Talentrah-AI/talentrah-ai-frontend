@@ -2,7 +2,6 @@
 "use client";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { X } from "lucide-react";
 import Image from "next/image";
 
 interface JobDetailsModalProps {
@@ -12,7 +11,7 @@ interface JobDetailsModalProps {
     company: string;
 }
 
-export function JobDetailsModal({ isOpen, onClose, jobTitle, company }: JobDetailsModalProps) {
+export function JobDetailsModal({ isOpen, onClose }: JobDetailsModalProps) {
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="sm:max-w-[649px] h-[628px] p-6 bg-white rounded-[12px] shadow-lg">

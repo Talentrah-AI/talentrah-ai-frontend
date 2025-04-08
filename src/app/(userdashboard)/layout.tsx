@@ -1,22 +1,18 @@
 import type { Metadata } from 'next';
 import { Gabarito } from 'next/font/google';
-import { ModalProvider } from '@/context/ModalContext';
-import { SubscriptionProvider } from '@/context/SubscriptionContext';
-import { DialogProvider } from '@/context/DialogContext';
 import { Toaster } from 'sonner';
 import '../globals.css';
 import { Providers } from '../providers';
-
-import ClientLayoutContent from './ClientLayoutContent'; // New client component
+import ClientLayoutContent from './ClientLayoutContent';
 
 const gabarito = Gabarito({
   subsets: ['latin'],
-  variable: '--font-gabarito',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'Talentra',
-  description: 'Your next career move starts here',
+  title: 'Talentrah',
+  description: 'AI-powered job application platform',
 };
 
 export default function UserDashboardLayout({
@@ -25,17 +21,11 @@ export default function UserDashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={gabarito.variable}>
+    <html lang="en">
       <body className={gabarito.className}>
         <Providers>
-          <ModalProvider>
-            <SubscriptionProvider>
-              <DialogProvider>
-                <ClientLayoutContent>{children}</ClientLayoutContent>
-                <Toaster />
-              </DialogProvider>
-            </SubscriptionProvider>
-          </ModalProvider>
+          <ClientLayoutContent>{children}</ClientLayoutContent>
+          <Toaster />
         </Providers>
       </body>
     </html>

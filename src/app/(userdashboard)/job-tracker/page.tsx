@@ -1,3 +1,5 @@
+'use client';
+
 import JobLoop from '@/components/JobLoop';
 import React from 'react';
 
