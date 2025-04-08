@@ -1,5 +1,6 @@
 import React, { SetStateAction } from 'react'
 import ProfileEdit from './ProfileEdit'
+import { UserData } from './AccoutSetting'
 
 interface User{
   firstName: string
@@ -18,7 +19,7 @@ interface User{
 interface ProfileInfoProps {
   user:User
   isEditing: boolean;
-  handleSaveChanges:any;
+  handleSaveChanges: (updatedData: Partial<UserData>) => void;
   setIsEditing:(value: SetStateAction<boolean>) => void;
 }
 

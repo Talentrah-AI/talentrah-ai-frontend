@@ -31,7 +31,7 @@ export function LogoutModal({ isOpen, onClose, onConfirm }: LogoutModalProps) {
           </button>
           <DialogTitle>Log out</DialogTitle>
           <DialogDescription>
-            Are you sure you want to log out? You'll need to sign in again to access your account.
+            Are you sure you want to log out? You&apos;ll need to sign in again to access your account.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex flex-col sm:flex-row gap-2 ">

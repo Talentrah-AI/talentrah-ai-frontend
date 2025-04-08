@@ -34,7 +34,7 @@ export function ResetPasswordForm() {
       // Redirect back to security settings
       router.push("/security-settings")
     } catch (err) {
-      setError("An error occurred. Please try again.")
+      setError(`An error occurred. Please try again.${err}`)
     } finally {
       setIsSubmitting(false)
     }
@@ -57,7 +57,7 @@ export function ResetPasswordForm() {
         <p className="text-gray-500 text-center mb-8">
           Enter your new password below to secure your account.
           <br />
-          Make sure it's strong and easy to remember!
+          Make sure it&apos;s strong and easy to remember!
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">

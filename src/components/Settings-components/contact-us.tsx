@@ -43,8 +43,8 @@ export default function ContactUsPage() {
         <div className="text-white rounded-xl shadow-sm p-3 md:p-4 bg-[#0967D2]">
         <h2 className="text-2xl font-bold mb-4">Reach out to us!</h2>
           <p className="mb-6 text-[14px] font-normal">
-            We're committed to helping you succeed in your job search. Whether you have questions, need support, or want
-            to share feedback, we're here for you. Feel free to contact us through any of the options below.
+          We&apos;re committed to helping you succeed in your job search. Whether you have questions, need support, or want
+          to share feedback, we&apos;re here for you. Feel free to contact us through any of the options below.
           </p>
         </div>
         
@@ -221,7 +221,7 @@ export default function ContactUsPage() {
               </div>
             </div>
             <h2 className="text-xl font-bold mb-2">Message sent successfully!</h2>
-            <p className="text-gray-500 mb-6">Thanks for reaching out to us. We'll get back to you soon.</p>
+            <p className="text-gray-500 mb-6">Thanks for reaching out to us. We&apos;ll get back to you soon.</p>
             <Button className="w-full" onClick={() => setIsOpen(false)}>
               Back to contact us
             </Button>

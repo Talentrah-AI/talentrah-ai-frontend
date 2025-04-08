@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
-const ProfileCard = ({ user, onEdit }: ProfileViewProps) => {
+const ProfileCard = ({ user}: ProfileViewProps) => {
   return (
     <div className='flex flex-col '>
     <div className='relative '>

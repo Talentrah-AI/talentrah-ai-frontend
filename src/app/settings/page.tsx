@@ -1,5 +1,5 @@
 
-import AccoutSetting from './Settings-components/AccoutSetting'
+import AccoutSetting from '../../components/Settings-components/AccoutSetting'
 
 const page = () => {
   return (

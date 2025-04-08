@@ -9,10 +9,10 @@ import ProfileInfo from "./ProfileInfo"
 import { SecuritySettings } from "./security-settings"
 import { Navigation } from "./NavTab"
 import ContactUsPage from "./contact-us"
-import { MobileNavigation } from "./mobile-navigation"
 
 
-interface UserData {
+
+export interface UserData {
     firstName: string
     lastName: string
     email: string
@@ -48,7 +48,7 @@ export default function AccountSettings() {
 
   const [user, setUser] = useState(userData)
 
-  const handleSaveChanges = (updatedData: any) => {
+  const handleSaveChanges = (updatedData:  Partial<UserData>) => {
     setUser({ ...user, ...updatedData })
     setIsEditing(false)
   }
