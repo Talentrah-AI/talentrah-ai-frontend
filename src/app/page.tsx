@@ -1,4 +1,5 @@
-import { HeroSection } from '@/components/landing/heroSection';
+import threeImage from '@/assets/images/threeImage.webp';
+import heroImage from '@/assets/images/heroImage.png';
 import { features } from '@/data/landing/features';
 import Image from 'next/image';
 import paper from '@/assets/images/paper.svg';
@@ -16,12 +17,114 @@ import { FaqSection } from '@/components/landing/faqsection';
 import { Navbar } from '@/components/landing/navbar';
 import { Footer } from '@/components/landing/footer';
 import Link from 'next/link';
+import { LandingForm } from '@/components/landing/landingForm';
 export default function Home() {
   return (
     <>
       <Navbar />
       <main className="flex flex-col items-center justify-start w-full min-h-screen gap-8 pb-24 bg-white">
-        <HeroSection />
+        <section className="w-full xl:min-h-screen md:h-[1024px] min-h-full h-full flex flex-col justify-start items-center font-gabarito bg-svg relative overflow-hidden px-4">
+          <div className="flex justify-start items-center gap-1 mb-6 md:mt-44 mt-36">
+            <Image
+              src={threeImage}
+              alt="users"
+              className="sm:w-[98px] w-[69px] object-contain"
+              width={98}
+              height={48}
+              priority
+            />
+            <div className="flex flex-col justify-start items-start gap-0">
+              <div className="flex justify-start items-center">
+                <svg
+                  className="sm:size-[17px] size-[14px]"
+                  width="17"
+                  height="17"
+                  viewBox="0 0 18 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.1 0.298828L11.0308 6.24128H17.2791L12.2241 9.91392L14.155 15.8564L9.1 12.1837L4.04505 15.8564L5.97587 9.91392L0.920914 6.24128H7.16918L9.1 0.298828Z"
+                    fill="#E9B209"
+                  />
+                </svg>
+                <svg
+                  className="sm:size-[17px] size-[14px]"
+                  width="17"
+                  height="17"
+                  viewBox="0 0 18 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.1 0.298828L11.0308 6.24128H17.2791L12.2241 9.91392L14.155 15.8564L9.1 12.1837L4.04505 15.8564L5.97587 9.91392L0.920914 6.24128H7.16918L9.1 0.298828Z"
+                    fill="#E9B209"
+                  />
+                </svg>
+                <svg
+                  className="sm:size-[17px] size-[14px]"
+                  width="17"
+                  height="17"
+                  viewBox="0 0 18 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.1 0.298828L11.0308 6.24128H17.2791L12.2241 9.91392L14.155 15.8564L9.1 12.1837L4.04505 15.8564L5.97587 9.91392L0.920914 6.24128H7.16918L9.1 0.298828Z"
+                    fill="#E9B209"
+                  />
+                </svg>
+                <svg
+                  className="sm:size-[17px] size-[14px]"
+                  width="17"
+                  height="17"
+                  viewBox="0 0 18 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.1 0.298828L11.0308 6.24128H17.2791L12.2241 9.91392L14.155 15.8564L9.1 12.1837L4.04505 15.8564L5.97587 9.91392L0.920914 6.24128H7.16918L9.1 0.298828Z"
+                    fill="#E9B209"
+                  />
+                </svg>
+                <svg
+                  className="sm:size-[17px] size-[14px]"
+                  width="17"
+                  height="17"
+                  viewBox="0 0 18 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.1 0.298828L11.0308 6.24128H17.2791L12.2241 9.91392L14.155 15.8564L9.1 12.1837L4.04505 15.8564L5.97587 9.91392L0.920914 6.24128H7.16918L9.1 0.298828Z"
+                    fill="#E9B209"
+                  />
+                </svg>
+              </div>
+              <p className="sm:text-sm text-xs text-blueShade font-medium">
+                +1000+ users
+              </p>
+            </div>
+          </div>
+          <div className="w-full flex flex-col justify-start items-center gap-4">
+            <h2 className="md:text-[44px] text-[26px] font-medium text-blueShade w-full max-w-[701px] text-center md:leading-12 leading-7">
+              Boost your chances with AI-Human co-pilot for job applications
+            </h2>
+            <p className="md:text-base sm:text-sm text-xs font-normal w-full max-w-[495px] text-center md:leading-5 leading-4 text-greyDark">
+              Leverage the power of AI and human expertise to optimize your
+              resume, write tailored cover letters, and apply to jobs with
+              confidence.
+            </p>
+          </div>
+          <LandingForm />
+          <Image
+            src={heroImage}
+            alt="Hero section Image"
+            className="w-[1068px]"
+            width={1068}
+          />
+        </section>
+
         <section
           className="w-full flex flex-col justify-start items-start gap-[35px] max-w-[1240px] mx-auto xl:px-0 sm:px-6 px-6 py-10"
           id="features"
@@ -230,6 +333,7 @@ export default function Home() {
             </section>
           </section>
         </section>
+
         <section className="flex items-center justify-center w-full h-full p-6 overflow-x-hidden xl:p-0">
           <section className="w-full max-w-[1276px] md:p-11 px-5 py-10 rounded-3xl bg-white shadow-card2 flex lg:flex-row flex-col justify-center items-center gap-2.5">
             <section className="max-w-[493px] w-full flex flex-col justify-start items-start gap-3">
@@ -260,6 +364,7 @@ export default function Home() {
             />
           </section>
         </section>
+
         <section className="flex items-center justify-center w-full px-6 py-10 xl:px-0">
           <section className="bg-background max-w-[1276px] w-full rounded-3xl py-11 lg:px-20 px-5 flex flex-col justify-start items-center gap-10">
             <div className="w-full md:max-w-[556px] sm:max-w-[400px] max-w-[300px] relative p-3.5">
@@ -379,6 +484,7 @@ export default function Home() {
             ))}
           </section>
         </section>
+
         <section className="flex items-start justify-start w-full px-6 xl:px-0">
           <section className="w-full max-w-[1280px] relative overflow-hidden mx-auto my-10 rounded-3xl bg-primary flex md:flex-row flex-col justify-between md:items-center items-start">
             <div className="w-full max-w-[500px] md:pl-14 px-6 flex flex-col justify-start items-start gap-3 py-10 relative z-10">
@@ -410,6 +516,7 @@ export default function Home() {
             <div className="size-[358px] rounded-full bg-[#62A7F433] absolute -bottom-[70%] left-[20%] z-0" />
           </section>
         </section>
+
         <section className="w-full max-w-[1137px] flex md:flex-row flex-col justify-between items-start gap-6 xl:px:0 px-6">
           <div className="flex flex-col justify-start items-start gap-3 w-full max-w-[549px] md:mx-0 mx-auto">
             <p className="text-xs font-normal uppercase text-lightGrey">

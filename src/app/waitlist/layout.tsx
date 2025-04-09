@@ -1,3 +1,4 @@
+import { Footer } from '@/components/landing/footer';
 import { Navbar } from '@/components/landing/navbar';
 import { Metadata } from 'next';
 const Base_url =
@@ -48,6 +49,7 @@ export default function WaitListLayout({
         <Navbar isDark />
       </header>
       <main className="w-full">{children}</main>
+      <Footer isDark />
     </>
   );
 }

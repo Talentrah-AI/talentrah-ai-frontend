@@ -1,6 +1,7 @@
 import { Check, Recycle } from 'lucide-react';
 import lights from '@/assets/images/light.svg';
 import Image from 'next/image';
+import { WaitlistForm } from '@/components/landing/waitlistForm';
 
 export default function WaitlistPaage() {
   return (
@@ -31,21 +32,7 @@ export default function WaitlistPaage() {
           Be among the first to experience Talentrah, exclusive early access,
           special perks, and insider updates. Don&apos;t miss out!
         </p>
-        <form className="w-full flex sm:flex-row flex-col justify-center items-center gap-1.5 sm:max-w-full max-w-[350px]">
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="py-3 px-3.5 w-full max-w-[372px] border border-[#B0B5BB] rounded-xl outline-none sm:text-sm text-xs placeholder:text-[#B0B5BB]/70 text-white"
-            placeholder="Enter your email address "
-          />
-          <button
-            type="button"
-            className="sm:text-sm text-xs text-white py-3.5 px-5 bg-primary rounded-xl cursor-pointer whitespace-nowrap sm:w-auto w-full"
-          >
-            Join Talenrah&apos;s waitlist
-          </button>
-        </form>
+        <WaitlistForm />
       </section>
       <section className="w-full flex flex-col justify-center items-center gap-4 max-w-[699px]">
         <p className="text-sm font-normal text-white">Key Benefits</p>
