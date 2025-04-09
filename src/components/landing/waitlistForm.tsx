@@ -16,9 +16,9 @@ export const WaitlistForm = () => {
         className="py-3 px-3.5 w-full border border-[#B0B5BB] rounded-xl outline-none sm:text-sm text-xs placeholder:text-[#B0B5BB]/70 text-white"
         placeholder="Enter your email address "
       />
-      <div
-        role="button"
+      <button
         className="w-full relative"
+        type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         aria-label="Select your primary interest"
       >
@@ -34,7 +34,7 @@ export const WaitlistForm = () => {
         <ChevronDown
           className={`absolute top-2.5 right-2 stroke-[#B0B5BB] cursor-pointer transition-all duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}
         />
-      </div>
+      </button>
       {isOpen && (
         <div className="w-full border border-[#B0B5BB] rounded-xl sm:text-sm text-xs flex flex-col justify-start items-start text-white overflow-hidden">
           {interestList.map((interest) => (
