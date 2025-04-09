@@ -35,71 +35,22 @@ export default function Home() {
             />
             <div className="flex flex-col justify-start items-start gap-0">
               <div className="flex justify-start items-center">
-                <svg
-                  className="sm:size-[17px] size-[14px]"
-                  width="17"
-                  height="17"
-                  viewBox="0 0 18 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9.1 0.298828L11.0308 6.24128H17.2791L12.2241 9.91392L14.155 15.8564L9.1 12.1837L4.04505 15.8564L5.97587 9.91392L0.920914 6.24128H7.16918L9.1 0.298828Z"
-                    fill="#E9B209"
-                  />
-                </svg>
-                <svg
-                  className="sm:size-[17px] size-[14px]"
-                  width="17"
-                  height="17"
-                  viewBox="0 0 18 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9.1 0.298828L11.0308 6.24128H17.2791L12.2241 9.91392L14.155 15.8564L9.1 12.1837L4.04505 15.8564L5.97587 9.91392L0.920914 6.24128H7.16918L9.1 0.298828Z"
-                    fill="#E9B209"
-                  />
-                </svg>
-                <svg
-                  className="sm:size-[17px] size-[14px]"
-                  width="17"
-                  height="17"
-                  viewBox="0 0 18 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9.1 0.298828L11.0308 6.24128H17.2791L12.2241 9.91392L14.155 15.8564L9.1 12.1837L4.04505 15.8564L5.97587 9.91392L0.920914 6.24128H7.16918L9.1 0.298828Z"
-                    fill="#E9B209"
-                  />
-                </svg>
-                <svg
-                  className="sm:size-[17px] size-[14px]"
-                  width="17"
-                  height="17"
-                  viewBox="0 0 18 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9.1 0.298828L11.0308 6.24128H17.2791L12.2241 9.91392L14.155 15.8564L9.1 12.1837L4.04505 15.8564L5.97587 9.91392L0.920914 6.24128H7.16918L9.1 0.298828Z"
-                    fill="#E9B209"
-                  />
-                </svg>
-                <svg
-                  className="sm:size-[17px] size-[14px]"
-                  width="17"
-                  height="17"
-                  viewBox="0 0 18 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9.1 0.298828L11.0308 6.24128H17.2791L12.2241 9.91392L14.155 15.8564L9.1 12.1837L4.04505 15.8564L5.97587 9.91392L0.920914 6.24128H7.16918L9.1 0.298828Z"
-                    fill="#E9B209"
-                  />
-                </svg>
+                {[...Array(5)].map(() => (
+                  <svg
+                    key={crypto.randomUUID()}
+                    className="sm:size-[17px] size-[14px]"
+                    width="17"
+                    height="17"
+                    viewBox="0 0 18 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.1 0.298828L11.0308 6.24128H17.2791L12.2241 9.91392L14.155 15.8564L9.1 12.1837L4.04505 15.8564L5.97587 9.91392L0.920914 6.24128H7.16918L9.1 0.298828Z"
+                      fill="#E9B209"
+                    />
+                  </svg>
+                ))}
               </div>
               <p className="sm:text-sm text-xs text-blueShade font-medium">
                 +1000+ users
@@ -131,10 +82,10 @@ export default function Home() {
         >
           <h4 className="text-base font-normal text-lightGrey">Key features</h4>
           <section className="grid w-full grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-y-10 gap-x-16">
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <div
                 className="flex flex-col justify-start items-start gap-2 w-full max-w-[320px]"
-                key={index}
+                key={feature.title}
               >
                 <Image
                   src={feature.image}
@@ -209,7 +160,7 @@ export default function Home() {
             {steps.map((step, index) => (
               <div
                 className="flex flex-col items-start justify-start w-full gap-4 p-3 bg-white lg:p-4 sm:rounded-3xl rounded-2xl shadow-card"
-                key={index}
+                key={step.title}
               >
                 <div
                   className="sm:rounded-t-[20px] rounded-t-xl w-full"
@@ -273,10 +224,10 @@ export default function Home() {
               Here&apos;s how AI simplifies your job search:
             </p>
             <section className="flex flex-col justify-start items-start gap-6 w-full sm:max-w-[514px] max-w-full">
-              {smartApply.map((content, index) => (
+              {smartApply.map((content) => (
                 <div
                   className="flex justify-start items-start gap-1.5"
-                  key={index}
+                  key={content.title}
                 >
                   <svg
                     width="22"
@@ -393,9 +344,9 @@ export default function Home() {
                 What you get from our mentorship call:
               </p>
               <section className="grid w-full grid-cols-1 gap-4 lg:grid-cols-4 sm:grid-cols-2">
-                {mentorData.map((content, index) => (
+                {mentorData.map((content) => (
                   <div
-                    key={index}
+                    key={content.title}
                     className="flex items-start justify-start gap-2 p-6 text-base font-normal leading-tight transition-all duration-300 bg-white cursor-default rounded-2xl hover:scale-102"
                   >
                     <Image
@@ -448,16 +399,18 @@ export default function Home() {
             </p>
           </div>
           <section className="w-full grid sm:grid-cols-3 grid-cols-1 mx-auto max-w-[1120px] sm:gap-x-5 sm:gap-y-8 gap-5">
-            {[...Array(6)].map((_, index) => (
+            {[...Array(6)].map(() => (
               <div
-                key={index}
+                key={crypto.randomUUID()}
                 className="p-6 rounded-[20px] bg-white flex flex-col justify-start items-start gap-4 shadow-card3 hover:scale-102 transition-all duration-300 cursor-default"
               >
                 <div className="flex items-center justify-start">
-                  <Star className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4" />
-                  <Star className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4" />
-                  <Star className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4" />
-                  <Star className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4" />
+                  {[...Array(4)].map(() => (
+                    <Star
+                      className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4"
+                      key={crypto.randomUUID()}
+                    />
+                  ))}
                   <StarHalf className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4" />
                 </div>
                 <p className="text-xs leading-snug text-tGray md:text-base">
