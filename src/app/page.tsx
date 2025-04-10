@@ -1,4 +1,5 @@
-import { HeroSection } from '@/components/landing/heroSection';
+import threeImage from '@/assets/images/threeImage.webp';
+import heroImage from '@/assets/images/heroImage.png';
 import { features } from '@/data/landing/features';
 import Image from 'next/image';
 import paper from '@/assets/images/paper.svg';
@@ -15,22 +16,76 @@ import dashboard2 from '@/assets/images/dashboard2.webp';
 import { FaqSection } from '@/components/landing/faqsection';
 import { Navbar } from '@/components/landing/navbar';
 import { Footer } from '@/components/landing/footer';
+import Link from 'next/link';
+import { LandingForm } from '@/components/landing/landingForm';
 export default function Home() {
   return (
     <>
       <Navbar />
       <main className="flex flex-col items-center justify-start w-full min-h-screen gap-8 pb-24 bg-white">
-        <HeroSection />
+        <section className="w-full xl:min-h-screen md:h-[1024px] min-h-full h-full flex flex-col justify-start items-center font-gabarito bg-svg relative overflow-hidden px-4">
+          <div className="flex justify-start items-center gap-1 mb-6 md:mt-44 mt-36">
+            <Image
+              src={threeImage}
+              alt="users"
+              className="sm:w-[98px] w-[69px] object-contain"
+              width={98}
+              height={48}
+              priority
+            />
+            <div className="flex flex-col justify-start items-start gap-0">
+              <div className="flex justify-start items-center">
+                {[...Array(5)].map(() => (
+                  <svg
+                    key={crypto.randomUUID()}
+                    className="sm:size-[17px] size-[14px]"
+                    width="17"
+                    height="17"
+                    viewBox="0 0 18 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.1 0.298828L11.0308 6.24128H17.2791L12.2241 9.91392L14.155 15.8564L9.1 12.1837L4.04505 15.8564L5.97587 9.91392L0.920914 6.24128H7.16918L9.1 0.298828Z"
+                      fill="#E9B209"
+                    />
+                  </svg>
+                ))}
+              </div>
+              <p className="sm:text-sm text-xs text-blueShade font-medium">
+                +1000+ users
+              </p>
+            </div>
+          </div>
+          <div className="w-full flex flex-col justify-start items-center gap-4">
+            <h2 className="md:text-[44px] text-[26px] font-medium text-blueShade w-full max-w-[701px] text-center md:leading-12 leading-7">
+              Boost your chances with AI-Human co-pilot for job applications
+            </h2>
+            <p className="md:text-base sm:text-sm text-xs font-normal w-full max-w-[495px] text-center md:leading-5 leading-4 text-greyDark">
+              Leverage the power of AI and human expertise to optimize your
+              resume, write tailored cover letters, and apply to jobs with
+              confidence.
+            </p>
+          </div>
+          <LandingForm />
+          <Image
+            src={heroImage}
+            alt="Hero section Image"
+            className="w-[1068px]"
+            width={1068}
+          />
+        </section>
+
         <section
           className="w-full flex flex-col justify-start items-start gap-[35px] max-w-[1240px] mx-auto xl:px-0 sm:px-6 px-6 py-10"
           id="features"
         >
           <h4 className="text-base font-normal text-lightGrey">Key features</h4>
           <section className="grid w-full grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-y-10 gap-x-16">
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <div
                 className="flex flex-col justify-start items-start gap-2 w-full max-w-[320px]"
-                key={index}
+                key={feature.title}
               >
                 <Image
                   src={feature.image}
@@ -65,9 +120,12 @@ export default function Home() {
                 you stay organized, improve your chances, and apply to more jobs
                 with less effort.
               </p>
-              <button className="px-6 py-3 text-xs bg-white rounded-lg outline-none cursor-pointer text-primary md:text-base">
+              <Link
+                href={'/waitlist'}
+                className="px-6 py-3 text-xs bg-white rounded-lg outline-none cursor-pointer text-primary md:text-base"
+              >
                 Apply for a job
-              </button>
+              </Link>
             </div>
             <div className="relative">
               <Image src={paper} alt="paper" />
@@ -102,7 +160,7 @@ export default function Home() {
             {steps.map((step, index) => (
               <div
                 className="flex flex-col items-start justify-start w-full gap-4 p-3 bg-white lg:p-4 sm:rounded-3xl rounded-2xl shadow-card"
-                key={index}
+                key={step.title}
               >
                 <div
                   className="sm:rounded-t-[20px] rounded-t-xl w-full"
@@ -133,9 +191,12 @@ export default function Home() {
               </div>
             ))}
           </section>
-          <button className="px-5 py-2 text-sm text-white rounded-lg outline-none cursor-pointer bg-primary md:py-3 md:px-6 md:text-base">
+          <Link
+            href={'/waitlist'}
+            className="px-5 py-2 text-sm text-white rounded-lg outline-none cursor-pointer bg-primary md:py-3 md:px-6 md:text-base"
+          >
             Get started now
-          </button>
+          </Link>
         </section>
 
         <section className="flex flex-col-reverse items-center justify-center w-full gap-12 px-5 py-10 lg:flex-row lg:items-start lg:gap-28 sm:px-0">
@@ -163,10 +224,10 @@ export default function Home() {
               Here&apos;s how AI simplifies your job search:
             </p>
             <section className="flex flex-col justify-start items-start gap-6 w-full sm:max-w-[514px] max-w-full">
-              {smartApply.map((content, index) => (
+              {smartApply.map((content) => (
                 <div
                   className="flex justify-start items-start gap-1.5"
-                  key={index}
+                  key={content.title}
                 >
                   <svg
                     width="22"
@@ -214,12 +275,16 @@ export default function Home() {
                   </p>
                 </div>
               ))}
-              <button className="px-5 py-2 text-sm text-white rounded-lg outline-none cursor-pointer bg-primary md:py-3 md:px-6 md:text-base">
+              <Link
+                href={'/waitlist'}
+                className="px-5 py-2 text-sm text-white rounded-lg outline-none cursor-pointer bg-primary md:py-3 md:px-6 md:text-base"
+              >
                 Get started for free
-              </button>
+              </Link>
             </section>
           </section>
         </section>
+
         <section className="flex items-center justify-center w-full h-full p-6 overflow-x-hidden xl:p-0">
           <section className="w-full max-w-[1276px] md:p-11 px-5 py-10 rounded-3xl bg-white shadow-card2 flex lg:flex-row flex-col justify-center items-center gap-2.5">
             <section className="max-w-[493px] w-full flex flex-col justify-start items-start gap-3">
@@ -234,9 +299,12 @@ export default function Home() {
                 fit your role and style. Whether you prefer a modern, creative,
                 or classic look, we&apos;ve got you covered
               </p>
-              <button className="px-5 py-2 mt-3 text-sm text-white rounded-lg outline-none cursor-pointer bg-primary md:py-3 md:px-6 md:text-base">
+              <Link
+                href={'/waitlist'}
+                className="px-5 py-2 mt-3 text-sm text-white rounded-lg outline-none cursor-pointer bg-primary md:py-3 md:px-6 md:text-base"
+              >
                 Choose a template
-              </button>
+              </Link>
             </section>
             <Image
               src={cv}
@@ -247,6 +315,7 @@ export default function Home() {
             />
           </section>
         </section>
+
         <section className="flex items-center justify-center w-full px-6 py-10 xl:px-0">
           <section className="bg-background max-w-[1276px] w-full rounded-3xl py-11 lg:px-20 px-5 flex flex-col justify-start items-center gap-10">
             <div className="w-full md:max-w-[556px] sm:max-w-[400px] max-w-[300px] relative p-3.5">
@@ -275,9 +344,9 @@ export default function Home() {
                 What you get from our mentorship call:
               </p>
               <section className="grid w-full grid-cols-1 gap-4 lg:grid-cols-4 sm:grid-cols-2">
-                {mentorData.map((content, index) => (
+                {mentorData.map((content) => (
                   <div
-                    key={index}
+                    key={content.title}
                     className="flex items-start justify-start gap-2 p-6 text-base font-normal leading-tight transition-all duration-300 bg-white cursor-default rounded-2xl hover:scale-102"
                   >
                     <Image
@@ -330,16 +399,18 @@ export default function Home() {
             </p>
           </div>
           <section className="w-full grid sm:grid-cols-3 grid-cols-1 mx-auto max-w-[1120px] sm:gap-x-5 sm:gap-y-8 gap-5">
-            {[...Array(6)].map((_, index) => (
+            {[...Array(6)].map(() => (
               <div
-                key={index}
+                key={crypto.randomUUID()}
                 className="p-6 rounded-[20px] bg-white flex flex-col justify-start items-start gap-4 shadow-card3 hover:scale-102 transition-all duration-300 cursor-default"
               >
                 <div className="flex items-center justify-start">
-                  <Star className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4" />
-                  <Star className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4" />
-                  <Star className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4" />
-                  <Star className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4" />
+                  {[...Array(4)].map(() => (
+                    <Star
+                      className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4"
+                      key={crypto.randomUUID()}
+                    />
+                  ))}
                   <StarHalf className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4" />
                 </div>
                 <p className="text-xs leading-snug text-tGray md:text-base">
@@ -366,6 +437,7 @@ export default function Home() {
             ))}
           </section>
         </section>
+
         <section className="flex items-start justify-start w-full px-6 xl:px-0">
           <section className="w-full max-w-[1280px] relative overflow-hidden mx-auto my-10 rounded-3xl bg-primary flex md:flex-row flex-col justify-between md:items-center items-start">
             <div className="w-full max-w-[500px] md:pl-14 px-6 flex flex-col justify-start items-start gap-3 py-10 relative z-10">
@@ -377,23 +449,27 @@ export default function Home() {
                 Let AI optimize your resume, match you with the right
                 opportunities, and apply in seconds.
               </p>
-              <button className="z-10 px-5 py-2 mt-3 text-sm bg-white rounded-lg outline-none cursor-pointer text-primary md:py-3 md:px-6 md:text-base">
+              <Link
+                href={'/waitlist'}
+                className="z-10 px-5 py-2 mt-3 text-sm bg-white rounded-lg outline-none cursor-pointer text-primary md:py-3 md:px-6 md:text-base"
+              >
                 Get started for free
-              </button>
+              </Link>
             </div>
-            <div className='md:absolute relative right-0 bottom-0 lg:w-[600px] w-[450px] ml-auto z-5'>
+            <div className="md:absolute relative right-0 bottom-0 lg:w-[600px] w-[450px] ml-auto z-5">
               <Image
                 src={dashboard2}
                 alt="dashboard"
                 width={620}
                 height={500}
-                className='w-auto h-auto'
+                className="w-auto h-auto"
               />
             </div>
             <div className="size-[358px] rounded-full bg-[#62A7F433] absolute -top-10 -left-44 z-0" />
             <div className="size-[358px] rounded-full bg-[#62A7F433] absolute -bottom-[70%] left-[20%] z-0" />
           </section>
         </section>
+
         <section className="w-full max-w-[1137px] flex md:flex-row flex-col justify-between items-start gap-6 xl:px:0 px-6">
           <div className="flex flex-col justify-start items-start gap-3 w-full max-w-[549px] md:mx-0 mx-auto">
             <p className="text-xs font-normal uppercase text-lightGrey">

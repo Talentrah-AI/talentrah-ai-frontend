@@ -156,3 +156,6 @@ section{
   background-position: center;
   background-repeat: no-repeat;
 }
+.hidescrollbar{
+  scrollbar-width: thin;
+}
