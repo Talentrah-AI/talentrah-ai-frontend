@@ -161,3 +161,6 @@ section{
 .bg-login{
   background-image: url('../assets/images/Left_Panel_Container.png');
 }
+.hidescrollbar{
+  scrollbar-width: thin;
+}
