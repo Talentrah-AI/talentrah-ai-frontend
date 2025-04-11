@@ -1,13 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowLeft, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '@/assets/images/logo.png';
 
+
 export default function ForgotPassword() {
   const [email, setEmail] = useState<string>('');
+
 
   return (
     <div className="flex flex-col items-center justify-start gap-5 bg-Lblueshade-02  w-full max-w-[1440px] mx-auto p-5 md:pt-12 pt-8">

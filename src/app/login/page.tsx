@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Eye, EyeOff, Globe, Loader2, ChevronDown } from 'lucide-react';
 import Talentrah from '@/assets/images/Talentrah.png';
@@ -9,31 +9,54 @@ import linkedinIcon from "@/assets/images/linkedinIcon.svg";
 import Link from 'next/link';
 import { languages, languagesType } from '@/data/login/languages';
 import { errorsType } from '@/data/login/checkTypes';
+import PopupCard from '@/components/Popcard1';
+
 
 export default function App() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     email: '',
-    pws: '',
+    password: '',
   });
   const [errors, setErrors] = useState<errorsType>({});
   const [selectedLanguage, setSelectedLanguage] = useState(languages[0]); // for default to English
+  //use iin pop up 
   const [isOpen, SetIsOpen] = useState(false);
+  const [vcode, setVcode] = useState<string[]>(["", "", "", "", "", ""]);
+  const [error, setError] = useState('');
+  const [isVerified, setIsVerified] = useState(false);
+  
+  // popup to appear automatically after login every 
+  // time, but only when it detects a new or unauthorized device.
+  // Use a library like fingerprintjs
+  // npm install @fingerprintjs/fingerprintjs
+
+
+  const handleVerify = () => {
+    const enteredCode = vcode.join('');
+    const correctCode = '110141'; //replace it with the logic
+    if (enteredCode === correctCode) {
+      setIsVerified(true);
+      setError('');
+    }else {
+      setError('Invalid code. Please try again')
+    }
+  };
 
   const validateForm = () => {
     const newErrors: errorsType = {};
 
     if (!formData.email) {
       newErrors.email = 'Email is required';
-    } else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email';
     }
 
-    if (!formData.pws) {
-      newErrors.pws = 'Password is required';
-    } else if (formData.pws.length < 6) {
-      newErrors.pws = 'Password must be at least 6 characters';
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
     }
 
     setErrors(newErrors);
@@ -50,6 +73,7 @@ export default function App() {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
       console.log('Form submitted:', formData);
+      setIsOpenP(true); //for poping up
     } catch (error) {
       console.error('Login error:', error);
     } finally {
@@ -76,6 +100,31 @@ export default function App() {
     setSelectedLanguage(language);
     SetIsOpen(false);
   };
+
+  // for popcard
+  const [isOpenP, setIsOpenP] = useState(false);
+
+  useEffect(() => {
+    // Automatically open the popup after a short delay
+    const timer = setTimeout(() => setIsOpenP(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleCodeChange = (index: number, value: string) => {
+    if (!/^\d*$/.test(value)) return;
+      const newCode = [...vcode];
+      newCode[index] = value;
+      setVcode(newCode);
+      
+      // Auto-focus next input
+      if (value && index < 5) {
+        const nextInput = document.getElementById(`code-${index + 1}`);
+        nextInput?.focus();
+      }
+    
+  };
+
+  
 
   return (
     <section className="min-h-screen w-full grid md:grid-cols-2 grid-cols-1 bg-white max-w-[1440px] mx-auto">
@@ -209,7 +258,7 @@ export default function App() {
                     id="password"
                     name="password"
                     type={showPassword ? 'text' : 'password'}
-                    value={formData.pws}
+                    value={formData.password}
                     onChange={handleInputChange}
                     placeholder="************"
                     className={`w-full px-4 py-3 rounded-lg border md:text-base text-sm ${
@@ -302,6 +351,80 @@ export default function App() {
           </div>
         </div>
       </div>
+       
+       {/* popup code */}
+       {isOpenP && (
+       <div className="fixed inset-0 flex items-center justify-center z-50 bg-transparent">
+      {/* Content AT THE TOP */}  
+      <PopupCard
+        isOpen={isOpenP}
+        onClose={() => setIsOpenP(false)}
+        title="Verify your identity"
+      >
+
+        {!isVerified ? (
+        <div className="space-y-4">
+        {/* <div className="h-3 bg-blue-500 rounded-t-md -mt-6  -mx-6 mb-4 "></div> */}
+          <p className="text-gray-600 text-center text-sm">
+          We've sent a 6-digit verification code to your registered email/phone. Enter the code below to continue
+          </p>
+          
+          {/* Code input grid */}
+          <div className="flex gap-2 justify-between">
+            {vcode.map((digit, index) => (
+              <input
+                key={index}
+                id={`code-${index}`}
+                type="text"
+                maxLength={1}
+                value={digit}
+                onChange={(e) => handleCodeChange(index, e.target.value)}
+                className={`w-12 h-12 text-center text-xl font-semibold rounded-lg outline-none transition-all
+                  border-2 ${error ? "border-red-500 focus:border-red-500 focus:ring-red-200" : "border-gray-300 focus:border-blue-500 focus:ring-blue-200"}
+                `}
+              />
+            ))}
+          </div>
+
+          {/* Error message */}
+          {error && (
+            <p className="text-red-500 text-sm text-center">{error}</p>
+          )}
+
+          <button
+            onClick={handleVerify}
+            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Verify
+          </button>
+
+          <p className="text-sm text-gray-500 text-center">
+          Didn't receive the code? Resend in 30 seconds <br></br>
+           <button className="text-blue-600 hover:text-blue-700">Resend code</button>
+          </p>
+        </div>
+        ) :(
+          // Success message block
+        <div className="text-center space-y-4">
+        <h2 className="font-semibold text-lg">Verification successful!</h2>
+        <p className="text-gray-600 text-sm">
+          Do you want to remember this device for future logins?
+        </p>
+
+        <div className="flex justify-center gap-4">
+          <button className="border border-blue-500 text-blue-500 px-4 py-2 rounded-full hover:bg-blue-50">
+            No, ignore it
+          </button>
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700">
+            Yes, remember this device
+          </button>
+        </div>
+      </div>
+    )}
+      </PopupCard>
+    </div>
+       )}
+
     </section>
   );
 }
