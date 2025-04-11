@@ -155,6 +155,7 @@ section{
   background-image: url("../assets/images/backgroundHero.svg");
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
 }
 .hidescrollbar{
   scrollbar-width: thin;
