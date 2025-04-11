@@ -23,7 +23,7 @@ export default function Home() {
     <>
       <Navbar />
       <main className="flex flex-col items-center justify-start w-full min-h-screen gap-8 pb-24 bg-white">
-        <section className="w-full xl:min-h-screen md:h-[1024px] min-h-full h-full flex flex-col justify-start items-center font-gabarito bg-svg relative overflow-hidden px-4">
+        <section className="w-full md:h-[1024px] min-h-full h-full flex flex-col justify-start items-center font-gabarito bg-svg relative overflow-hidden px-4">
           <div className="flex justify-start items-center gap-1 mb-6 md:mt-44 mt-36">
             <Image
               src={threeImage}
