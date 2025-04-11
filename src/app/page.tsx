@@ -411,6 +411,12 @@ export default function Home() {
                       key={crypto.randomUUID()}
                     />
                   ))}
+                  {[...Array(4)].map(() => (
+                    <Star
+                      className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4"
+                      key={crypto.randomUUID()}
+                    />
+                  ))}
                   <StarHalf className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4" />
                 </div>
                 <p className="text-xs leading-snug text-tGray md:text-base">
