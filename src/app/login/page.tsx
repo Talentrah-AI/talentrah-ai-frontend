@@ -43,6 +43,11 @@ export default function App() {
       setError('Invalid code. Please try again')
     }
   };
+  
+  const messages = {
+    required: 'This field is required',
+    minLength: 'Must be at least 6 characters',
+  };
 
   const validateForm = () => {
     const newErrors: errorsType = {};
@@ -54,9 +59,9 @@ export default function App() {
     }
 
     if (!formData.password) {
-      newErrors.password = 'This field is required';
+      newErrors.password = messages.required;
     } else if (formData.password.length < 6) {
-      newErrors.password = 'Must be at least 6 characters';
+      newErrors.password =  messages.minLength;
     }
 
     setErrors(newErrors);
