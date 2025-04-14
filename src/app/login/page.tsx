@@ -366,7 +366,7 @@ export default function App() {
         <div className="space-y-4">
         {/* <div className="h-3 bg-blue-500 rounded-t-md -mt-6  -mx-6 mb-4 "></div> */}
           <p className="text-gray-600 text-center text-sm">
-          We've sent a 6-digit verification code to your registered email/phone. Enter the code below to continue
+          We&apos;ve sent a 6-digit verification code to your registered email/phone. Enter the code below to continue
           </p>
           
           {/* Code input grid */}
@@ -399,7 +399,7 @@ export default function App() {
           </button>
 
           <p className="text-sm text-gray-500 text-center">
-          Didn't receive the code? Resend in 30 seconds <br></br>
+          Didn&apos;t receive the code? Resend in 30 seconds <br></br>
            <button className="text-blue-600 hover:text-blue-700">Resend code</button>
           </p>
         </div>
