@@ -54,7 +54,7 @@ export default function App() {
 
     if (!formData.email) {
       newErrors.email = 'Email is required';
-    } else if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email)) {
+    } else if (/^[^@]+@[^@]+\.[^@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email';
     }
 
