@@ -23,7 +23,7 @@ export default function Home() {
     <>
       <Navbar />
       <main className="flex flex-col items-center justify-start w-full min-h-screen gap-8 pb-24 bg-white">
-        <section className="w-full xl:min-h-screen md:h-[1024px] min-h-full h-full flex flex-col justify-start items-center font-gabarito bg-svg relative overflow-hidden px-4">
+        <section className="w-full md:h-[1024px] min-h-full h-full flex flex-col justify-start items-center font-gabarito bg-svg relative overflow-hidden px-4">
           <div className="flex justify-start items-center gap-1 mb-6 md:mt-44 mt-36">
             <Image
               src={threeImage}
@@ -405,6 +405,12 @@ export default function Home() {
                 className="p-6 rounded-[20px] bg-white flex flex-col justify-start items-start gap-4 shadow-card3 hover:scale-102 transition-all duration-300 cursor-default"
               >
                 <div className="flex items-center justify-start">
+                  {[...Array(4)].map(() => (
+                    <Star
+                      className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4"
+                      key={crypto.randomUUID()}
+                    />
+                  ))}
                   {[...Array(4)].map(() => (
                     <Star
                       className="fill-[#E98239] stroke-1 stroke-[#E98239] size-4"
