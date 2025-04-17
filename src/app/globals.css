@@ -158,6 +158,9 @@ section{
   background-position: center;
   background-repeat: no-repeat;
 }
+.bg-login{
+  background-image: url('../assets/images/Left_Panel_Container.png');
+}
 .hidescrollbar{
   scrollbar-width: thin;
 }

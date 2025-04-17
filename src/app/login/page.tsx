@@ -54,7 +54,7 @@ export default function App() {
 
     if (!formData.email) {
       newErrors.email = 'Email is required';
-    } else if (/^[^@]+@[^@]+\.[^@]+$/.test(formData.email)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email';
     }
 
@@ -239,6 +239,7 @@ export default function App() {
                   id="email"
                   name="email"
                   type="email"
+                  required
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Enter your email"
