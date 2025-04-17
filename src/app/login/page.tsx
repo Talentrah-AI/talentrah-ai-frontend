@@ -11,7 +11,6 @@ import { languages, languagesType } from '@/data/login/languages';
 import { errorsType } from '@/data/login/checkTypes';
 import PopupCard from '@/components/Popcard1';
 
-
 export default function App() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
