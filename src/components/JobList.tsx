@@ -1,7 +1,7 @@
 'use client';
 
 import { JobCard } from '@/components/JobCard';
-import Image from 'next/image';
+
 import { useState } from 'react';
 
 // Sample job data
