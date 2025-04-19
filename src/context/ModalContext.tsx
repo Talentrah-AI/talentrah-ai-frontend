@@ -8,6 +8,9 @@ const ResumeModal = dynamic(() => import('@/components/modals/ResumeModal'));
 const CoverLetterModal = dynamic(
   () => import('@/components/modals/CoverLetterModal')
 );
+const AdvancedFilterModal = dynamic(
+  () => import('@/components/modal/AdvancedFilterModal')
+);
 
 interface ModalProps {
   [key: string]: unknown;
@@ -48,6 +51,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         return <ResumeModal {...modalProps} />;
       case 'coverLetter':
         return <CoverLetterModal {...modalProps} />;
+      case 'advancedFilter':
+        return <AdvancedFilterModal />;
       default:
         return null;
     }
