@@ -170,9 +170,12 @@ const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button size="icon" className="bg-white">
+              <Button
+                size="icon"
+                className="bg-white hover:bg-gray-200 cursor-pointer"
+              >
                 <Image
-                  src="/icons/more-01.png"
+                  src="/icons/more.png"
                   alt="Method"
                   width={24}
                   height={24}
@@ -181,12 +184,24 @@ const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="bg-white text-[#08121D] [&>*:not(:last-child)]:border-b [&>*:not(:last-child)]:border-gray-300 border-[0.5px] border-solid border-[#EFF0F2] shadow-[0px_5px_15px_0px_#1B20201A] w-[242px] h-[166px] rounded-[10px] p-[8px]"
+              className="bg-white text-[#08121D] [&>*:not(:last-child)]:border-b [&>*:not(:last-child)]:border-gray-300 border-[0.5px] border-solid border-[#EFF0F2] shadow-[0px_5px_15px_0px_#1B20201A] w-[242px] h-[166px] rounded-[10px] p-[8px] "
             >
-              <DropdownMenuItem onClick={() => openModal('resume')}>
+              <DropdownMenuItem
+                onClick={() =>
+                  openModal('resume', { resumeUrl: job.resumeUrl })
+                }
+              >
                 View resume used
               </DropdownMenuItem>
-              <DropdownMenuItem>View cover letter used</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() =>
+                  openModal('coverLetter', {
+                    coverLetterUrl: job.coverLetterUrl,
+                  })
+                }
+              >
+                View cover letter used
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={handleDelete}>
                 Delete job
               </DropdownMenuItem>

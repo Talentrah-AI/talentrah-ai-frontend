@@ -8,6 +8,7 @@ import ClientLayoutContent from './ClientLayoutContent';
 const gabarito = Gabarito({
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-gabarito',
 });
 
 export const metadata: Metadata = {
@@ -21,7 +22,7 @@ export default function UserDashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" style={gabarito.style}>
       <body className={gabarito.className}>
         <Providers>
           <ClientLayoutContent>{children}</ClientLayoutContent>
