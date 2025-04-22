@@ -56,7 +56,7 @@ export default function AdminLoginPage() {
                 </div>
 
                 {/* Login box */}
-                <div className="w-full max-w-[558px] max-h-[546.76px] bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center">
+                <div className="w-full max-w-[558px] max-h-[369.76px] bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center">
                     <div className="mb-3 text-center">
                         <Image
                             src="/Logo (1).png"
@@ -66,9 +66,9 @@ export default function AdminLoginPage() {
                             priority
                         />
                     </div>
-                    <h2 className="text-2xl font-medium text-center mt-0 mb-1">Admin Login</h2>
+                    <h2 className="text-2xl font-medium text-center mt-0 mb-1">Forgot password?</h2>
                     <p className="text-sm text-gray-500 mb-8 text-center">
-                        Stay in control with powerful admin tools.
+                        Enter your email below, and we&apos;ll send you a link to reset it.
                     </p>
 
                     {/* Login form */}
@@ -88,56 +88,15 @@ export default function AdminLoginPage() {
                             />
                         </div>
 
-                        {/* Password field */}
-                        <div className="space-y-2">
-                            <label htmlFor="password" className="block text-sm font-medium">
-                                Password
-                            </label>
-                            <div className="relative">
-                                <Input
-                                    id="password"
-                                    type={showPassword ? "text" : "password"}
-                                    placeholder="************"
-                                    className="w-full max-w-[510px] h-[50px] rounded-lg border border-gray-300"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                                <button
-                                    type="button"
-                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                >
-                                    {showPassword ? (
-                                        <EyeOff className="h-5 w-5" />
-                                    ) : (
-                                        <Eye className="h-5 w-5" />
-                                    )}
-                                </button>
-                            </div>
-                            <div className="flex justify-end">
-                                <Link href="/admin/reset-password" className="text-sm text-primary hover:underline">
-                                    Reset password
-                                </Link>
-                            </div>
-                        </div>
-
                         {/* Error and submit */}
                         {error && <p className="text-red-500 text-sm">{error}</p>}
                         <Button
                             type="submit"
                             className="w-full py-3 bg-[#E6F0FD] hover:bg-[#D6E6FA] text-primary"
                         >
-                            Login
+                            Reset password
                         </Button>
                     </form>
-
-                    {/* Register link */}
-                    <div className="mt-8 text-center text-gray-500 text-sm">
-                        Don&apos;t have an account?{" "}
-                        <Link href="/admin/register" className="text-primary hover:underline">
-                            Create one
-                        </Link>
-                    </div>
                 </div>
             </section>
         </div>
