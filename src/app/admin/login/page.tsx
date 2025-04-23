@@ -126,7 +126,7 @@ export default function AdminLoginPage() {
                         {error && <p className="text-red-500 text-sm">{error}</p>}
                         <Button
                             type="submit"
-                            className="w-full py-3 bg-[#E6F0FD] hover:bg-[#D6E6FA] text-primary"
+                            className="w-full py-3 bg-[#CEE1F6] hover:bg-[#D6E6FA] text-primary"
                         >
                             Login
                         </Button>
