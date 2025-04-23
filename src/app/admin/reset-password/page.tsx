@@ -21,13 +21,14 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: "#0752A8" }}>
-      {/* Background image */}
-      <img
-        src="/Rectangle.png"
-        alt="Decorative background"
-        className="absolute bottom-0 w-full object-cover z-0 pointer-events-none"
-      />
+    <div className="relative w-full min-h-screen overflow-hidden bg-[#0752A8]">
+            {/* Background image */}
+            <img
+                src="/Rectangle.png"
+                alt="Decorative background"
+                className="absolute inset-0 w-full h-full object-cover z-0"
+            />
+
 
       {/* Page Content */}
       <section className="relative z-20 flex flex-col justify-center items-center min-h-screen px-4">

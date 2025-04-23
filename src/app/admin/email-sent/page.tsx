@@ -20,13 +20,14 @@ export default function EmailSentPage() {
     };
 
     return (
-        <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: "#0752A8" }}>
+        <div className="relative w-full min-h-screen overflow-hidden bg-[#0752A8]">
             {/* Background image */}
             <img
                 src="/Rectangle.png"
                 alt="Decorative background"
-                className="absolute bottom-0 w-full object-cover z-0 pointer-events-none"
+                className="absolute inset-0 w-full h-full object-cover z-0"
             />
+
 
             {/* Overlapping blue color */}
             <div className="absolute bottom-0 w-full" />
@@ -58,53 +59,53 @@ export default function EmailSentPage() {
                         />
                     </div>
 
-                    <div className="w-[510px] h-[356px] bg-white border border-gray-200 rounded-md p-2 shadow-sm">
+                    <div className="w-full max-w-[510px] max-h-[356px] bg-white border border-gray-200 rounded-md p-2 shadow-sm">
 
-                    {/* Email icon */}
-                    <div className="my-0 p-0">
-                        <div className="flex items-center justify-center">
-                            <Image
-                                src="/EmptyState.svg"
-                                alt="Talentrah"
-                                width={200}
-                                height={65}
-                                priority
-                            />
+                        {/* Email icon */}
+                        <div className="my-0 p-0">
+                            <div className="flex items-center justify-center">
+                                <Image
+                                    src="/EmptyState.svg"
+                                    alt="Talentrah"
+                                    width={200}
+                                    height={65}
+                                    priority
+                                />
+                            </div>
                         </div>
+
+                        <h2 className="text-2xl font-medium text-center mt-0 mb-3">Email Sent</h2>
+                        <p className="text-sm text-gray-500 mb-8 text-center max-w-md">
+                            We have sent you an email at <span className="font-medium text-black">{userEmail}</span>.
+                            Check your inbox and follow instructions to reset your password.
+                        </p>
+
+                        {/* Action links */}
+                        <div className="w-full space-y-2 flex flex-col items-center">
+                            {/* First Line: Text + Button */}
+                            <div className="flex items-center gap-2 text-sm text-gray-500">
+                                <p>Did not receive the email?</p>
+                                <button
+                                    onClick={handleResendEmail}
+                                    className="text-primary hover:underline font-medium"
+                                >
+                                    Resend Email
+                                </button>
+                            </div>
+
+                            {/* Second Line: Text + Button */}
+                            <div className="flex items-center gap-2 text-sm text-gray-500">
+                                <p>Wrong email?</p>
+                                <button
+                                    onClick={handleChangeEmail}
+                                    className="text-primary hover:underline font-medium"
+                                >
+                                    Change Email Address
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
-
-                    <h2 className="text-2xl font-medium text-center mt-0 mb-3">Email Sent</h2>
-                    <p className="text-sm text-gray-500 mb-8 text-center max-w-md">
-                        We have sent you an email at <span className="font-medium text-black">{userEmail}</span>.
-                        Check your inbox and follow instructions to reset your password.
-                    </p>
-
-                    {/* Action links */}
-                    <div className="w-full space-y-2 flex flex-col items-center">
-                        {/* First Line: Text + Button */}
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
-                            <p>Did not receive the email?</p>
-                            <button
-                                onClick={handleResendEmail}
-                                className="text-primary hover:underline font-medium"
-                            >
-                                Resend Email
-                            </button>
-                        </div>
-
-                        {/* Second Line: Text + Button */}
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
-                            <p>Wrong email?</p>
-                            <button
-                                onClick={handleChangeEmail}
-                                className="text-primary hover:underline font-medium"
-                            >
-                                Change Email Address
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
                 </div>
             </section>
         </div>

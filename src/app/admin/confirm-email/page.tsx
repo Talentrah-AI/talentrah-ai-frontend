@@ -20,13 +20,14 @@ export default function EmailSentPage() {
     };
 
     return (
-        <div className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: "#0752A8" }}>
+        <div className="relative w-full min-h-screen overflow-hidden bg-[#0752A8]">
             {/* Background image */}
             <img
                 src="/Rectangle.png"
                 alt="Decorative background"
-                className="absolute bottom-0 w-full object-cover z-0 pointer-events-none"
+                className="absolute inset-0 w-full h-full object-cover z-0"
             />
+
 
             {/* Overlapping blue color */}
             <div className="absolute bottom-0 w-full" />
