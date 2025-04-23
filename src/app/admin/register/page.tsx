@@ -14,12 +14,45 @@ export default function CreateAccountPage() {
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [countryCode, setCountryCode] = useState("+234");
+    const [error, setError] = useState("");
     const router = useRouter();
+
+    const validateEmail = (email: string) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // In a real app, you would validate and submit the form data
-        // For now, just navigate to the next step
+        setError("");
+
+        // Validate inputs
+        if (!fullName.trim()) {
+            setError("Please enter your full name");
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            setError("Please enter a valid email address");
+            return;
+        }
+
+        if (!phoneNumber.trim()) {
+            setError("Please enter your phone number");
+            return;
+        }
+
+        // Store the data (in a real app, you might use Redux, Context, or localStorage)
+        const formData = {
+            fullName,
+            email,
+            phoneNumber: `${countryCode}${phoneNumber}`,
+        };
+
+        // You could store the data here if needed
+        // localStorage.setItem('registration_step1', JSON.stringify(formData));
+
+        // Navigate to step 2
         router.push("/admin/register/step2");
     };
 
@@ -68,8 +101,6 @@ export default function CreateAccountPage() {
                         {/* Empty progress bar (gray outline) */}
                         <div className="w-[251px] h-[9px] rounded-full bg-gray-200 border border-gray-200"></div>
                     </div>
-
-
 
                     <div className="mb-3 mt-3 text-center">
                         <Image
@@ -150,8 +181,11 @@ export default function CreateAccountPage() {
                             </div>
                         </div>
 
-
                         {/* Submit button */}
+                        {error && (
+                            <p className="text-red-500 text-sm text-center">{error}</p>
+                        )}
+
                         <Button
                             type="submit"
                             className="w-full py-3 bg-[#CEE1F6] hover:bg-[#D6E6FA] text-primary flex items-center justify-center gap-2"
