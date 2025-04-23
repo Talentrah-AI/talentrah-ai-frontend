@@ -127,10 +127,12 @@ export default function CreateAccountPage() {
                                 id="fullName"
                                 type="text"
                                 placeholder="Enter your full name"
-                                className="w-full max-w-[510px] h-[50px] rounded-lg border border-gray-300"
+                                className={`w-full max-w-[510px] h-[50px] rounded-lg border ${fullName ? "border-black" : "border-gray-300"
+                                    }`}
                                 value={fullName}
                                 onChange={(e) => setFullName(e.target.value)}
                             />
+
                         </div>
 
                         {/* Email field */}
@@ -142,7 +144,8 @@ export default function CreateAccountPage() {
                                 id="email"
                                 type="email"
                                 placeholder="Enter your email"
-                                className="w-full max-w-[510px] h-[50px] rounded-lg border border-gray-300"
+                                className={`w-full max-w-[510px] h-[50px] rounded-lg border ${email ? "border-black" : "border-gray-300"
+                                    }`}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -150,36 +153,58 @@ export default function CreateAccountPage() {
 
                         {/* Phone Number field */}
                         <div className="space-y-2">
-                            <label htmlFor="phoneNumber" className="block text-sm font-medium">
+                            <label htmlFor="phoneNumber" className="block text-sm font-medium text-black">
                                 Phone number
                             </label>
-                            <div className="flex items-center w-full max-w-[510px] h-[50px] rounded-[8px] border border-gray-300 overflow-hidden bg-white text-gray-400 px-3">
-                                <div className="flex items-center gap-1 text-sm">
+
+                            <div
+                                className={`relative flex items-center w-full max-w-[510px] h-[50px] rounded-[8px] px-3 bg-white text-black ${countryCode || phoneNumber ? "border-black" : "border-gray-200"
+                                    } border`}
+                            >
+                                {/* Country code selector and divider */}
+                                <div className="relative flex items-center gap-1 text-sm">
                                     <select
                                         value={countryCode}
                                         onChange={(e) => setCountryCode(e.target.value)}
-                                        className="bg-transparent appearance-none pr-4 text-gray-400 focus:outline-none"
+                                        className="bg-transparent appearance-none pr-8 text-black focus:outline-none"
                                     >
+                                        <option value="">Code</option>
                                         <option value="+234">+234</option>
                                         <option value="+1">+1</option>
                                         <option value="+44">+44</option>
                                         <option value="+91">+91</option>
                                     </select>
-                                    <ChevronDown className="w-4 h-4" />
+
+                                    {/* Arrow-down icon (PNG) */}
+                                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                                        <Image
+                                            src="/arrow-down.png"
+                                            alt="Dropdown Arrow"
+                                            width={16}
+                                            height={16}
+                                            className="w-5 h-5 object-contain"
+                                        />
+                                    </div>
+
+                                    {/* Moved pipe divider to the left */}
+                                    <span className="ml-2 text-black">|</span>
                                 </div>
 
-                                <span className="mx-2 text-gray-500">|</span>
-
+                                {/* Phone input */}
                                 <input
                                     type="tel"
                                     id="phoneNumber"
                                     placeholder="8066518279"
-                                    className="flex-1 bg-transparent text-sm text-black placeholder-gray-500 focus:outline-none"
+                                    className="flex-1 ml-2 bg-transparent text-sm text-black placeholder-gray-300 focus:outline-none"
                                     value={phoneNumber}
                                     onChange={(e) => setPhoneNumber(e.target.value)}
                                 />
                             </div>
                         </div>
+
+
+
+
 
                         {/* Submit button */}
                         {error && (

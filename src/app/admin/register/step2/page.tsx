@@ -111,13 +111,17 @@ export default function CreateAccountStep2Page() {
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="************"
-                                    className="w-full max-w-[510px] h-[50px] rounded-lg border border-gray-300 pr-10"
+                                    className={`w-full max-w-[510px] h-[50px] rounded-lg border pr-10 ${password ? "border-black" : "border-gray-300"
+                                        }`}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
+
+
                                 <button
                                     type="button"
-                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                                    className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${password ? "text-black" : "text-gray-400"
+                                        }`}
                                     onClick={() => setShowPassword(!showPassword)}
                                 >
                                     {showPassword ? (
@@ -126,6 +130,7 @@ export default function CreateAccountStep2Page() {
                                         <Eye className="h-5 w-5" />
                                     )}
                                 </button>
+
                             </div>
                         </div>
 
@@ -139,13 +144,15 @@ export default function CreateAccountStep2Page() {
                                     id="confirmPassword"
                                     type={showConfirmPassword ? "text" : "password"}
                                     placeholder="************"
-                                    className="w-full max-w-[510px] h-[50px] rounded-lg border border-gray-300 pr-10"
+                                    className={`w-full max-w-[510px] h-[50px] rounded-lg border pr-10 ${confirmPassword ? "border-black" : "border-gray-300"
+                                        }`}
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
                                 <button
                                     type="button"
-                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                                    className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${confirmPassword ? "text-black" : "text-gray-400"
+                                        }`}
                                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                                 >
                                     {showConfirmPassword ? (
@@ -156,6 +163,7 @@ export default function CreateAccountStep2Page() {
                                 </button>
                             </div>
                         </div>
+
 
                         {/* Error message */}
                         {error && (
