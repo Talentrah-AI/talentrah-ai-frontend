@@ -8,7 +8,11 @@ import { Suspense } from 'react';
 import { MapPin, ChevronUp, ChevronDown, Info } from 'lucide-react';
 import { CircularProgress } from '@/components/ui/circular-progress';
 import { useState } from 'react';
-import { JobDetailsModal } from '@/components/JobDetailsModal'; // Import the new modal
+import { JobDetailsModal } from '@/components/modal/JobDetailsModal'; // Import the new modal
+import GenerateCoverLetterModal from '@/components/modal/GenerateCoverLetterModal';
+import {useModal} from '@/context/ModalContext';
+import ChangeResumeModal from '@/components/modal/ChangeResumeModal';
+import { useJobStore } from '@/store/useJobStore';
 
 function ResumeOptimized() {
   const [isObjectiveOpen, setIsObjectiveOpen] = useState(false);
@@ -20,16 +24,25 @@ function ResumeOptimized() {
   const [isWorkExperienceOpen, setIsWorkExperienceOpen] = useState(false);
   const [isEducationOpen, setIsEducationOpen] = useState(false);
   const [isCertificationOpen, setIsCertificationOpen] = useState(false);
-  const [isJobDetailsModalOpen, setIsJobDetailsModalOpen] = useState(false); // State for modal
 
+  const { openModal } = useModal();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const {toggleApplyJob} = useJobStore();
   const jobTitle = searchParams.get('jobTitle') || 'Unknown Job';
   const company = searchParams.get('company') || 'Unknown Company';
+  const jobPreference = searchParams.get('jobPreference') || 'Unknown Job Preference';
+  const seniorityLevel = searchParams.get('seniorityLevel') || 'Unknown Seniority Level';
+  const experience = searchParams.get('experience') || 'Unknown Experience';
+  const location = searchParams.get('location') || 'Unknown Location';
+  const jobType = searchParams.get('jobType') || 'Unknown Job Type';
+  const jobId = searchParams.get('jobId') || 'Unknown Job ID';
+  const encodedUrl = searchParams.get('url') || '';
+  const url = decodeURIComponent(encodedUrl);
 
   // Placeholder for fetching the external job application URL via API
   const fetchJobApplicationUrl = async () => {
-    return 'https://example.com/apply'; // Placeholder URL
+    return url; // Placeholder URL
   };
 
   // Placeholder for notifying the backend of the job application
@@ -37,11 +50,18 @@ function ResumeOptimized() {
     console.log('Application submitted to backend');
   };
 
-  const handleApplyForJob = async () => {
+  const handleApplyForJob = async (jobId: string) => {
     try {
+      if(!jobId) {
+        throw new Error('Job ID is required');
+      }
+
+
+      // TODO: Fetch the external job application URL via API
       const applicationUrl = await fetchJobApplicationUrl();
       await notifyApplicationSubmitted();
       window.open(applicationUrl, '_blank');
+      toggleApplyJob(jobId);
       router.push('/jobdashboard?showPopup=true');
     } catch (error) {
       console.error('Error during job application:', error);
@@ -82,23 +102,23 @@ function ResumeOptimized() {
               <div className="flex flex-row items-center gap-[10px] font-gabarito font-normal text-[10px] leading-[12px] text-white mt-4">
                 <div className="flex items-center gap-[6px] border-r-[1px] border-r-white pr-[10px]">
                   <MapPin className="h-[14px] w-[14px]" />
-                  <span>Lagos, Nigeria</span>
+                  <span>{location}</span>
                 </div>
                 <div className="flex items-center gap-[6px] border-r-[1px] border-r-white pr-[10px]">
                   <Image src="/briefcasewhite.svg" alt="Briefcase" width={14} height={14} />
-                  <span>Full Time</span>
+                  <span>{jobType}</span>
                 </div>
                 <div className="flex items-center gap-[6px] border-r-[1px] border-r-white pr-[10px]">
                   <Image src="/clockwhite.svg" alt="Remote" width={14} height={14} />
-                  <span>Remote</span>
+                  <span>{jobPreference}</span>
                 </div>
                 <div className="flex items-center gap-[6px] border-r-[1px] border-r-white pr-[10px]">
                   <Image src="/crownwhite.svg" alt="Seniority Level" width={14} height={14} />
-                  <span>Senior</span>
+                  <span>{seniorityLevel}</span>
                 </div>
                 <div className="flex items-center gap-[6px]">
                   <Image src="/calendarwhite.svg" alt="Experience" width={14} height={14} />
-                  <span>1 year</span>
+                  <span>{experience}</span>
                 </div>
               </div>
             </div>
@@ -151,6 +171,8 @@ function ResumeOptimized() {
               </p>
               <p className="font-gabarito font-normal text-[12px] text-[#515D68] mb-4">
                 Email: juphili@yahoo.com
+                <br />
+                {url}
               </p>
 
               <div className="mb-4">
@@ -220,7 +242,7 @@ function ResumeOptimized() {
               Want to use a different resume for this job?{' '}
               <span
                 className="text-[#E36308] underline cursor-pointer"
-                onClick={handleChangeResume}
+                onClick={() => openModal(<ChangeResumeModal />)}
               >
                 Change Resume
               </span>
@@ -237,7 +259,7 @@ function ResumeOptimized() {
             <p>
               <span
                 className="text-[#0967D2] font-gabarito font-normal text-[12px] cursor-pointer"
-                onClick={() => setIsJobDetailsModalOpen(true)} // Open modal on click
+                onClick={() => openModal(<JobDetailsModal />)}
               >
                 See all
               </span>
@@ -711,12 +733,13 @@ function ResumeOptimized() {
           </Button>
           <Button
             variant="outline"
+            onClick={() => openModal(<GenerateCoverLetterModal jobTitle={jobTitle} company={company} />)}
             className="font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-[#0967D2] px-[50px] py-[5px] rounded-[12px] border-[#0967D2] border-[0.5px]"
           >
             Generate cover letter
           </Button>
           <Button
-            onClick={handleApplyForJob}
+            onClick={() => handleApplyForJob(jobId)}
             className="font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-white px-[50px] py-[5px] rounded-[12px] bg-[#2563EB] hover:bg-[#1D4ED8]"
           >
             Apply for this job
@@ -724,13 +747,12 @@ function ResumeOptimized() {
         </div>
       </div>
 
-      {/* Job Details Modal */}
-      <JobDetailsModal
+      {/* <JobDetailsModal
         isOpen={isJobDetailsModalOpen}
         onClose={() => setIsJobDetailsModalOpen(false)}
         jobTitle={jobTitle}
         company={company}
-      />
+      /> */}
     </div>
   );
 }

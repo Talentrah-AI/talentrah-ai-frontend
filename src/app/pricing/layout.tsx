@@ -1,13 +1,9 @@
 import { Providers } from '@/app/providers';
 import { SubscriptionProvider } from '@/context/SubscriptionContext';
 import { Toaster } from 'sonner';
-import { Gabarito } from 'next/font/google';
 import '../globals.css';
 
-const gabarito = Gabarito({
-  subsets: ['latin'],
-  variable: '--font-gabarito',
-});
+
 
 export default function subscriptionplansLayout({
   children,
@@ -15,8 +11,8 @@ export default function subscriptionplansLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en className={gabarito.variable}">
-      <body className={gabarito.className}>
+    <html lang="en">
+      <body>
         <Providers>
           <SubscriptionProvider>
             {children}

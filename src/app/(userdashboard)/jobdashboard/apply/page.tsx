@@ -7,45 +7,64 @@
 'use client';
 
 // Import necessary components and utilities
-import ApplySkeleton from '@/components/ApplySkeleton';
 import ChangeResumeModal from '@/components/modal/ChangeResumeModal';
 import GenerateCoverLetterModal from '@/components/modal/GenerateCoverLetterModal';
 import PreviewResumeModal from '@/components/modal/PreviewResumeModal';
 import ResumeOptimizationModal from '@/components/modal/ResumeOptimizationModal';
+import {LoadingSpinner} from '@/components/LoadingSpinner';
 import { Button } from '@/components/ui/button';
 import { CircularProgress } from '@/components/ui/circular-progress';
 import { useModal } from '@/context/ModalContext';
 import { MapPin } from 'lucide-react';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
+import { useSubscription } from '@/context/SubscriptionContext';
 
 function Apply() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // state for loading spinner
   const { openModal } = useModal();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, []);
+  const { isPremium } = useSubscription();
+  const router = useRouter();
 
   // Extract job-related information from URL parameters
   const searchParams = useSearchParams();
   const jobTitle = searchParams.get('jobTitle');
   const company = searchParams.get('company');
+  const jobPreference = searchParams.get('jobPreference');
+  const seniorityLevel = searchParams.get('seniorityLevel');
+  const experience = searchParams.get('experience');
+  const location = searchParams.get('location');
+  const jobType = searchParams.get('jobType');
+  const jobId = searchParams.get('jobId');
+  const encodedUrl = searchParams.get('url') || '';
+  const url = decodeURIComponent(encodedUrl);
 
+  
+const handleOptimizeResume = () => {
+  setIsLoading(true);
+
+
+  if(isPremium) {
+    //If subscribed, route to resume-optimized page
+    router.push(`/jobdashboard/resume-optimized?jobTitle=${jobTitle}&company=${company}&jobPreference=${jobPreference}&seniorityLevel=${seniorityLevel}&experience=${experience}&location=${location}&jobType=${jobType}&url=${url}&jobId=${jobId}`);
+  } else {
+    //If not subscribed, open modal
+    openModal(<ResumeOptimizationModal />);
+  }
+
+  setIsLoading(false);
+  
+};
  
 
-  if (isLoading) {
-    return <ApplySkeleton />; // Render ApplySkeleton when loading
-  }
+
+
 
   return (
     // Main container with custom dimensions and styling
+    <>
+    {isLoading && <LoadingSpinner message="Optimizing your resume, this might take a few minutes..." />}
     <div className="w-[1157px] h-[968px] flex flex-col gap-[32px] p-[12px] pt-[12px] pr-[12px] pb-[30px] pl-[12px] rounded-[24px] bg-[#F8F8F8]">
       <section className="w-[1133px] h-[849px] flex justify-between">
         <div className="w-[707px] h-[849px] flex flex-col gap-[12px]">
@@ -66,7 +85,16 @@ function Apply() {
               <div className="flex flex-row items-center gap-[10px] font-gabarito font-normal text-[10px] leading-[12px] text-white mt-4">
                 <div className="flex items-center gap-[6px] border-r-[1px] border-r-white pr-[10px]">
                   <MapPin className="h-[14px] w-[14px]" />
-                  <span>Lagos, Nigeria</span>
+                  <span>{location}</span>
+                </div>
+                <div className="flex items-center gap-[6px] border-r-[1px] border-r-white pr-[10px]">
+                  <Image
+                    src="/clockwhite.svg"
+                    alt="Remote"
+                    width={14}
+                    height={14}
+                  />
+                  <span>{jobType}</span>
                 </div>
                 <div className="flex items-center gap-[6px] border-r-[1px] border-r-white pr-[10px]">
                   <Image
@@ -75,18 +103,9 @@ function Apply() {
                     width={14}
                     height={14}
                   />
-                  <span>Full Time</span>
+                  <span>{jobPreference}</span>
                 </div>
 
-                <div className="flex items-center gap-[6px] border-r-[1px] border-r-white pr-[10px]">
-                  <Image
-                    src="/clockwhite.svg"
-                    alt="Remote"
-                    width={14}
-                    height={14}
-                  />
-                  <span>Remote</span>
-                </div>
 
                 <div className="flex items-center gap-[6px] border-r-[1px] border-r-white pr-[10px]">
                   <Image
@@ -95,7 +114,7 @@ function Apply() {
                     width={14}
                     height={14}
                   />
-                  <span>Senior</span>
+                  <span>{seniorityLevel}</span>
                 </div>
                 <div className="flex items-center gap-[6px]">
                   <Image
@@ -104,7 +123,7 @@ function Apply() {
                     width={14}
                     height={14}
                   />
-                  <span>1 year</span>
+                  <span>{experience}</span>
                 </div>
               </div>
             </div>
@@ -441,6 +460,7 @@ function Apply() {
                 />
               )
             }
+          
             variant="outline"
             className="font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-[#0967D2] px-[50px] py-[5px] rounded-[12px] border-[#0967D2] border-[0.5px] cursor-pointer"
           >
@@ -448,7 +468,7 @@ function Apply() {
           </Button>
           <Button
             variant="outline"
-            onClick={() => openModal(<ResumeOptimizationModal />)}
+            onClick={handleOptimizeResume}
             className="flex gap-[5px] p-[5px_50px] rounded-[12px] px-6 bg-[#2563EB] font-[Gabarito] font-normal text-[16px] leading-[20px] tracking-[0px] text-center text-white cursor-pointer"
           >
             <Image src="/optimize.svg" alt="optimize" width={24} height={24} />
@@ -458,6 +478,7 @@ function Apply() {
       </div>
      
     </div>
+    </>
   );
 }
 

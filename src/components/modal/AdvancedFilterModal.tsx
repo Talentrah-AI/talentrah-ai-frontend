@@ -1,375 +1,400 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { ChevronDown, X } from "lucide-react";
-import { useState } from "react";
+'use client';
 
-const options = [
-  "UI/UX Designer",
-  "Product Designer",
-  "Frontend Developer",
-  "Backend Developer",
-  "Full-Stack Developer",
-]
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useJobStore } from '@/store/useJobStore';
+import { X } from 'lucide-react';
+import { Slider } from '@/components/ui/slider';
+import { useModal } from '@/context/ModalContext';
+import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
-const jobTypes = ["Full-time", "Part-time", "Contract", "Internship"];
-const workModels = ["Remote", "Hybrid", "On-site"];
-const experienceLevel = ["Entry level", "Mid level", "Senior level", "Intern", "Director/Associate", "Lead/staff"];
+const jobTypes = ['Full-time', 'Part-time', 'Contract', 'Internship'] as const;
+const workModels = ['Remote', 'Hybrid', 'On-site'] as const;
+const experienceLevels = [
+  'Entry Level',
+  'Mid Level',
+  'Senior Level',
+  'Director/Executive',
+  'Lead/Staff',
+] as const;
 
+type FilterFormData = {
+  jobTitles: string[];
+  jobType: typeof jobTypes[number][];
+  workModel: typeof workModels[number][];
+  priceRange: number;
+  experienceLevel: typeof experienceLevels[number][];
+  locations: string[];
+};
 
+const emptyFilters: FilterFormData = {
+  jobTitles: [],
+  jobType: [],
+  workModel: [],
+  priceRange: 50000,
+  experienceLevel: [],
+  locations: [],
+};
 
- const AdvancedFilterModal: React.FC = () => {
-   const [open, setOpen] = useState(false)
-  const [inputValue, setInputValue] = useState("")
-  const [selected, setSelected] = useState<string[]>(["Product Manager", "Product Designer", "Product Advisor"])
-  const [selectedJobTypes, setSelectedJobTypes] = useState<string[]>(["Full-time"]);
-  const [selectedWorkModels, setSelectedWorkModels] = useState<string[]>(["Remote"]);
-  const [selectedExperienceLevel, setSelectedExperienceLevel] = useState<string[]>(["Entry level"]);
-  const [priceRange, setPriceRange] = useState(80);
+export function AdvancedFilterModal() {
+  const { closeModal } = useModal();
+  const { filters, setFilters, resetFilters, initializeFiltersFromSetup, setSetupFormData } = useJobStore();
+  const setupFormData = useJobStore((state) => state.setupFormData);
+  
+  const [formData, setFormData] = useState<FilterFormData>(filters || emptyFilters);
 
-  const min = 10;
-  const max = 300;
-  const percentage = ((priceRange - min) / (max - min)) * 100;
-
-
-
-   // Convert the value to range (10K - 300K)
-  const formattedPrice = `$${priceRange}k`
-   
-    const filteredOptions = options.filter((option) =>
-    option.toLowerCase().includes(inputValue.toLowerCase()) && (
-        !selected.includes(option) // Prevent showing already selected options
-    )
-  )
-
-  // Handle selecting a job title
-  const handleSelect = (option: string) => {
-    if (!selected.includes(option)) {
-      setSelected([...selected, option])
+  // Initialize filters from job setup data if available
+  useEffect(() => {
+    if (setupFormData && !filters.jobTitles.length) {
+      initializeFiltersFromSetup(setupFormData);
+      setFormData({
+        jobTitles: setupFormData.jobTitles,
+        jobType: setupFormData.jobType as FilterFormData['jobType'],
+        workModel: setupFormData.preference as FilterFormData['workModel'],
+        priceRange: 50000,
+        experienceLevel: setupFormData.experience as FilterFormData['experienceLevel'],
+        locations: setupFormData.locations,
+      });
     }
-    setInputValue("") // Clear input after selection
-    setOpen(false)
-  }
+  }, [setupFormData, filters, initializeFiltersFromSetup]);
 
-  // Handle removing a selected job title
-  const handleRemove = (option: string) => {
-    setSelected(selected.filter((item) => item !== option))
-  }
-
-  // Toggle function for job types
-  const handleJobTypeToggle = (type: string) => {
-    setSelectedJobTypes((prev) =>
-      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
-    );
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submitted!', formData);
+    const jobSetupData = {
+      jobTitles: formData.jobTitles,
+      experience: formData.experienceLevel,
+      jobType: formData.jobType,
+      locations: formData.locations,
+      preference: formData.workModel,
+    };
+    setSetupFormData(jobSetupData);
+    closeModal();
   };
 
-  // Toggle function for work models
-  const handleWorkModelToggle = (model: string) => {
-    setSelectedWorkModels((prev) =>
-      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model]
-    );
+  const handleReset = () => {
+    resetFilters();
+    setFormData(emptyFilters);
   };
 
-//   Toggle function for work models
-const handleExperienceLevelToggle = (level:string) => {
-    setSelectedExperienceLevel((prev) => prev.includes(level) ? prev.filter((l)=>l !== level) : [...prev, level]);
-}
+  const formatPrice = (value: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
 
-  const resetFilters = () => {
-    
+  const updateJobTitles = (title: string, add: boolean) => {
+    if (add) {
+      setFormData(prev => ({
+        ...prev,
+        jobTitles: [...prev.jobTitles, title]
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        jobTitles: prev.jobTitles.filter(t => t !== title)
+      }));
+    }
+  };
+
+  const toggleJobType = (type: typeof jobTypes[number]) => {
+    setFormData(prev => {
+      if (prev.jobType.includes(type)) {
+        return {
+          ...prev,
+          jobType: prev.jobType.filter(t => t !== type)
+        };
+      } else {
+        return {
+          ...prev,
+          jobType: [...prev.jobType, type]
+        };
+      }
+    });
+  };
+
+  const toggleWorkModel = (model: typeof workModels[number]) => {
+    setFormData(prev => {
+      if (prev.workModel.includes(model)) {
+        return {
+          ...prev,
+          workModel: prev.workModel.filter(m => m !== model)
+        };
+      } else {
+        return {
+          ...prev,
+          workModel: [...prev.workModel, model]
+        };
+      }
+    });
+  };
+
+  const updatePriceRange = (value: number) => {
+    setFormData(prev => ({
+      ...prev,
+      priceRange: value
+    }));
+  };
+
+  const toggleExperienceLevel = (level: typeof experienceLevels[number]) => {
+    setFormData(prev => {
+      if (prev.experienceLevel.includes(level)) {
+        return {
+          ...prev,
+          experienceLevel: prev.experienceLevel.filter(l => l !== level)
+        };
+      } else {
+        return {
+          ...prev,
+          experienceLevel: [...prev.experienceLevel, level]
+        };
+      }
+    });
+  };
+
+  const updateLocations = (location: string, add: boolean) => {
+    if (add) {
+      setFormData(prev => ({
+        ...prev,
+        locations: [...prev.locations, location]
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        locations: prev.locations.filter(l => l !== location)
+      }));
+    }
+  };
+
+  const handleJobTitleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && e.currentTarget.value.trim()) {
+      e.preventDefault();
+      updateJobTitles(e.currentTarget.value.trim(), true);
+      e.currentTarget.value = '';
+    }
+  };
+
+  const handleLocationInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && e.currentTarget.value.trim()) {
+      e.preventDefault();
+      updateLocations(e.currentTarget.value.trim(), true);
+      e.currentTarget.value = '';
+    }
   };
 
   return (
-        <div className="w-[378px] h-[1176.62px] flex flex-col pt-[26px] pr-[12px] pb-[26px] pl-[12px] gap-[10px] left-[1062px] bg-[#F8F8F8] absolute top-0 right-0">
-
-         <div className="flex justify-between items-center">
-          <h2 className="font-[Gabarito] font-medium text-[16px] leading-[20px] tracking-[0px] text-[#08121D] text-center">Filter</h2>
-            <Button 
-            onClick={resetFilters} 
-            variant="ghost" 
-            className="w-[77px] h-[27.62px] rounded-[10.04px] border-[#0967D2] border-[0.5px] px-[41.85px] py-[4.18px] gap-[4.18px]" >
-                <span className="font-[Gabarito] font-normal text-[10.04px] leading-[13.39px] tracking-[0px] text-center text-[#0967D2]">Reset All</span>
-            </Button>
-         </div>
-
-        <div className="border flex flex-col gap-4">
-            <div className="flex flex-col bg-white rounded-[12px] p-[19px] gap-[10px]">
-            <h1 className="font-[Gabarito] font-medium text-[12px] leading-[16px] tracking-[0px]">* Job title</h1>
-          
-       <Popover open={open} onOpenChange={setOpen}>
-        <div className="relative w-full">
-          {/* Input Field */}
-          <Input
-            value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value)
-              setOpen(true) // Keep dropdown open while typing
-            }}
-            onFocus={() => setOpen(true)} // Open on focus
-            placeholder="Enter/Choose job title"
-            className="pr-10 cursor-text"
-          />
-
-          {/* Dropdown Toggle Icon */}
-          <PopoverTrigger asChild>
-            <button
-              type="button"
-              onClick={() => setOpen((prev) => !prev)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-1"
+    <div className="fixed inset-0 z-50 flex items-start justify-end">
+      <div className="h-full w-[400px] bg-[#F8F8F8] shadow-xl p-6 overflow-y-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-lg font-semibold">Filter</h2>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              onClick={handleReset}
+              className="text-sm text-blue-600"
             >
-              <ChevronDown className="h-5 w-5 text-gray-400" />
-            </button>
-          </PopoverTrigger>
+              Reset All
+            </Button>
+          </div>
         </div>
 
-        {/* Dropdown */}
-        
-          <PopoverContent align="start" className="w-[316px] absolute -right-10 p-2">
-            <div className="max-h-48 overflow-y-auto">
-              {filteredOptions.length > 0 ? (
-                filteredOptions.map((option) => (
+        <form onSubmit={onSubmit} className="space-y-6">
+          {/* Job Title Section */}
+          <div className="space-y-2 rounded-[12px] p-[16px_19px] bg-white">
+            <p className="font-[Gabarito] font-medium text-[12px] leading-[16px] tracking-[0px]">
+              <span className="text-red-500">*</span> Job title
+            </p>
+            <div className="space-y-2">
+              <input
+                type="text"
+                placeholder="Enter/Choose job title"
+                className="w-full p-2 border rounded-lg text-sm"
+                onKeyDown={handleJobTitleInput}
+              />
+              <p className="text-xs text-gray-500">You can choose more than one job title</p>
+              <div className="flex flex-wrap gap-2">
+                {formData.jobTitles.map((title) => (
                   <div
-                    key={option}
-                    role="button"
-                    tabIndex={0}
-                    className={cn(
-                      "cursor-pointer flex items-center justify-between p-2 rounded-md hover:bg-gray-100 transition"
-                    )}
-                    onClick={() => handleSelect(option)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault(); // Prevent any default actions
-                        handleSelect(option);
-                        }
-                    }}
+                    key={title}
+                    className="flex items-center gap-1 bg-blue-100 px-2 py-1 rounded-md"
                   >
-                    {option}
-                  </div>
-                ))
-              ) : (
-                <p className="text-sm text-gray-500 p-2">No results found</p>
-              )}
-            </div>
-          </PopoverContent>
-      </Popover>
-
-      {/* Display Selected Job Titles Below Input */}
-      {selected.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-            <p className="font-[Gabarito] font-normal text-[12px] leading-4 tracking-[0px] text-[#717A84]">You can choose more than one job title</p>
-          {selected.map((job) => (
-            <div key={job}>
-                <div className="w-full h-[26px] flex items-center rounded-[6px] px-[10px] py-[5px] gap-[5px] bg-[#0967D2] whitespace-nowrap text-white">
-                    <span className=" font-[400] text-[12px] leading-[16px] tracking-[0px]  font-[Gabarito]">{job}</span>
-                    <button onClick={() => handleRemove(job)}>
-                        <X className="w-4 h-4"/>
+                    <span className="text-xs">{title}</span>
+                    <button
+                      type="button"
+                      onClick={() => updateJobTitles(title, false)}
+                    >
+                      <X className="h-3 w-3" />
                     </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Job Type Section */}
+          <div className="space-y-2 rounded-[12px] p-[16px_19px] bg-white">
+            <p className="font-[Gabarito] font-medium text-[12px] leading-[16px] tracking-[0px]">
+              <span className="text-red-500">*</span> Job Type
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              {jobTypes.map((type) => (
+                <div
+                  key={type}
+                  className={cn(
+                    "flex items-center transition cursor-pointer w-[149px] h-[30px] rounded-[8px] gap-[7px] p-[8px]",
+                    formData.jobType.includes(type) ? "bg-[#E6F0FB]" : "bg-[#f8f8f8]"
+                  )}
+                >
+                  <Checkbox 
+                    checked={formData.jobType.includes(type)}
+                    onCheckedChange={() => toggleJobType(type)}
+                    id={`job-type-${type}`}
+                  />
+                  <label 
+                    htmlFor={`job-type-${type}`}
+                    className="flex-1 cursor-pointer font-[Gabarito] font-normal text-[10px] leading-[12px] tracking-[0px] text-black"
+                  >
+                    {type}
+                  </label>
                 </div>
-              
+              ))}
             </div>
-          ))}
-        </div>
-      )}
-         
+          </div>
+
+          {/* Work Model Section */}
+          <div className="space-y-2 rounded-[12px] p-[16px_19px] bg-white">
+            <p className="font-[Gabarito] font-medium text-[12px] leading-[16px] tracking-[0px]">
+              <span className="text-red-500">*</span> Work Model
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              {workModels.map((model) => (
+                <div
+                  key={model}
+                  className={cn(
+                    "flex items-center transition cursor-pointer w-[149px] h-[30px] rounded-[8px] gap-[7px] p-[8px]",
+                    formData.workModel.includes(model) ? "bg-[#E6F0FB]" : "bg-[#f8f8f8]"
+                  )}
+                >
+                  <Checkbox 
+                    checked={formData.workModel.includes(model)} 
+                    onCheckedChange={() => toggleWorkModel(model)}
+                    id={`work-model-${model}`}
+                  />
+                  <label 
+                    htmlFor={`work-model-${model}`}
+                    className="flex-1 cursor-pointer font-[Gabarito] font-normal text-[10px] leading-[12px] tracking-[0px] text-black"
+                  >
+                    {model}
+                  </label>
+                </div>
+              ))}
             </div>
+          </div>
 
-            <div className="space-y-2 rounded-[12px] p-[16px_19px] bg-white">
-                 {/* Job Type Section */}
-                
-                    <p className="font-[Gabarito] font-medium text-[12px] leading-[16px] tracking-[0px]">
-                    <span className="text-red-500">*</span> Job Type
-                    </p>
-                    <div className="grid grid-cols-2 gap-3">
-                    {jobTypes.map((type) => (
-                        <div
-                        key={type}
-                        role="button"
-                        tabIndex={0}
-                        className={cn(
-                            "flex items-center transition cursor-pointer w-[149px] h-[30px] rounded-[8px] gap-[7px] p-[8px]",
-                            selectedJobTypes.includes(type) ? "bg-[#E6F0FB]" : "bg-[#f8f8f8]"
-                        )}
-                        onClick={() => handleJobTypeToggle(type)}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault(); // Prevent any default actions
-                            handleJobTypeToggle(type);
-                            }
-                        }}
-                        >
-                        <Checkbox checked={selectedJobTypes.includes(type)}  />
-                        <span className="font-[Gabarito] font-normal text-[10px] leading-[12px] tracking-[0px] text-black">{type}</span>
-                        </div>
-                    ))}
-                    </div>
+          {/* Price Range Section */}
+          <div className="space-y-4 rounded-[12px] p-[16px_19px] bg-white">
+            <p className="font-[Gabarito] font-medium text-[12px] leading-[16px] tracking-[0px]">
+              <span className="text-red-500">*</span> Price range
+            </p>
+            <div className="space-y-6">
+              <div className="flex justify-end">
+                <span className="text-sm font-medium">{formatPrice(formData.priceRange)}</span>
+              </div>
+              <Slider
+                value={[formData.priceRange]}
+                min={0}
+                max={200000}
+                step={1000}
+                onValueChange={([value]) => updatePriceRange(value)}
+                className="w-full"
+              />
             </div>
+          </div>
 
-
-            <div className="space-y-2 rounded-[12px] p-[16px_19px] bg-white">
-                {/* Work Model Section */}
-                    <p className="font-[Gabarito] font-medium text-[12px] leading-[16px] tracking-[0px]">
-                    <span className="text-red-500">*</span> Work Model
-                    </p>
-                    <div className="grid grid-cols-2 gap-3">
-                    {workModels.map((model) => (
-                        <div
-                        key={model}
-                        role="button"
-                        tabIndex={0}
-                        className={cn(
-                            "flex items-center transition cursor-pointer w-[149px] h-[30px] rounded-[8px] gap-[7px] p-[8px]",
-                            selectedWorkModels.includes(model) ? "bg-[#E6F0FB]" : "bg-[#f8f8f8]"
-                        )}
-                        onClick={() => handleWorkModelToggle(model)}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault(); // Prevent any default actions
-                            handleWorkModelToggle(model);
-                            }
-                        }}
-                        >
-                        <Checkbox checked={selectedWorkModels.includes(model)} />
-                        <span className="font-[Gabarito] font-normal text-[10px] leading-[12px] tracking-[0px] text-black">{model}</span>
-                        </div>
-                    ))}
-                    </div>
+          {/* Experience Level Section */}
+          <div className="space-y-2 rounded-[12px] p-[16px_19px] bg-white">
+            <p className="font-[Gabarito] font-medium text-[12px] leading-[16px] tracking-[0px]">
+              <span className="text-red-500">*</span> Experience level
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              {experienceLevels.map((level) => (
+                <div
+                  key={level}
+                  className={cn(
+                    "flex items-center transition cursor-pointer w-[149px] h-[30px] rounded-[8px] gap-[7px] p-[8px]",
+                    formData.experienceLevel.includes(level) ? "bg-[#E6F0FB]" : "bg-[#f8f8f8]"
+                  )}
+                >
+                  <Checkbox 
+                    checked={formData.experienceLevel.includes(level)}
+                    onCheckedChange={() => toggleExperienceLevel(level)}
+                    id={`exp-level-${level}`}
+                  />
+                  <label 
+                    htmlFor={`exp-level-${level}`}
+                    className="flex-1 cursor-pointer font-[Gabarito] font-normal text-[10px] leading-[12px] tracking-[0px] text-black"
+                  >
+                    {level}
+                  </label>
+                </div>
+              ))}
             </div>
+          </div>
 
+          {/* Location Section */}
+          <div className="space-y-2 rounded-[12px] p-[16px_19px] bg-white">
+            <p className="font-[Gabarito] font-medium text-[12px] leading-[16px] tracking-[0px]">
+              <span className="text-red-500">*</span> Location
+            </p>
+            <div className="space-y-2">
+              <input
+                type="text"
+                placeholder="Search location"
+                className="w-full p-2 border rounded-lg text-sm"
+                onKeyDown={handleLocationInput}
+              />
+              <p className="text-xs text-gray-500">You can choose more than one location</p>
+              <div className="flex flex-wrap gap-2">
+                {formData.locations.map((location) => (
+                  <div
+                    key={location}
+                    className="flex items-center gap-1 bg-blue-100 px-2 py-1 rounded-md"
+                  >
+                    <span className="text-xs">{location}</span>
+                    <button
+                      type="button"
+                      onClick={() => updateLocations(location, false)}
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
-
-
-
-
- <div className="space-y-4 rounded-[12px] p-6 bg-white w-full">
-      {/* Price Range Label */}
-      <p className="font-[Gabarito] font-medium text-[14px] leading-[16px] tracking-[0px]">
-        <span className="text-red-500">*</span> Price range
-      </p>
-
-      {/* Slider Container */}
-      <div className="relative w-full flex flex-col items-center">
-        {/* Floating Price Label */}
-        <div
-          className="absolute -top-8 bg-yellow-700 text-white text-[12px] font-[Gabarito] font-medium px-2 py-1 rounded-md transition-transform"
-          style={{
-            left: `calc(${percentage}% - 16px)`, // Adjust label dynamically
-            transform: "translateX(-50%)", // Center the label over the thumb
-          }}
-        >
-          {formattedPrice}
-        </div>
-
-        {/* Custom Styled Slider */}
-        <div className="relative w-full h-6 flex items-center">
-          <input
-            type="range"
-            min={min}
-            max={max}
-            step="5"
-            value={priceRange}
-            onChange={(e) => setPriceRange(Number(e.target.value))}
-            className="w-full appearance-none bg-transparent cursor-pointer"
-            style={{
-              WebkitAppearance: "none",
-              appearance: "none",
-            }}
-          />
-
-          {/* Custom Track */}
-          <div className="absolute w-full h-1 bg-gray-300 rounded-full top-1/2 transform -translate-y-1/2" />
-
-          {/* Custom Progress Bar */}
-          <div
-            className="absolute h-1 bg-[#0967D2] rounded-full top-1/2 transform -translate-y-1/2"
-            style={{
-              width: `${percentage}%`,
-            }}
-          />
-
-          {/* Custom Thumb */}
-          {/* <div
-            className="absolute w-5 h-5 bg-yellow-500 rounded-full border-2 border-white shadow-md cursor-pointer"
-            style={{
-              left: `calc(${percentage}% - 8px)`, // Adjust for proper centering
-              transform: "translateX(-50%)",
-            }}
-          /> */}
-        </div>
+          {/* Action Buttons */}
+          <div className="flex justify-between gap-4 mt-6">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={closeModal}
+              className="flex-1 bg-white"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="flex-1 bg-blue-600 text-white hover:bg-blue-700"
+            >
+              Apply
+            </Button>
+          </div>
+        </form>
       </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-             <div className="space-y-2 rounded-[12px] p-[16px_19px] bg-white">
-                {/* Experience level Section */}
-                    <p className="font-[Gabarito] font-medium text-[12px] leading-[16px] tracking-[0px]">
-                    <span className="text-red-500">*</span> Experience level
-                    </p>
-                    <div className="grid grid-cols-2 gap-3">
-                    {experienceLevel.map((level) => (
-                        <div
-                        key={level}
-                        role="button"
-                        tabIndex={0}
-                        className={cn(
-                            "flex items-center transition cursor-pointer w-[149px] h-[30px] rounded-[8px] gap-[7px] p-[8px]",
-                            selectedExperienceLevel.includes(level) ? "bg-[#E6F0FB]" : "bg-[#f8f8f8]"
-                        )}
-                        onClick={() => handleExperienceLevelToggle(level)}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault(); // Prevent any default actions
-                            handleExperienceLevelToggle(level);
-                            }
-                        }}
-                        >
-                        <Checkbox checked={selectedExperienceLevel.includes(level)} />
-                        <span className="font-[Gabarito] font-normal text-[10px] leading-[12px] tracking-[0px] text-black">{level}</span>
-                        </div>
-                    ))}
-                    </div>
-            </div>
-          
-          <span className="text-sm font-medium">Job Type</span>
-          {/* <Checkbox label="Full-time" className="mb-4" checked={filters.jobType === "Full-time"} /> */}
-          
-          <span className="text-sm font-medium">Work Model</span>
-          {/* <Checkbox label="Remote" className="mb-4" checked={filters.workModel === "Remote"} /> */}
-          
-          
-          
-          <span className="text-sm font-medium">Experience Level</span>
-          {/* <Checkbox label="Entry Level" className="mb-4" checked={filters.experience === "Entry Level"} /> */}
-          
-          <span className="text-sm font-medium">Location</span>
-          <Input placeholder="Search location" className="mb-2" />
-          {/* <div className="flex flex-wrap gap-2 mb-4">
-            {selectedLocations.map((location) => (
-              <Badge key={location} variant="secondary" className="flex items-center gap-1">
-                {location} <button onClick={() => setSelectedLocations(selectedLocations.filter(l => l !== location))}>✕</button>
-              </Badge>
-            ))}
-          </div> */}
-        </div>
-          
-          <Button className="w-full">Apply</Button>
-        </div>
   );
 }
-
-export default AdvancedFilterModal;

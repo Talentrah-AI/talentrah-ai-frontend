@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import {useModal} from '@/context/ModalContext';
 import {
   Dialog,
   DialogContent,
@@ -6,15 +7,16 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 
-interface JobLoopDialogProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSetup: () => void;
-}
+// interface JobLoopDialogProps {
+//   isOpen: boolean;
+//   onClose: () => void;
+//   onSetup: () => void;
+// }
 
-export function JobLoopDialog({ isOpen, onClose, onSetup }: JobLoopDialogProps) {
+export function JobLoopModal() {
+  const {closeModal} = useModal();
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <div>
       <DialogContent className="sm:max-w-[425px] p-6 bg-white rounded-[12px] shadow-lg">
         <DialogHeader className="relative mb-4">
           <DialogTitle className="text-[16px] font-semibold text-[#08121D]">
@@ -27,7 +29,7 @@ export function JobLoopDialog({ isOpen, onClose, onSetup }: JobLoopDialogProps) 
           </p>
           <div className="mt-6">
             <Button
-              onClick={onSetup}
+              onClick={closeModal}
               className="w-full h-[40px] bg-[#0967D2] text-white hover:bg-[#0967D2]/90 rounded-[8px] font-normal text-[14px]"
             >
               Set up job loop
@@ -35,6 +37,7 @@ export function JobLoopDialog({ isOpen, onClose, onSetup }: JobLoopDialogProps) 
           </div>
         </div>
       </DialogContent>
-    </Dialog>
+    </div>
+  
   );
 } 

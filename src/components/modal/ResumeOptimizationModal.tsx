@@ -5,11 +5,21 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
-
+import { useJobStore } from '@/store/useJobStore';
+import { useSearchParams } from 'next/navigation';
 
 const ResumeOptimizationModal: React.FC = () => {
   const { closeModal } = useModal();
   const router = useRouter();
+  const {addAppliedJob} = useJobStore();
+  const jobId = useSearchParams().get('jobId') || '';
+
+  const handleApplyAnyway = (jobId: string) => {
+    if(jobId) {
+      addAppliedJob(jobId);
+    }
+    closeModal();
+  };
 
   const handleUpgradeClick = () => {
     router.push('/pricing');
@@ -51,7 +61,7 @@ const ResumeOptimizationModal: React.FC = () => {
           <div className="flex justify-between mt-4">
             <Button
               variant="outline"
-              onClick={closeModal}
+              onClick={() => handleApplyAnyway(jobId)}
               className="w-[229.5px] h-[45px] rounded-[12px] border-[0.5px] border-[#0967D2] gap-[5px] px-[37px] py-[5px] cursor-pointer"
             >
               Apply anyway

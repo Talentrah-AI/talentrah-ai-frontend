@@ -1,20 +1,18 @@
 'use client';
 
+import { X } from 'lucide-react';
+import { useModal } from '@/context/ModalContext';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useModal } from '@/context/ModalContext';
-import { X } from 'lucide-react';
-import Image from 'next/image';
-import { useState } from 'react';
+import { useJobStore } from '@/store/useJobStore';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import AdvancedFilterModal from './modal/AdvancedFilterModal';
-
-interface JobTabsProps {
-  activeTab: 'recommended' | 'saved' | 'recent' | 'top-matched';
-  setActiveTab: (
-    tab: 'recommended' | 'saved' | 'recent' | 'top-matched'
-  ) => void;
-}
+import Image from 'next/image';
+import { AdvancedFilterModal } from '@/components/modal/AdvancedFilterModal';
+import { cn } from '@/lib/utils';
+import { Search } from 'lucide-react';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { JOBS } from '@/data/mockJobData/job';
 
 interface FilterBadgeProps {
   label: string;
@@ -40,25 +38,27 @@ function FilterBadge({ label, onRemove }: FilterBadgeProps) {
   );
 }
 
-export function JobTabs({ activeTab, setActiveTab }: JobTabsProps) {
-  const pathname = usePathname();
+export function JobTabs() {
+  const { activeTab, setActiveTab, searchResults, setupFormData: formData, savedJobs } = useJobStore();
   const { openModal } = useModal();
+  const pathname = usePathname();
 
-  // User details and filters
-  const initialFilters = [
-    'UI Designer',
-    'Product Designer',
-    'Intermediate',
-    'Senior',
-    'Nigeria',
-    'Canada',
-    'Full-time',
-    'Hybrid',
-    'Remote',
-    'Contract',
-  ];
+  // Initialize filters from form data when available
+  const [filters, setFilters] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
 
-  const [filters, setFilters] = useState(initialFilters);
+  useEffect(() => {
+    if (formData) {
+      const newFilters = [
+        ...formData.jobTitles,
+        ...formData.experience,
+        ...formData.locations,
+        ...formData.jobType,
+      ].filter(Boolean);
+      setFilters(newFilters);
+    }
+  }, [formData]);
 
   // Function to remove a filter
   const removeFilter = (filterToRemove: string) => {
@@ -69,8 +69,72 @@ export function JobTabs({ activeTab, setActiveTab }: JobTabsProps) {
   const displayedFilters = filters.slice(0, 5);
   const remainingFilters = filters.length - displayedFilters.length;
 
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    
+    setIsSearching(true);
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    const searchResults = JOBS.filter(job => {
+      //first apply search query filter
+      const query = searchQuery.toLowerCase();
+      const matchesSearch =
+        job.title.toLowerCase().includes(query) ||
+        job.location.toLowerCase().includes(query) ||
+        job.jobType.toLowerCase().includes(query);
+
+      if (!matchesSearch) return false;
+
+      //then apply active tab conditions
+      switch (activeTab) {
+        case 'saved':
+          return savedJobs.includes(job.id);
+        case 'top-matched':
+          return job.matchPercentage >= 90;
+        case 'recent':
+          return job.daysAgo <= 7;
+        case 'recommended':
+          // For recommeded tab, applyform data filters if available
+          if (formData) {
+            const titleMatch = formData.jobTitles.length === 0 || formData.jobTitles.some(title =>
+              job.title.toLowerCase().includes(title.toLowerCase())
+            );
+            if (!titleMatch) return false;
+          }
+          return true;
+        default:
+          return true;
+      }
+
+    });
+
+    useJobStore.setState({ searchResults });
+    setIsSearching(false);
+  };
+
   return (
     <div className="bg-[#FFFFFF] rounded-[12px] p-4 w-[800px]">
+      {/* Search Input */}
+      <form onSubmit={handleSearch} className="relative mb-4">
+        <input
+          type="text"
+          placeholder="Search for job titles, location, job type"
+          className="w-full h-[48px] pl-12 pr-4 rounded-[12px] border border-[#E5E7EB] text-[14px] font-gabarito text-[#717A84] focus:outline-none focus:ring-2 focus:ring-[#0967D2] focus:border-transparent"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#717A84] h-5 w-5" />
+        <Button
+          type="submit"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 h-[36px] px-4 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-[8px]"
+          disabled={isSearching}
+        >
+          {isSearching ? <LoadingSpinner message="" /> : 'Search'}
+        </Button>
+      </form>
+
       <div className="flex justify-between items-center mb-4">
         <div className="flex gap-2 bg-white rounded-xl shadow-md w-[400px] h-[36px] p-2">
           <button

@@ -7,6 +7,8 @@ import {
   CardHeader,
 } from '@/components/ui/card';
 import Image from 'next/image';
+import { useJobStore } from '@/store/useJobStore';
+import { useState, useEffect } from 'react';
 
 // Reusable Stat Box Component
 function StatBox({
@@ -35,9 +37,24 @@ function StatBox({
 }
 
 export function UserProfile() {
+  const [stats, setStats] = useState({
+    appliedJobs: 0,
+    generatedResumes: 0,
+    generatedCoverLetters: 0,
+  });
+  const appliedJobs = useJobStore((state) => state.appliedJobs);
+
+
+  useEffect(() => {
+    setStats({
+      appliedJobs: appliedJobs.length,
+      generatedResumes: 0,
+      generatedCoverLetters: 0,
+    });
+  }, [appliedJobs]);
   return (
-    <div className="space-y-4 flex flex-col items-center">
-      <Card className="w-full max-w-[325px] flex items-center bg-[#F8F8F8] rounded-[24px]">
+    <div className="hidden lg:block w-[325px] space-y-4 flex flex-col items-center">
+      <Card className="w-[325px] flex items-center bg-[#F8F8F8] rounded-[24px]">
         {/* Profile Image */}
         <div className="flex flex-col items-center gap-[8px]">
           <div className="relative w-24 h-24 rounded-full overflow-hidden">
@@ -62,10 +79,10 @@ export function UserProfile() {
         {/* Stats Section */}
         <CardContent className="mt-6 flex flex-col items-center space-y-3">
           <div className="flex space-x-3">
-            <StatBox title="Applied Jobs" count={0} />
-            <StatBox title="Generated Resumes" count={0} />
+            <StatBox title="Applied Jobs" count={stats.appliedJobs} />
+            <StatBox title="Generated Resumes" count={stats.generatedResumes} />
           </div>
-          <StatBox title="Generated Cover Letters" count={0} />
+          <StatBox title="Generated Cover Letters" count={stats.generatedCoverLetters} />
         </CardContent>
 
         {/* View Profile Button */}
@@ -80,7 +97,7 @@ export function UserProfile() {
       </Card>
 
       {/* Chat with AI */}
-      <Card className="w-full max-w-[325px] h-[543px] flex items-start  gap-4 bg-[#F8F8F8] rounded-[24px]  ">
+      <Card className="w-[325px] h-[543px] flex items-start  gap-4 bg-[#F8F8F8] rounded-[24px]  ">
         {/* Header */}
         <CardHeader className="flex flex-col items-start gap-2">
           <div className="flex gap-2 items-center">

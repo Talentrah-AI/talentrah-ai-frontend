@@ -1,12 +1,13 @@
 'use client';
 
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { endpoints } from '@/lib/api';
+import { mockSubscriptionApi, type SubscriptionPlan } from '@/data/mockSubscriptionData/subscription';
 
 interface SubscriptionContextType {
   isPremium: boolean;
-  setIsPremium: (value: boolean) => void;
+  subscriptionData: SubscriptionPlan | null;
+  loading: boolean;
+  error: Error | null;
 }
 
 const SubscriptionContext = createContext<SubscriptionContextType | undefined>(
@@ -26,25 +27,39 @@ export const useSubscription = () => {
 export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isPremium, setIsPremium] = useState(false);
-
-  // Fetch subscription status
-  const { data } = useQuery({
-    queryKey: ['subscription'],
-    queryFn: async () => {
-      const response = await endpoints.subscription.getPlan();
-      return response.data;
-    },
+  const [state, setState] = useState<SubscriptionContextType>({
+    isPremium: false,
+    subscriptionData: null,
+    loading: true,
+    error: null,
   });
 
-  // Ensure state updates when query data changes
+
+
   useEffect(() => {
-    if (data?.isPremium !== undefined) {
-      setIsPremium(data.isPremium);
-    }
-  }, [data]);
+    const fetchSubscription = async () => {
+      try {
+        const { data } = await mockSubscriptionApi.getPlan();
+        setState({
+          isPremium: data.isActive,
+          subscriptionData: data,
+          loading: false,
+          error: null
+        });
+      } catch (error) {
+        setState(prev => ({
+          ...prev,
+          loading: false,
+          error: error as Error
+        }));
+      }
+    };
+    fetchSubscription();
+  }, []);
+
+
   return (
-    <SubscriptionContext.Provider value={{ isPremium, setIsPremium }}>
+    <SubscriptionContext.Provider value={state}>
       {children}
     </SubscriptionContext.Provider>
   );

@@ -1,14 +1,9 @@
 import type { Metadata } from 'next';
-import { Gabarito } from 'next/font/google';
 import { Toaster } from 'sonner';
 import '../globals.css';
 import { Providers } from '../providers';
 import ClientLayoutContent from './ClientLayoutContent';
 
-const gabarito = Gabarito({
-  subsets: ['latin'],
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   title: 'Talentrah',
@@ -22,7 +17,7 @@ export default function UserDashboardLayout({
 }) {
   return (
     <html lang="en">
-      <body className={gabarito.className}>
+      <body>
         <Providers>
           <ClientLayoutContent>{children}</ClientLayoutContent>
           <Toaster />

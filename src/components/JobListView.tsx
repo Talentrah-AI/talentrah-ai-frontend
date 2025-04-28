@@ -1,35 +1,50 @@
 'use client';
 import React, { useState, useEffect, useCallback } from 'react';
-import { mockJobs } from '@/components/data/mockJobs';
 import JobCard from '@/components/JobTrackerCard';
 import TabNavigation from './TabNavigation';
 import Pagination from './Pagination';
-import { Job } from '@/types/Jobs';
+import { JOBS } from '@/data/mockJobData/job';
+import { useJobStore } from '@/store/useJobStore';
 
 const itemsPerPage = 7;
 
 const JobListView: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [tabJobs, setTabJobs] = useState<Job[]>(mockJobs);
-  const [filteredJobs, setFilteredJobs] = useState<Job[]>(mockJobs);
+  const {savedJobs, appliedJobs, draftJobs, activeTab, setActiveTab, toggleSaveJob, toggleDraftJob, removeAppliedJob} = useJobStore();
 
-  // Memoized functions to prevent re-renders
-  const updateTabJobs = useCallback((jobs: Job[]) => {
-    setTabJobs(jobs);
-  }, []);
+  const filteredJobs = JOBS.filter((job) => {
+    switch (activeTab) {
+      case 'saved':
+        return savedJobs.includes(job.id);
+      case 'applied':
+        return appliedJobs.includes(job.id);
+      case 'draft':
+        return draftJobs.includes(job.id);
+      default:
+        return false;
+    }
+  })
 
-  const updateFilteredJobs = useCallback((jobs: Job[]) => {
-    setFilteredJobs(jobs);
-  }, []);
+  const getJobAction = useCallback((jobId: string) => {
+    return {
+      delete: ()=> {
+        switch (activeTab) {
+          case 'saved' : return toggleSaveJob(jobId);
+          case 'applied' : return removeAppliedJob(jobId);
+          case 'draft' : return toggleDraftJob(jobId);
+          default: return;
+        }
+      },
+      toggle: ()=> {
+        switch (activeTab) {
+          case 'saved' : return toggleSaveJob(jobId);
+          default: return;
+        }
+      },
+    }
+  }, [toggleSaveJob, removeAppliedJob, toggleDraftJob, activeTab]);
 
-  useEffect(() => {
-    setFilteredJobs(tabJobs);
-    setCurrentPage(1); // Reset to first page when tab changes
-  }, [tabJobs]);
-
-  const handleDelete = useCallback((id: string) => {
-    setFilteredJobs((prevJobs) => prevJobs.filter((job) => job.id !== id));
-  }, []);
+  
 
   // Calculate total pages
   const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
@@ -39,21 +54,17 @@ const JobListView: React.FC = () => {
   const currentJobs = filteredJobs.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="w-[1200px] h-[946px] top-[64px] left-[2px] rounded-tl-[24px] rounded-tr-[24px] bg-[#F8F8F8] p-[10px]">
-      <div className="w-[1132px] h-[844px] top-3 left-3 gap-10 mx-auto">
-        <h1 className="font-gabarito font-500 text-[16px] leading-[20px] tracking-[0px] bg-custom text-custom text-black">
+    <div className="w-full h-[946px] rounded-tl-[24px] rounded-tr-[24px] bg-[#F8F8F8]">
+      <div className="flex flex-col w-[1132px] h-[844px] mx-auto border">
+        <h1 className="mt-4 font-gabarito font-medium text-[16px] leading-[20px] tracking-[0px]">
           My Jobs
         </h1>
-        <div className="font-gabarito w-[1132px]">
-          <TabNavigation
-            setFilteredJobs={updateFilteredJobs} // Memoized function
-            setTabJobs={updateTabJobs} // Memoized function
-            tabJobs={tabJobs}
-          />
+        <div className="mt-6">
+          <TabNavigation />
         </div>
-        <div className="block w-[1132px] h-[756px] gap-3 space-y-4 font-gabarito">
+        <div className="h-[756px] space-y-4 mt-4">
           {currentJobs.map((job) => (
-            <JobCard key={job.id} job={job} onDelete={handleDelete} />
+            <JobCard key={job.id} job={job} actions={getJobAction(job.id)} />
           ))}
         </div>
       </div>

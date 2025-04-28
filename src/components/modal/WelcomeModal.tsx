@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useModal } from "@/context/ModalContext";
 import {
   Dialog,
   DialogContent,
@@ -10,14 +11,21 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-interface WelcomeModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+// interface WelcomeModalProps {
+//   isOpen: boolean;
+//   onClose: () => void;
+// }
 
-export function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
+export function WelcomeModal() {
+  const { closeModal } = useModal();
+
+  const handleCloseWelcomeModal = () => {
+    localStorage.setItem("hasVisitedBefore", "true");
+    closeModal();
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <div>
       <DialogContent
         className="sm:max-w-md z-50 bg-gradient-to-b from-blue-100 via-white to-white 
              w-[533px] h-[308px] rounded-[22px] 
@@ -39,12 +47,12 @@ export function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
           <Button
             type="button"
             className="w-[320px] bg-blue-600 hover:bg-blue-700 "
-            onClick={onClose}
+            onClick={handleCloseWelcomeModal}
           >
             Let&apos;s go!
           </Button>
         </DialogFooter>
       </DialogContent>
-    </Dialog>
+    </div>
   );
 }

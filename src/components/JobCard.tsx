@@ -1,4 +1,6 @@
 // src/components/JobCard.tsx
+'use client';
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -7,24 +9,12 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { Job } from '@/data/mockJobData/job';
 
-interface JobCardProps {
-  id: string;
-  title: string;
-  company: string;
-  location: string;
-  jobType: string;
-  remote: boolean;
-  seniorityLevel: string;
-  experience: string;
-  description: string;
-  matchPercentage: number;
-  matchQuality: "Excellent" | "Good" | "Fair";
-  daysAgo: number;
-  applicants: number;
-  companyLogo: string;
+interface JobCardProps extends Job {
   isSaved?: boolean;
   onSave?: () => void;
+  jobId: string;
 }
 
 export function JobCard({
@@ -32,7 +22,7 @@ export function JobCard({
   company,
   location,
   jobType,
-  remote,
+  jobPreference,
   seniorityLevel,
   experience,
   description,
@@ -41,6 +31,8 @@ export function JobCard({
   daysAgo,
   applicants,
   companyLogo,
+  url,
+  jobId,
   isSaved = false,
   onSave,
 }: JobCardProps) {
@@ -52,16 +44,23 @@ export function JobCard({
     const params = new URLSearchParams({
       jobTitle: title,
       company: company,
+      jobPreference: jobPreference,
+      seniorityLevel: seniorityLevel,
+      experience: experience,
+      location: location,
+      jobType: jobType,
+      jobId: jobId,
+      url: encodeURIComponent(url), // URL encoding to handle special characters
     });
 
     // Simulate processing (replaceable with API call later)
     setTimeout(() => {
       setIsLoading(false);
-      router.push(`/jobdashboard/premium-user-apply?${params.toString()}`);
+      router.push(`/jobdashboard/apply?${params.toString()}`);
     }, 2000);
   };
 
-  const getProgressColor = (quality: "Excellent" | "Good" | "Fair") => {
+  const getProgressColor = (quality: "Excellent" | "Good" | "Fair" | "Bad") => {
     switch (quality) {
       case "Excellent":
         return "#22C55E"; // green
@@ -69,6 +68,8 @@ export function JobCard({
         return "#0967D2"; // blue
       case "Fair":
         return "#F97316"; // orange
+      case "Bad":
+        return "#9CA3AF"; // gray
       default:
         return "#9CA3AF"; // gray
     }
@@ -109,18 +110,24 @@ export function JobCard({
                         <span className="truncate">{location}</span>
                       </div>
                       <div className="flex items-center gap-[6px] border-r-[1px] border-r-gray-200 pr-[10px]">
+                        <Image
+                          src="/clock.svg"
+                          alt="Clock"
+                          width={14}
+                          height={14}
+                        />
                         <span className="truncate">{jobType}</span>
                       </div>
-                      {remote && (
+                      {jobPreference && (
                         <div className="flex items-center gap-[6px] border-r-[1px] border-r-gray-200 pr-[10px]">
                           <Image
-                            src="/globe.svg"
-                            alt="Remote"
+                            src="/briefcase.svg"
+                            alt="Briefcase"
                             width={14}
                             height={14}
                             className="shrink-0"
                           />
-                          <span>Remote</span>
+                          <span>{jobPreference}</span>
                         </div>
                       )}
                       <div className="flex items-center gap-[6px] border-r-[1px] border-r-gray-200 pr-[10px]">

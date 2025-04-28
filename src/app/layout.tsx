@@ -3,6 +3,7 @@ import { Gabarito } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
 import { Toaster } from 'sonner';
+import { SubscriptionProvider } from '@/context/SubscriptionContext';
 
 const gabarito = Gabarito({
   subsets: ['latin'],
@@ -67,8 +68,10 @@ export default function RootLayout({
     <html lang="en" className={gabarito.variable}>
       <body className={gabarito.className}>
         <Providers>
-          {children}
-          <Toaster />
+          <SubscriptionProvider>
+            {children}
+            <Toaster />
+          </SubscriptionProvider>
         </Providers>
       </body>
     </html>

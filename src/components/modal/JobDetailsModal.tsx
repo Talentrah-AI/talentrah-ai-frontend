@@ -1,25 +1,26 @@
 // src/components/JobDetailsModal.tsx
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Image from "next/image";
+import { X } from "lucide-react";
+import { useModal } from "@/context/ModalContext";
 
-interface JobDetailsModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    jobTitle: string;
-    company: string;
-}
 
-export function JobDetailsModal({ isOpen, onClose }: JobDetailsModalProps) {
+
+
+export function JobDetailsModal() {
+    const { closeModal } = useModal();
     return (
-        <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[649px] h-[628px] p-6 bg-white rounded-[12px] shadow-lg">
-                <DialogHeader className="flex flex-row items-center justify-between">
-                    <DialogTitle className="font-gabarito font-normal text-[20px] text-[#08121D]">
+        <>
+            <div className="sm:max-w-[649px] h-[628px] p-6 bg-white rounded-[12px] shadow-lg">
+                <div className="flex flex-row items-center justify-between">
+                    <p className="font-gabarito font-normal text-[20px] text-[#08121D]">
                         Job details
-                    </DialogTitle>
-                </DialogHeader>
+                    </p>
+                    <button onClick={closeModal} className="font-gabarito font-normal text-[12px] text-[#08121D]">
+                        <X className="h-4 w-4" />
+                    </button>
+                </div>
                 <div className="mt-0 space-y-5">
                     {/* Job Description */}
                     <p className="font-gabarito font-normal text-[12px] leading-[16px] text-[#414A53]">
@@ -99,7 +100,7 @@ export function JobDetailsModal({ isOpen, onClose }: JobDetailsModalProps) {
                         </p>
                     </div>
                 </div>
-            </DialogContent>
-        </Dialog>
+            </div>
+        </>
     );
 }

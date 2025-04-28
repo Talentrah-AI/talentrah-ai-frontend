@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Header } from '@/components/Header';
 import { Sidebar } from '@/components/Sidebar';
-import GlobalModal from '@/components/GlobalModal';
+import GlobalModal from '@/components/modal/GlobalModal';
 import { useDialog } from '@/context/DialogContext';
 
 export default function ClientLayoutContent({

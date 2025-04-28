@@ -14,7 +14,7 @@ export function Sidebar() {
   const isJobsActive = pathname === '/jobdashboard' || pathname === '/job-setup' || pathname === '/job-matched' || pathname === '/jobdashboard/premium-user-apply' || pathname === '/jobdashboard/resume-optimized';
 
   return (
-    <div className="w-[257px] h-[1024px] flex flex-col pt-[24px] pr-[16px] pb-[24px] pl-[16px] gap-[10px]">
+    <div className="hidden lg:block w-[257px] h-[1024px] flex flex-col pt-[24px] pr-[16px] pb-[24px] pl-[16px] gap-[10px]">
       <div className="flex flex-col w-[225px] h-[976px] gap-[16px]">
         <div className="flex justify-between items-center">
           <div>
