@@ -83,7 +83,8 @@ export default function AdminLoginPage() {
                                 id="email"
                                 type="email"
                                 placeholder="Enter your email"
-                                className="w-full max-w-[510px] h-[50px] rounded-lg border border-gray-300"
+                                className={`w-full max-w-[510px] h-[50px] rounded-lg border ${email ? "border-black" : "border-gray-300"
+                                }`}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -99,7 +100,8 @@ export default function AdminLoginPage() {
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="************"
-                                    className="w-full max-w-[510px] h-[50px] rounded-lg border border-gray-300"
+                                    className={`w-full max-w-[510px] h-[50px] rounded-lg border ${password ? "border-black" : "border-gray-300"
+                                    }`}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />

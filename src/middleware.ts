@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Allow public routes
-  const publicRoutes = ['/', '/waitlist', '/admin/login', '/admin/sign-up', '/admin/forgot-password', '/admin/email-sent', '/admin/reset-password', '/admin/confirm-email', '/admin/register', '/admin/register/step2'];
+  const publicRoutes = ['/', '/waitlist', '/admin/overview', '/admin/login', '/admin/sign-up', '/admin/forgot-password', '/admin/email-sent', '/admin/reset-password', '/admin/confirm-email', '/admin/register', '/admin/register/step2'];
   if (publicRoutes.includes(pathname)) {
     return NextResponse.next();
   }
