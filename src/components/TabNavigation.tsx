@@ -1,16 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ArrowDownIcon, ChevronDown, Search } from 'lucide-react';
+import { ChevronDown, Search } from 'lucide-react';
 import { useJobStore } from '@/store/useJobStore';
 import Image from 'next/image';
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from '@/components/ui/select2';
+
 
 
 
@@ -91,7 +85,6 @@ const TabNavigation: React.FC = () => {
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              onSearch?.(e.target.value);
             }}
             className="w-full bg-white focus:outline-none !important focus:border-none"
           />
@@ -148,19 +141,4 @@ export default TabNavigation;
 
 
 
-   {/* <Image src="/icons/filter.png" alt="icon" width={16} height={16} /> */}
-          {/* <Select
-            onValueChange={(value) => setFilter(value)}
-            defaultValue="All"
-          >
-            <SelectTrigger className="w-full h-[32px]">
-              <SelectValue>{filter}</SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              {['All', 'Applied with AI', 'Applied manually'].map((option) => (
-                <SelectItem key={option} value={option}>
-                  {option}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select> */}
+   

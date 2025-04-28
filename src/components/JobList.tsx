@@ -2,7 +2,7 @@
 
 import { JobCard } from '@/components/JobCard';
 import { useJobStore } from '@/store/useJobStore';
-import { JOBS, Job } from '@/data/mockJobData/job';
+import { JOBS} from '@/data/mockJobData/job';
 
 
 export function JobList() {

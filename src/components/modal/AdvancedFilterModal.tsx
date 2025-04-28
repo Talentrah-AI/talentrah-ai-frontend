@@ -39,7 +39,7 @@ const emptyFilters: FilterFormData = {
 
 export function AdvancedFilterModal() {
   const { closeModal } = useModal();
-  const { filters, setFilters, resetFilters, initializeFiltersFromSetup, setSetupFormData } = useJobStore();
+  const { filters, resetFilters, initializeFiltersFromSetup, setSetupFormData } = useJobStore();
   const setupFormData = useJobStore((state) => state.setupFormData);
   
   const [formData, setFormData] = useState<FilterFormData>(filters || emptyFilters);

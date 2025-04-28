@@ -2,13 +2,10 @@
 
 import EmptyState from '@/components/EmptyState';
 import JobListView from '@/components/JobListView';
-import { useModal } from '@/context/ModalContext';
-import PreviewResumeModal from '@/components/modal/PreviewResumeModal';
 import { useRouter } from 'next/navigation';
 import { useJobStore } from '@/store/useJobStore';
 
 const Tracker = () => {
-  const { isOpen, modalType } = useModal(); // Access modal state
   const router = useRouter();
   const {savedJobs, appliedJobs, draftJobs} = useJobStore()
   const handleCreateJobLoop = () => {
@@ -27,8 +24,6 @@ const Tracker = () => {
       ) : (
         <JobListView />
       )}
-      {/* Conditionally render the modal when "View resume used" is clicked */}
-      {isOpen && modalType === 'resume' && <PreviewResumeModal />}
     </div>
   );
 };

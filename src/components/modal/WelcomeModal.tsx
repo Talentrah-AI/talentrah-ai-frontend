@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/context/ModalContext";
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -11,10 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-// interface WelcomeModalProps {
-//   isOpen: boolean;
-//   onClose: () => void;
-// }
+
 
 export function WelcomeModal() {
   const { closeModal } = useModal();

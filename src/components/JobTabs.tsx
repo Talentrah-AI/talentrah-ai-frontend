@@ -6,10 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useJobStore } from '@/store/useJobStore';
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import { AdvancedFilterModal } from '@/components/modal/AdvancedFilterModal';
-import { cn } from '@/lib/utils';
 import { Search } from 'lucide-react';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { JOBS } from '@/data/mockJobData/job';
@@ -39,9 +36,8 @@ function FilterBadge({ label, onRemove }: FilterBadgeProps) {
 }
 
 export function JobTabs() {
-  const { activeTab, setActiveTab, searchResults, setupFormData: formData, savedJobs } = useJobStore();
+  const { activeTab, setActiveTab, setupFormData: formData, savedJobs } = useJobStore();
   const { openModal } = useModal();
-  const pathname = usePathname();
 
   // Initialize filters from form data when available
   const [filters, setFilters] = useState<string[]>([]);

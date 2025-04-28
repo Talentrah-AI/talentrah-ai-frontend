@@ -163,7 +163,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, actions }) => {
               <DropdownMenuItem onClick={() => openModal(<PreviewResumeModal />)}>
                 View resume used
               </DropdownMenuItem>
-              <DropdownMenuItem>View cover letter used</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => openModal(<PreviewResumeModal />)}>View cover letter used</DropdownMenuItem>
               <DropdownMenuItem onClick={() => setIsOpen(true)}>
                 Delete job
               </DropdownMenuItem>

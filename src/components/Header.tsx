@@ -21,7 +21,7 @@ import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import Image from 'next/image';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter} from 'next/navigation';
 import { useSubscription } from '@/context/SubscriptionContext';
 
 interface Notification {
@@ -50,7 +50,7 @@ export function Header() {
   const [showSideBar, setShowSideBar] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { isPremium, subscriptionData, loading: subscriptionLoading } = useSubscription();
+  const { isPremium, loading: subscriptionLoading } = useSubscription();
 
   // Fetch notifications
   const { data: notifications = [], isLoading: isLoadingNotifications } =

@@ -7,16 +7,16 @@ import { UserProfile } from "@/components/UserProfile";
 import { AutoApply } from "@/components/AutoApply";
 import { WelcomeModal } from "@/components/modal/WelcomeModal";
 import { AIApplyPopup } from "@/components/modal/AIApplyPopupModal";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useModal } from "@/context/ModalContext";
 
-export default function DashboardPage() {
-  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+function DashboardContainer() {
+  // const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showAIApplyPopup, setShowAIApplyPopup] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { openModal, closeModal } = useModal();
+  const { openModal, isOpen } = useModal();
 
   const jobTitle = searchParams.get("jobTitle") || "Unknown Job";
   const location = searchParams.get("location") || "Unknown Location";
@@ -31,7 +31,7 @@ export default function DashboardPage() {
     // Check for the showPopup query parameter to show the AI Apply pop-up
     const shouldShowPopup = searchParams.get("showPopup") === "true";
     setShowAIApplyPopup(shouldShowPopup);
-  }, [searchParams]);
+  }, []);
 
  
 
@@ -51,7 +51,7 @@ export default function DashboardPage() {
     <>
       <div
         className={`transition-opacity duration-200 ${
-          showWelcomeModal || showAIApplyPopup ? "opacity-50" : ""
+          isOpen || showAIApplyPopup ? "opacity-50" : ""
         }`}
       >
         <div className="max-w-7xl mx-auto">
@@ -86,5 +86,13 @@ export default function DashboardPage() {
         location={location}
       />
     </>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DashboardContainer />
+    </Suspense>
   );
 }

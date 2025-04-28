@@ -18,7 +18,7 @@ import { useModal } from '@/context/ModalContext';
 import { MapPin } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense,  useState } from 'react';
 import { useSubscription } from '@/context/SubscriptionContext';
 
 function Apply() {

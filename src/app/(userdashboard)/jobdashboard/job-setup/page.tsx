@@ -157,6 +157,8 @@ function JobSetup() {
       toast.success('Job loop created successfully!');
       router.push('/jobdashboard');
     } catch (error) {
+      console.error("Error creating job loop", error);
+      
       toast.error('Failed to create job loop');
     } finally {
       setIsLoading(false);
@@ -173,7 +175,7 @@ function JobSetup() {
                 Set up your job search loop
               </h2>
               <p className="font-normal text-[12px] text-[#717A84] leading-[16px] tracking-[0px] font-gabarito mb-2">
-                Tell us what type of jobs you're looking for, and our AI will find and apply to the best matches for you—automatically!
+                Tell us what type of jobs you&apos;re looking for, and our AI will find and apply to the best matches for you—automatically!
               </p>
             </div>
             <div className="bg-white rounded-[24px] p-6">
@@ -448,7 +450,7 @@ function JobSetup() {
                 className="w-[258px] h-[40px] px-[12px] py-[4px] bg-[#CEE1F6] rounded-[12px] hover:bg-[#0967D2] flex items-center justify-center gap-2 text-[12px] leading-normal group disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
-                  <LoadingSpinner className="h-4 w-4" />
+                  <LoadingSpinner />
                 ) : (
                   <Plus className="h-4 w-4 text-[#3A85DB] group-hover:text-white transition-colors" />
                 )}

@@ -5,7 +5,6 @@ import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, Copyright } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useSubscription } from '@/context/SubscriptionContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'sonner';
@@ -57,11 +56,9 @@ const plans: Plan[] = [
 
 const Pricing = () => {
   const router = useRouter();
-  const { setIsPremium } = useSubscription();
 
   const handleSubscribe = async () => {
     try {
-      setIsPremium(true); // Update global subscription state
 
       const previousRoute =
         localStorage.getItem('previousRoute') || '/jobdashboard/apply';

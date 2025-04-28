@@ -32,6 +32,8 @@ export async function middleware(request: NextRequest) {
         } catch (error) {
             //If verification fails, redirect to login
             return NextResponse.redirect(new URL('/login', request.url));
+            console.error(error);
+            
         }
     }
 

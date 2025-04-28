@@ -28,7 +28,7 @@ function ResumeOptimized() {
   const { openModal } = useModal();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const {toggleApplyJob} = useJobStore();
+  const {addAppliedJob} = useJobStore();
   const jobTitle = searchParams.get('jobTitle') || 'Unknown Job';
   const company = searchParams.get('company') || 'Unknown Company';
   const jobPreference = searchParams.get('jobPreference') || 'Unknown Job Preference';
@@ -61,15 +61,11 @@ function ResumeOptimized() {
       const applicationUrl = await fetchJobApplicationUrl();
       await notifyApplicationSubmitted();
       window.open(applicationUrl, '_blank');
-      toggleApplyJob(jobId);
+      addAppliedJob(jobId);
       router.push('/jobdashboard?showPopup=true');
     } catch (error) {
       console.error('Error during job application:', error);
     }
-  };
-
-  const handleChangeResume = () => {
-    console.log('Change Resume clicked');
   };
 
   const handleTabClick = (tab: string) => {

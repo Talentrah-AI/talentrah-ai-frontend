@@ -1,17 +1,12 @@
 import { Button } from '@/components/ui/button';
 import {useModal} from '@/context/ModalContext';
 import {
-  Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
 
-// interface JobLoopDialogProps {
-//   isOpen: boolean;
-//   onClose: () => void;
-//   onSetup: () => void;
-// }
+
 
 export function JobLoopModal() {
   const {closeModal} = useModal();

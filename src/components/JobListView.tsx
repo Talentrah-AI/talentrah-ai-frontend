@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import JobCard from '@/components/JobTrackerCard';
 import TabNavigation from './TabNavigation';
 import Pagination from './Pagination';
@@ -10,7 +10,7 @@ const itemsPerPage = 7;
 
 const JobListView: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const {savedJobs, appliedJobs, draftJobs, activeTab, setActiveTab, toggleSaveJob, toggleDraftJob, removeAppliedJob} = useJobStore();
+  const {savedJobs, appliedJobs, draftJobs, activeTab, toggleSaveJob, toggleDraftJob, removeAppliedJob} = useJobStore();
 
   const filteredJobs = JOBS.filter((job) => {
     switch (activeTab) {

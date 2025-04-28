@@ -1,4 +1,3 @@
-'use client';
 
 import { Dialog } from '@/components/ui/dialog';
 import { useModal } from '@/context/ModalContext';
