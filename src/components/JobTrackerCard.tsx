@@ -149,7 +149,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, actions }) => {
             <DropdownMenuTrigger asChild>
               <button className="bg-white cursor-pointer">
                 <Image
-                  src="/icons/more-01.png"
+                  src="/icons/more.png"
                   alt="Method"
                   width={20}
                   height={20}
@@ -158,7 +158,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, actions }) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="bg-white text-[#08121D] [&>*:not(:last-child)]:border-b [&>*:not(:last-child)]:border-gray-300 border-[0.5px] border-solid border-[#EFF0F2] shadow-[0px_5px_15px_0px_#1B20201A] w-[242px] h-[166px] rounded-[10px] p-[8px]"
+              className="bg-white text-[#08121D] [&>*:not(:last-child)]:border-b [&>*:not(:last-child)]:border-gray-300 border-[0.5px] border-solid border-[#EFF0F2] shadow-[0px_5px_15px_0px_#1B20201A] w-[242px] h-[166px] rounded-[10px] p-[8px] "
             >
               <DropdownMenuItem onClick={() => openModal(<PreviewResumeModal />)}>
                 View resume used

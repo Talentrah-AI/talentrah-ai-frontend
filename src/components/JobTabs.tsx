@@ -182,7 +182,7 @@ export function JobTabs() {
         {/* Advance filters button */}
         <div className="flex gap-2 bg-white rounded-xl shadow-md w-[150px] h-[36px] p-4">
           <button
-            onClick={() => openModal(<AdvancedFilterModal />, {})}
+            onClick={() => openModal('advancedFilter')}
             className="flex items-center gap-2 text-[#414A53]"
           >
             <Image src="/sort.svg" alt="sort" width={16} height={16} />

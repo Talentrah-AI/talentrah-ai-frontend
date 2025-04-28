@@ -1,6 +1,16 @@
 'use client';
 
 import { createContext, ReactNode, useContext, useState } from 'react';
+import dynamic from 'next/dynamic';
+
+// Dynamically import modal components
+const ResumeModal = dynamic(() => import('@/components/modals/ResumeModal'));
+const CoverLetterModal = dynamic(
+  () => import('@/components/modals/CoverLetterModal')
+);
+const AdvancedFilterModal = dynamic(
+  () => import('@/components/modal/AdvancedFilterModal')
+);
 
 interface ModalProps {
   [key: string]: unknown;
@@ -9,9 +19,8 @@ interface ModalProps {
 interface ModalContextType {
   isOpen: boolean;
   modalType: string | null;
-  modalContent: ReactNode | null;
   modalProps: ModalProps | null;
-  openModal: (content: ReactNode, props?: ModalProps) => void;
+  openModal: (type: string, props?: ModalProps) => void;
   closeModal: () => void;
 }
 
@@ -20,19 +29,33 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState<string | null>(null);
-  const [modalContent, setModalContent] = useState<ReactNode | null>(null);
   const [modalProps, setModalProps] = useState<ModalProps | null>(null);
 
-  const openModal = (content: ReactNode, props: ModalProps = {}) => {
-    setModalContent(content);
+  const openModal = (type: string, props: ModalProps = {}) => {
+    setModalType(type);
     setModalProps(props);
     setIsOpen(true);
   };
 
   const closeModal = () => {
     setIsOpen(false);
-    setModalContent(null);
+    setModalType(null);
     setModalProps(null);
+  };
+
+  const renderModal = () => {
+    if (!isOpen || !modalType) return null;
+
+    switch (modalType) {
+      case 'resume':
+        return <ResumeModal {...modalProps} />;
+      case 'coverLetter':
+        return <CoverLetterModal {...modalProps} />;
+      case 'advancedFilter':
+        return <AdvancedFilterModal />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -40,13 +63,13 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       value={{
         isOpen,
         modalType,
-        modalContent,
         modalProps,
         openModal,
         closeModal,
       }}
     >
       {children}
+      {renderModal()}
     </ModalContext.Provider>
   );
 }

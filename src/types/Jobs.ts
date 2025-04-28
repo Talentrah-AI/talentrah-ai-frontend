@@ -10,6 +10,8 @@ export interface Job {
   appliedAt: string;
   imageURL?: string;
   description?: string;
-  status: "Applied with AI" | "Applied manually";
+  status: 'Applied with AI' | 'Applied manually';
   url?: string;
+  resumeUrl?: string;
+  coverLetterUrl?: string;
 }
