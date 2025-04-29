@@ -8,11 +8,20 @@ interface ProfileViewProps {
   }
   onEdit: () => void
 }
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { useState } from "react"
+import ProfileImage from "./Profile-image"
 
 const ProfileCard = ({ user}: ProfileViewProps) => {
+  const [userImage, setUserImage] = useState<string | undefined>(undefined);
+  
+  const handleImageChange = (newImageUrl: string) => {
+    setUserImage(newImageUrl);
+    console.log("Image updated:", newImageUrl);
+    // Here you would typically save the image to your backend
+  };
   return (
     <div className='flex flex-col '>
     <div className='relative '>
@@ -31,8 +40,10 @@ const ProfileCard = ({ user}: ProfileViewProps) => {
         <div className="flex flex-col items-center p-7 text-center bg-white  w-full min-h-[231.9px] justify-center rounded-[12px] mb-[12px]">
           <div className="relative">
             <Avatar className="w-24 h-24 border-4 border-white cursor-pointer">
-              <AvatarImage src="https://res.cloudinary.com/dk5mfu099/image/upload/v1742584967/Ellipse_53_nhahx3.png" alt="Mercy Benjamin" />
-              <AvatarFallback>MB</AvatarFallback>
+            <ProfileImage
+          initialImage={userImage}
+          onImageChange={handleImageChange}
+        />
             </Avatar>
             <Button size="icon" variant="outline" className="absolute bottom-0 right-0 rounded-full bg-white cursor-pointer">      
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
