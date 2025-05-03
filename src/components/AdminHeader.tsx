@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-export function AdminHeader({ language, setLanguage }) {
+interface AdminHeaderProps {
+  language: string;
+  setLanguage: (lang: string) => void;
+}
+
+export function AdminHeader({ language, setLanguage }: AdminHeaderProps) {
   const languages = ['English', 'Spanish', 'French'];
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
-  const handleSelect = (lang) => {
+  const handleSelect = (lang: string) => {
     setLanguage(lang);
     setDropdownOpen(false);
   };

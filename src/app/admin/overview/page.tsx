@@ -7,6 +7,7 @@ import { PieChart, LineChart } from '@/components/ui/charts';
 import { Table } from '@/components/ui/table';
 import { mockData } from '@/data/mockData';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Overview() {
   const [language, setLanguage] = useState('English');
@@ -30,7 +31,7 @@ export default function Overview() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
             <div className="bg-white p-4 rounded-lg shadow">
               <div className="mb-2">
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#E6F0FB] shadow-sm">
                   <Image
                     src="/profile-2user(color).png"
                     alt="People Icon"
@@ -40,14 +41,14 @@ export default function Overview() {
                 </div>
               </div>
               <h2 className="text-xl font-semibold">
-                {mockData.totalCandidates}
+                {mockData.totalCandidates.toLocaleString()}
               </h2>
               <p>Total candidates</p>
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow">
               <div className="mb-2">
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#E6FAFB] shadow-sm">
                   <Image
                     src="/Resume(color).png"
                     alt="resume"
@@ -56,13 +57,13 @@ export default function Overview() {
                   />
                 </div>
               </div>
-              <h2 className="text-xl font-semibold">{mockData.totalResumes}</h2>
+              <h2 className="text-xl font-semibold">{mockData.totalResumes.toLocaleString()}</h2>
               <p>Total resumes created</p>
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow">
               <div className="mb-2">
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#FCEFE6] shadow-sm">
                   <Image
                     src="/Cover letter(color).png"
                     alt="cover letter"
@@ -72,14 +73,14 @@ export default function Overview() {
                 </div>
               </div>
               <h2 className="text-xl font-semibold">
-                {mockData.totalCoverLetters}
+                {mockData.totalCoverLetters.toLocaleString()}
               </h2>
               <p>Total cover letters created</p>
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow">
               <div className="mb-2">
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#E6FBE9] shadow-sm">
                   <Image
                     src="/briefcase(color).png"
                     alt="briefcase"
@@ -89,14 +90,14 @@ export default function Overview() {
                 </div>
               </div>
               <h2 className="text-xl font-semibold">
-                {mockData.totalJobsApplied}
+                {mockData.totalJobsApplied.toLocaleString()}
               </h2>
               <p>Total jobs applied</p>
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow">
               <div className="mb-2">
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#E6F0FB] shadow-sm">
                   <Image
                     src="/user(color).png"
                     alt="person"
@@ -106,14 +107,14 @@ export default function Overview() {
                 </div>
               </div>
               <h2 className="text-xl font-semibold">
-                {mockData.activePaidCandidates}
+                {mockData.activePaidCandidates.toLocaleString()}
               </h2>
               <p>Active paid candidates</p>
             </div>
           </div>
 
           {/* Charts Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 w-[950px] gap-4 mt-6">
             {/* Job Applications (2/3) */}
             <div className="col-span-1 lg:col-span-2 bg-white p-6 rounded-2xl shadow flex flex-col">
               {/* Header row */}
@@ -127,46 +128,52 @@ export default function Overview() {
                 <div className="flex items-center gap-6">
                   <div className="flex items-center gap-2">
                     <div className="h-3 w-3 rounded-full bg-blue-500" />
-                    <span className="text-sm text-gray-500">
+                    <span className="text-[10px] text-gray-500">
                       Paid candidates
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="h-3 w-3 rounded-full bg-orange-500" />
-                    <span className="text-sm text-gray-500">
+                    <span className="text-[10px] text-gray-500">
                       Free candidates
                     </span>
                   </div>
                 </div>
 
+                {/* Job application */}
+                <button className="flex items-center gap-1 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-sm hover:bg-gray-50">
+                  <Image src="/sort.png" alt="Filter" width={12} height={12} />
+                  Job application
+                </button>
+
                 {/* Filter */}
-                <button className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-sm text-gray-700 shadow-sm hover:bg-gray-50">
-                  <Image src="/sort.png" alt="Filter" width={16} height={16} />
+                <button className="flex items-center gap-1 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-sm hover:bg-gray-50">
+                  <Image src="/sort.png" alt="Filter" width={12} height={12} />
                   Last 7 days
                 </button>
               </div>
 
               {/* Line chart */}
-              <div className="h-[400px]">
+              <div className="h-[360px] -mt-2 -mb-4">
                 <LineChart data={mockData.jobApplications} />
               </div>
             </div>
 
             {/* Subscription & Payments (1/3) */}
-            <div className="bg-white p-6 rounded-2xl shadow flex flex-col items-center">
+            <div className="bg-white w-[400px] p-6 rounded-2xl shadow flex flex-col items-center">
               <div className="flex items-center justify-between w-full mb-6">
                 <h2 className="text-l font-semibold text-gray-900">
                   Subscription & Payments
                 </h2>
                 {/* Filter Button */}
-                <button className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-sm text-gray-700 shadow-sm hover:bg-gray-50">
-                  <Image src="/sort.png" alt="Filter" width={16} height={16} />
+                <button className="flex items-center gap-1 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-sm hover:bg-gray-50">
+                  <Image src="/sort.png" alt="Filter" width={12} height={12} />
                   Last 7 days
                 </button>
               </div>
 
               {/* Pie Chart with center text */}
-              <div className="relative w-64 h-64 flex items-center justify-center">
+              <div className="relative w-70 h-70 flex items-center justify-center">
                 <PieChart data={mockData.subscriptionPayments} />
 
                 {/* Center Text */}
@@ -193,13 +200,15 @@ export default function Overview() {
           {/* Latest Candidates Table */}
           <div className="mt-6 bg-white p-6 rounded-2xl shadow">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">
-                Latest Candidates
+              <h2 className="text-l font-semibold text-gray-900">
+                Latest candidates
               </h2>
-              <button className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-sm text-gray-700 shadow-sm hover:bg-gray-50">
-                <Image src="/sort.png" alt="Filter" width={16} height={16} />
-                Filter
-              </button>
+              <Link
+                href="#"
+                className="text-blue-600 text-sm font-medium hover:underline"
+              >
+                View all candidates
+              </Link>
             </div>
             <Table data={mockData.latestCandidates} />
           </div>

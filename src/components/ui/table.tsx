@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import { FreeButton, PremiumButton } from './crownButton';
 
 interface Candidate {
   fullName: string;
@@ -19,141 +19,75 @@ interface TableProps {
 }
 
 export function Table({ data }: TableProps) {
-  // Function to generate initials from full name
-  const getInitials = (name: string) => {
-    const names = name.split(' ');
-    return names
-      .map((n) => n[0])
-      .slice(0, 2)
-      .join('')
-      .toUpperCase();
-  };
-
-  // Function to generate a consistent background color based on name
-  const getAvatarColor = (name: string) => {
-    const colors = [
-      'bg-blue-500',
-      'bg-green-500',
-      'bg-purple-500',
-      'bg-red-500',
-      'bg-yellow-500',
-    ];
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    return colors[Math.abs(hash) % colors.length];
+  const getCompletionColor = (completion: string) => {
+    const value = parseInt(completion);
+    if (value >= 80) return 'bg-green-500';
+    if (value >= 60) return 'bg-orange-400';
+    return 'bg-red-500';
   };
 
   return (
-    <div className="mt-4 bg-white rounded-2xl shadow overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+    <div className="mt-4 bg-white rounded-2xl overflow-x-auto">
+      <table className="min-w-full">
+        <thead>
           <tr>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <input type="checkbox" className="rounded h-[20px] w-[20px] border-gray-300" />
+            </th>
+            <th className="px-6 py-3 text-left text-[12px] font-medium text-gray-500 uppercase tracking-wider">
               Full Name
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Email
+            <th className="px-6 py-3 text-left text-[12px] font-medium text-gray-500 uppercase tracking-wider">
+              Email Address
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Applications
+            <th className="px-6 py-3 text-left text-[12px] font-medium text-gray-500 uppercase tracking-wider">
+              Job Application Metrics
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Shortlisted
+            <th className="px-6 py-3 text-left text-[12px] font-medium text-gray-500 uppercase tracking-wider">
+              Subscription Type
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Rejected
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Subscription
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Completion
+            <th className="px-6 py-3 text-left text-[12px] font-medium text-gray-500 uppercase tracking-wider">
+              Profile Completion
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody>
           {data.map((candidate, index) => (
             <tr key={index}>
-              {/* Full Name with Avatar */}
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex items-center">
-                  <div
-                    className={`flex-shrink-0 h-10 w-10 rounded-full ${getAvatarColor(
-                      candidate.fullName
-                    )} flex items-center justify-center text-white font-semibold`}
-                  >
-                    {getInitials(candidate.fullName)}
-                  </div>
-                  <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-900">
-                      {candidate.fullName}
-                    </div>
-                  </div>
+                <input type="checkbox" className="rounded h-[20px] w-[20px] border-gray-300" />
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+                {candidate.fullName}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
+                {candidate.email}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="flex gap-[4px] w-[113px] h-[32px] bg-white p-1 px-1 py-1 rounded-lg shadow">
+                  <span className="px-3 py-1 w-[33px] h-[24px] bg-[#FCEFE6] text-orange-800 rounded-lg text-sm">
+                    {candidate.metrics.applications}
+                  </span>
+                  <span className="px-3 py-1 w-[33px] h-[24px] bg-green-100 text-green-800 rounded-lg text-sm">
+                    {candidate.metrics.shortlisted}
+                  </span>
+                  <span className="px-3 py-1 w-[33px] h-[24px] bg-[#E6F0FB] text-gray-800 rounded-lg text-sm">
+                    {candidate.metrics.rejected}
+                  </span>
                 </div>
               </td>
-              {/* Email */}
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-500">{candidate.email}</div>
+                {candidate.subscription === 'Premium' ? (
+                  <PremiumButton />
+                ) : (
+                  <FreeButton />
+                )}
               </td>
-              {/* Applications */}
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">
-                  {candidate.metrics.applications}
-                </div>
-              </td>
-              {/* Shortlisted */}
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">
-                  {candidate.metrics.shortlisted}
-                </div>
-              </td>
-              {/* Rejected */}
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">
-                  {candidate.metrics.rejected}
-                </div>
-              </td>
-              {/* Subscription */}
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span
-                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    candidate.subscription === 'Premium'
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-gray-100 text-gray-800'
-                  }`}
-                >
-                  {candidate.subscription}
-                </span>
-              </td>
-              {/* Completion */}
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                   <div className="w-24 bg-gray-200 rounded-full h-2 mr-2">
                     <div
-                      className="bg-blue-500 h-2 rounded-full"
+                      className={`h-2 rounded-full ${getCompletionColor(candidate.completion)}`}
                       style={{ width: candidate.completion }}
                     ></div>
                   </div>
