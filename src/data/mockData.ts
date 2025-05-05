@@ -5,7 +5,7 @@ export const mockData = {
     totalJobsApplied: 20455,
     activePaidCandidates: 4295,
     jobApplications: {
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         paid: [100, 500, 800, 700, 600, 900, 1100],
         free: [200, 600, 900, 1000, 1200, 1100, 1300],
     },

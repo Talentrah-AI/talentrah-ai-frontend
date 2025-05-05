@@ -28,32 +28,73 @@ export default function Overview() {
       <div className="flex-1 flex flex-col">
         <AdminHeader language={language} setLanguage={setLanguage} />
         <main className="flex-1 p-6 overflow-y-auto overflow-x-hidden">
-        <div className="flex items-start justify-between mt-4">
-  <div>
-    <h1 className="text-2xl font-bold">Welcome back Admin</h1>
-    <p className="text-gray-600">
-      Get real-time insights, track engagement, and manage candidates with ease.
-    </p>
-  </div>
+          <div className="flex items-start justify-between mt-4">
+            <div>
+              <h1 className="text-2xl font-bold">Welcome back Admin</h1>
+              <p className="text-gray-600">
+                Get real-time insights, track engagement, and manage candidates with ease.
+              </p>
+            </div>
 
-  <DropdownMenu>
-    <DropdownMenuTrigger className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-sm hover:bg-gray-50">
-      <Image src="/sort.png" alt="Filter" width={12} height={12} />
-      <span>Today</span>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent align="end" className="w-56 divide-y divide-gray-200 w-[160px] h-[266px] justify-center">
-      <DropdownMenuItem className="text-sm bg-[#CEE1F6] w-[144px] h-[50px]">Today</DropdownMenuItem>
-      <DropdownMenuItem className="text-sm w-[144px] h-[50px]">Recent</DropdownMenuItem>
-      <DropdownMenuItem className="text-sm w-[144px] h-[50px]">30 days</DropdownMenuItem>
-      <DropdownMenuItem className="text-sm w-[144px] h-[50px]">6 months</DropdownMenuItem>
-      <DropdownMenuItem className="text-sm w-[144px] h-[50px]">Customize</DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
-</div>
+            {/* Today filter */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-lg hover:bg-gray-50">
+                <Image src="/sort.png" alt="Filter" width={15} height={15} />
+                <span>Today</span>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 divide-y divide-gray-200 w-[160px] h-[266px] justify-center rounded-[15px]">
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="text-sm bg-[#CEE1F6] ml-1 mt-1 w-[144px] h-[50px] rounded-[15px] flex items-center justify-center">
+                    Today
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    side="bottom"
+                    align="end"
+                    sideOffset={8}
+                    className="w-full max-w-[386px] max-h-[155px] mr-52 mt-13 bg-white border border-[#D1D5DB] rounded-2xl px-6 py-5 shadow-md space-y-4"
+                  >
+
+                    {/* Date Buttons Row */}
+                    <div className="flex justify-between space-x-4">
+                      <button className="flex justify-between gap-2 items-center w-full max-w-[162px] h-[48px] px-4 py-3 border border-[#CBD5E1] rounded-2xl text-[12px] text-[#0F172A] font-normal whitespace-nowrap hover:bg-gray-50">
+                        September 01
+                        <Image
+                          src="/calendar-black.png"
+                          alt="calendar icon"
+                          width={22}
+                          height={22}
+                        />
+                      </button>
+
+                      <button className="flex justify-between items-center w-full max-w-[162px] h-[48px] px-4 py-3 border border-[#CBD5E1] rounded-2xl text-[12px] text-[#0F172A] font-normal whitespace-nowrap hover:bg-gray-50">
+                        September 12
+                        <Image
+                          src="/calendar-black.png"
+                          alt="calendar icon"
+                          width={22}
+                          height={22}
+                        />
+                      </button>
+                    </div>
+
+                    {/* Search Duration Button */}
+                    <button className="w-full h-[40px] max-w-[342px] bg-white border border-[#CBD5E1] rounded-2xl text-[16px] font-normal text-[#0F172A] hover:bg-gray-50">
+                      Search duration
+                    </button>
+                  </DropdownMenuContent>
+
+                </DropdownMenu>
+                <DropdownMenuItem className="text-sm w-[144px] ml-1 h-[50px] text-gray-400 rounded-[15px]">Recent</DropdownMenuItem>
+                <DropdownMenuItem className="text-sm w-[144px] ml-1 h-[50px] text-gray-400 rounded-[15px]">30 days</DropdownMenuItem>
+                <DropdownMenuItem className="text-sm w-[144px] ml-1 h-[50px] text-gray-400 rounded-[15px]">6 months</DropdownMenuItem>
+                <DropdownMenuItem className="text-sm w-[144px] ml-1 h-[50px] text-gray-400 rounded-[15px]">Customize</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
 
 
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
             <div className="bg-white p-4 rounded-lg shadow">
               <div className="mb-2">
                 <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#E6F0FB] shadow-sm">
@@ -139,7 +180,7 @@ export default function Overview() {
           </div>
 
           {/* Charts Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 w-[950px] gap-4 mt-6">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-3 w-[950px] gap-4 mt-6">
             {/* Job Applications (2/3) */}
             <div className="col-span-1 lg:col-span-2 bg-white p-6 rounded-2xl shadow flex flex-col">
               {/* Header row */}
@@ -151,7 +192,7 @@ export default function Overview() {
 
                 {/* Legend */}
                 <div className="flex items-center gap-6">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mr-6">
                     <div className="h-3 w-3 rounded-full bg-blue-500" />
                     <span className="text-[10px] text-gray-500">
                       Paid candidates
@@ -166,24 +207,26 @@ export default function Overview() {
                 </div>
 
                 {/* Job application */}
-                <DropdownMenu>
-          <DropdownMenuTrigger className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-sm hover:bg-gray-50">
-          <Image src="/sort.png" alt="Filter" width={12} height={12} />
-          <span>Job applied</span>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56  divide-y divide-gray-200 w-[209px] h-[215px] justify-center">
-            <DropdownMenuItem className="text-sm bg-[#CEE1F6] w-[193px] h-[50px]">Job applied</DropdownMenuItem>
-            <DropdownMenuItem className="text-sm w-[193px] h-[50px]">Resume created</DropdownMenuItem>
-            <DropdownMenuItem className="text-sm w-[193px] h-[50px]">Cover letter created</DropdownMenuItem>
-            <DropdownMenuItem className="text-sm w-[193px] h-[50px]">Active candidate</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                <div className='flex items-center gap-2'>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-lg hover:bg-gray-50">
+                      <Image src="/sort.png" alt="Filter" width={15} height={15} />
+                      <span>Job applied</span>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="divide-y divide-gray-200 w-[209px] h-[215px] justify-center rounded-[15px]">
+                      <DropdownMenuItem className="text-sm justify-start ml-1 mt-1 bg-[#CEE1F6] w-[193px] h-[50px] rounded-[15px]">Job applied</DropdownMenuItem>
+                      <DropdownMenuItem className="text-sm w-[193px] ml-1 h-[50px] text-gray-400 rounded-[15px]">Resume created</DropdownMenuItem>
+                      <DropdownMenuItem className="text-sm w-[193px] ml-1 h-[50px] text-gray-400 rounded-[15px]">Cover letter created</DropdownMenuItem>
+                      <DropdownMenuItem className="text-sm w-[193px] ml-1 h-[50px] text-gray-400 rounded-[15px]">Active candidate</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
 
-                {/* Filter */}
-                <button className="flex items-center gap-1 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-sm hover:bg-gray-50">
-                  <Image src="/sort.png" alt="Filter" width={12} height={12} />
-                  Last 7 days
-                </button>
+                  {/* Filter */}
+                  <button className="flex items-center gap-1 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-lg hover:bg-gray-50">
+                    <Image src="/sort.png" alt="Filter" width={15} height={15} />
+                    Last 7 days
+                  </button>
+                </div>
               </div>
 
               {/* Line chart */}
@@ -193,14 +236,14 @@ export default function Overview() {
             </div>
 
             {/* Subscription & Payments (1/3) */}
-            <div className="bg-white w-[400px] p-6 rounded-2xl shadow flex flex-col items-center">
+            <div className="w-full bg-white w-[400px] p-6 rounded-2xl shadow flex flex-col items-center">
               <div className="flex items-center justify-between w-full mb-6">
                 <h2 className="text-l font-semibold text-gray-900">
                   Subscription & Payments
                 </h2>
                 {/* Filter Button */}
-                <button className="flex items-center gap-1 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-sm hover:bg-gray-50">
-                  <Image src="/sort.png" alt="Filter" width={12} height={12} />
+                <button className="flex items-center gap-1 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-lg hover:bg-gray-50">
+                  <Image src="/sort.png" alt="Filter" width={15} height={15} />
                   Last 7 days
                 </button>
               </div>
