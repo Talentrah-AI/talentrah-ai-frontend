@@ -8,6 +8,13 @@ import { Table } from '@/components/ui/table';
 import { mockData } from '@/data/mockData';
 import Image from 'next/image';
 import Link from 'next/link';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react"
 
 export default function Overview() {
   const [language, setLanguage] = useState('English');
@@ -21,11 +28,29 @@ export default function Overview() {
       <div className="flex-1 flex flex-col">
         <AdminHeader language={language} setLanguage={setLanguage} />
         <main className="flex-1 p-6 overflow-y-auto overflow-x-hidden">
-          <h1 className="text-2xl font-bold">Welcome back Admin</h1>
-          <p className="text-gray-600">
-            Get real-time insights, track engagement, and manage candidates with
-            ease.
-          </p>
+        <div className="flex items-start justify-between mt-4">
+  <div>
+    <h1 className="text-2xl font-bold">Welcome back Admin</h1>
+    <p className="text-gray-600">
+      Get real-time insights, track engagement, and manage candidates with ease.
+    </p>
+  </div>
+
+  <DropdownMenu>
+    <DropdownMenuTrigger className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-sm hover:bg-gray-50">
+      <Image src="/sort.png" alt="Filter" width={12} height={12} />
+      <span>Today</span>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent align="end" className="w-56 divide-y divide-gray-200 w-[160px] h-[266px] justify-center">
+      <DropdownMenuItem className="text-sm bg-[#CEE1F6] w-[144px] h-[50px]">Today</DropdownMenuItem>
+      <DropdownMenuItem className="text-sm w-[144px] h-[50px]">Recent</DropdownMenuItem>
+      <DropdownMenuItem className="text-sm w-[144px] h-[50px]">30 days</DropdownMenuItem>
+      <DropdownMenuItem className="text-sm w-[144px] h-[50px]">6 months</DropdownMenuItem>
+      <DropdownMenuItem className="text-sm w-[144px] h-[50px]">Customize</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
+</div>
+
 
           {/* Summary Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
@@ -141,10 +166,18 @@ export default function Overview() {
                 </div>
 
                 {/* Job application */}
-                <button className="flex items-center gap-1 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-sm hover:bg-gray-50">
-                  <Image src="/sort.png" alt="Filter" width={12} height={12} />
-                  Job application
-                </button>
+                <DropdownMenu>
+          <DropdownMenuTrigger className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-sm hover:bg-gray-50">
+          <Image src="/sort.png" alt="Filter" width={12} height={12} />
+          <span>Job applied</span>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56  divide-y divide-gray-200 w-[209px] h-[215px] justify-center">
+            <DropdownMenuItem className="text-sm bg-[#CEE1F6] w-[193px] h-[50px]">Job applied</DropdownMenuItem>
+            <DropdownMenuItem className="text-sm w-[193px] h-[50px]">Resume created</DropdownMenuItem>
+            <DropdownMenuItem className="text-sm w-[193px] h-[50px]">Cover letter created</DropdownMenuItem>
+            <DropdownMenuItem className="text-sm w-[193px] h-[50px]">Active candidate</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
                 {/* Filter */}
                 <button className="flex items-center gap-1 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-sm hover:bg-gray-50">

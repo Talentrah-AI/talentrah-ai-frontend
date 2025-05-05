@@ -71,36 +71,38 @@ export function LineChart({ data }) {
     },
     elements: {
       line: {
-        borderWidth: 2,
+        borderWidth: 1,
         tension: 0,
       },
       point: {
-        radius: 5,
-        borderWidth: 2,
+        radius: 1,
+        borderWidth: 1,
       },
     },
     scales: {
       x: {
-        grid: { display: false },
+        grid: { display: false,
+          drawBorder: false,
+          drawTicks: false,
+         },
         ticks: {
           font: { size: 14, weight: "500" },
           color: "#6B7280",
+        },
+        border: {
+          display: false, // removes the axis line
         },
       },
       y: {
-        grid: {
-          color: "#E5E7EB",
+        grid: { display: false,
           drawBorder: false,
           drawTicks: false,
         },
-        ticks: {
-          stepSize: 500,
-          font: { size: 14, weight: "500" },
-          color: "#6B7280",
-          padding: 8,
-        },
         beginAtZero: true,
         max: 2500,
+        border: {
+          display: false, // removes the axis line
+        },
       },
     },
   };
@@ -126,31 +128,31 @@ export function PieChart({ data }) {
     ],
   };
 
-  const options = {
-    responsive: true,
-    cutout: "80%",
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        callbacks: {
-          label: function (context) {
-            const label = context.label || "";
-            const value = context.raw || 0;
-            return `${value.toLocaleString()} ${label}`;
-          },
-        },
-        backgroundColor: "#111827",
-        titleFont: { size: 0 },
-        bodyFont: { size: 14 },
-        displayColors: true,
-        padding: 10,
-        cornerRadius: 6,
-      },
-      
+const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
     },
-  };
+    tooltip: {
+      backgroundColor: "#111827",
+      titleFont: { size: 0 },
+      bodyFont: { size: 14 },
+      bodyColor: "#ffffff",
+      displayColors: true,
+      cornerRadius: 8,
+      padding: 10,
+      callbacks: {
+        label: function (context) {
+          const label = context.label || "";
+          const value = context.raw || 0;
+          return `${value.toLocaleString()} ${label}`;
+        },
+      },
+    },
+  },
+};
+
 
   return (
     <div className="relative w-[300px] h-[300px]">
