@@ -51,8 +51,8 @@ export default function EmailSentPage() {
                 <div className="w-full max-w-[558px] max-h-[337.76px] bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center">
                     <div className="mb-0 text-center">
                         <Image
-                            src="/Logo (1).png"
-                            alt="Talentrah"
+                            src="/Polygon color.png"
+                            alt="polygon logo"
                             width={100}
                             height={50}
                             priority

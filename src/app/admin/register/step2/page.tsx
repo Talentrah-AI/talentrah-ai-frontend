@@ -87,8 +87,8 @@ export default function CreateAccountStep2Page() {
 
                     <div className="mb-3 mt-3 text-center">
                         <Image
-                            src="/Logo (1).png"
-                            alt="Talentrah"
+                            src="/Polygon color.png"
+                            alt="polygon logo"
                             width={100}
                             height={50}
                             priority

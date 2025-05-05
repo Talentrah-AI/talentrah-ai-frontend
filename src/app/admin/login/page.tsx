@@ -60,8 +60,8 @@ export default function AdminLoginPage() {
                 <div className="w-full max-w-[558px] max-h-[546.76px] bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center">
                     <div className="mb-3 text-center">
                         <Image
-                            src="/Logo (1).png"
-                            alt="Talentra"
+                            src="/Polygon color.png"
+                            alt="polygon logo"
                             width={116}
                             height={58}
                             priority
