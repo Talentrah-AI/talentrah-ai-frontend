@@ -49,7 +49,7 @@ export function AdminSidebar() {
 
       {/* Logout */}
       <div className="pl-1">
-        <Link href="/logout" className="flex items-center gap-2 text-white text-sm hover:opacity-80">
+        <Link href="/admin/login" className="flex items-center gap-2 text-white text-sm hover:opacity-80">
           <Image src="/logout-icon.png" alt="logout" width={18} height={18} />
           Logout
         </Link>
