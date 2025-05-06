@@ -8,9 +8,17 @@ import RolesTab from "../roles-tab"
 import { useRouter } from "next/navigation"
 import { toast } from "@/hooks/use-toast"
 import PermissionTab from "../permission-tab"
+import { Adamina } from "next/font/google"
+import AdminTabPage from "../admin-tab-page"
+import { CreateRoleDialog } from "../dilogs-modal/create-role-modal"
+import { CreateAdminDialog } from "../dilogs-modal/create-admin-modal"
+import { EditRoleDialog } from "../dilogs-modal/edit-role-modal"
+import { AddPermissionDialog } from "../dilogs-modal/add-permission-modal"
+import { EditPermissionDialog } from "../dilogs-modal/edit-permission-modal"
+import { RemovePermissionDialog } from "../dilogs-modal/remove-permission-modal"
 
 
-interface AdminProps
+ export interface AdminProps
 {
   id: number
   firstName: string 
@@ -366,12 +374,12 @@ const MainContentDashboard = () => {
         <div className="flex gap-4 md:gap-2 ">
           <Button
             onClick={() => {
-              if (activeTab === "admins") {
-                setCreateAdminOpen(true)
-              } else if (activeTab === "roles") {
-                setCreateRoleOpen(true)
-              } else if (activeTab === "permissions") {
-                setAddPermissionOpen(true)
+              if (activeTab === 'admins') {
+                setCreateAdminOpen(true);
+              } else if (activeTab === 'roles') {
+                setCreateRoleOpen(true);
+              } else if (activeTab === 'permissions') {
+                setAddPermissionOpen(true);
               }
             }}
             className="flex-1 h-[40px]"
@@ -429,6 +437,9 @@ const MainContentDashboard = () => {
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             totalRolePages={totalRolePages}
+            roleSearchQuery={roleSearchQuery}
+            setRoleSearchQuery={setRoleSearchQuery}
+            setItemsPerPage={setItemsPerPage}
           />
         </TabsContent>
         <TabsContent value="permissions">
@@ -449,7 +460,64 @@ const MainContentDashboard = () => {
             totalPermissionPages={totalPermissionPages}
           />
         </TabsContent>
+        <TabsContent value="admins">
+          <AdminTabPage
+            itemsPerPage={itemsPerPage}
+            setItemsPerPage={setItemsPerPage}
+            adminSearchQuery={adminSearchQuery}
+            setAdminSearchQuery={setAdminSearchQuery}
+            currentAdmins={currentAdmins}
+            setAdminToDelete={setAdminToDelete}
+            setDeleteAdminOpen={setDeleteAdminOpen}
+            indexOfFirstItem={indexOfFirstItem}
+            filteredAdmins={filteredAdmins}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            indexOfLastItem={indexOfLastItem}
+            totalAdminPages={totalAdminPages}
+            setCreateAdminOpen={setCreateAdminOpen}
+          />
+        </TabsContent>
       </Tabs>
+
+      {/* keep the exixting dialog */}
+
+      <CreateRoleDialog
+        open={createRoleOpen}
+        onOpenChange={setCreateRoleOpen}
+        onSubmit={handleCreateRole}
+      />
+
+      <CreateAdminDialog
+        open={createAdminOpen}
+        onOpenChange={setCreateAdminOpen}
+        onSubmit={handleCreateAdmin}
+      />
+      <EditRoleDialog
+        open={editRoleOpen}
+        onOpenChange={setEditRoleOpen}
+        roleName={selectedRole || ''}
+        onSubmit={handleUpdateRole}
+      />
+
+      <AddPermissionDialog
+        open={addPermissionOpen}
+        onOpenChange={setAddPermissionOpen}
+        onSubmit={handleAddPermission}
+      />
+
+      <EditPermissionDialog
+        open={editPermissionOpen}
+        onOpenChange={setEditPermissionOpen}
+        permissionName={selectedPermission || ''}
+        onSubmit={handleEditPermission}
+      />
+
+      <RemovePermissionDialog
+        open={removePermissionOpen}
+        onOpenChange={setRemovePermissionOpen}
+        onConfirm={handleRemovePermission}
+      />
     </div>
   );
 } 

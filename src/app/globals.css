@@ -185,3 +185,13 @@ img{
   font-style:italic;
   /* shape-margin: 2rem; */
 }
+
+@media (max-width:460px) {
+  .displayInitial{
+  display:grid;
+  grid-template-columns: repeat(2,1fr);
+   grid-template-rows: repeat(4,1fr);
+  background-color: white;
+  width:100%;
+}
+}

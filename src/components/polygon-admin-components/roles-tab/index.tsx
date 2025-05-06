@@ -19,6 +19,9 @@ interface RoleTabProps {
   setCurrentPage: Dispatch<SetStateAction<number>>;
   currentPage: number;
   totalRolePages: number;
+  setRoleSearchQuery: Dispatch<SetStateAction<string>>;
+  roleSearchQuery: string;
+  setItemsPerPage: Dispatch<SetStateAction<number>>;
 }
 const RolesTab = ({
   currentRoles,
@@ -32,6 +35,9 @@ const RolesTab = ({
   setCurrentPage,
   currentPage,
   totalRolePages,
+  roleSearchQuery,
+  setRoleSearchQuery,
+  setItemsPerPage,
 }: RoleTabProps) => {
   return (
     <div>
@@ -40,8 +46,8 @@ const RolesTab = ({
         <div className="flex items-center gap-2 ">
           <span className="text-sm">Show</span>
           <Select
-          // value={itemsPerPage.toString()}
-          // onValueChange={(value) => setItemsPerPage(Number.parseInt(value))}
+            value={itemsPerPage.toString()}
+            onValueChange={(value) => setItemsPerPage(Number.parseInt(value))}
           >
             <SelectTrigger className="w-16 bg-white">
               <SelectValue />
@@ -62,8 +68,8 @@ const RolesTab = ({
               type="search"
               placeholder="Search"
               className="pl-8 "
-              //   value={roleSearchQuery}
-              //   onChange={(e) => setRoleSearchQuery(e.target.value)}
+              value={roleSearchQuery}
+              onChange={(e) => setRoleSearchQuery(e.target.value)}
             />
           </div>
         </div>
@@ -86,17 +92,18 @@ const RolesTab = ({
                   </h3>
                 </div>
                 <div className="flex items-center gap-4 ">
-                  <Badge
-                    variant="outline"
-                    className="bg-orange-50 text-orange-700"
-                  >
-                    {role.permissions} permissions
+                  <Badge className="bg-white text-[#B64F06] shadow-sm p-0.5 ">
+                    <span className="bg-[#FCEFE6] text-xs rounded-lg p-0.5">
+                      {role.permissions} permissions
+                    </span>
                   </Badge>
                   <Badge
                     variant="outline"
-                    className="bg-green-50 text-green-700"
+                    className="bg-white text-[#07A81A] shadow-sm p-0.5"
                   >
-                    {role.count} {role.name.toLowerCase()}
+                    <span className="bg-[#E6FBE9] text-xs rounded-lg p-0.5">
+                      {role.count} {role.name.toLowerCase()}
+                    </span>
                   </Badge>
                 </div>
               </div>
