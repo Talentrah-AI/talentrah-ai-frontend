@@ -6,7 +6,8 @@ import { Toaster } from 'sonner';
 
 const gabarito = Gabarito({
   subsets: ['latin'],
-  variable: '--font-gabarito',
+  weight: ['400', '700'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={gabarito.variable}>
+    <html lang="en">
       <body className={gabarito.className}>
         <Providers>
           {children}

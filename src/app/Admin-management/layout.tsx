@@ -1,6 +1,13 @@
 "use client";
-
+import { Gabarito } from 'next/font/google';
 import { SideBar, HeaderPolygon } from '@/components/polygon-admin-components';
+
+
+const gabarito = Gabarito({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
+});
 
 
 
@@ -10,7 +17,7 @@ export default function PolygonDashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
+    <div className="min-h-screen flex flex-col lg:flex-row" >
       {/* Sidebar */}
       <SideBar />
       {/* Main Content */}

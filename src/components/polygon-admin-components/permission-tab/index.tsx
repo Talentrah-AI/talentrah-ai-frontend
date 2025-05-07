@@ -45,7 +45,7 @@ const PermissionTab = ({
             value={itemsPerPage.toString()}
             onValueChange={(value) => setItemsPerPage(Number.parseInt(value))}
           >
-            <SelectTrigger className="w-16 bg-white">
+            <SelectTrigger className="w-19 bg-white">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -80,10 +80,10 @@ const PermissionTab = ({
           currentPermissions.map((permission, index) => (
             <div
               key={index}
-              className="flex md:items-center flex-col justify-start md:flex-row md:justify-between rounded-lg shadow-md bg-white p-4"
+              className="flex md:items-center flex-col justify-start md:flex-row md:justify-between rounded-lg shadow-sm bg-white p-4"
             >
               <div className="md:flex-1 pl-4 md:pl-0">
-                <h3 className="font-normal text-[#515D68] md:text-[16px] text-sm leading-[20px]  ">
+                <h3 className="font-normal text-[#515D68] text-sm  leading-[20px]  ">
                   {permission}
                 </h3>
               </div>

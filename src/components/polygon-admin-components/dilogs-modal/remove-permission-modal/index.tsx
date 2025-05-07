@@ -15,25 +15,31 @@ interface RemovePermissionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onConfirm: () => void;
+  title: string 
+  desc: string
+  deleteNote:string
 }
 
 export function RemovePermissionDialog({
   open,
   onOpenChange,
   onConfirm,
+  title,
+  desc,
+  deleteNote
 }: RemovePermissionDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Remove permission?</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
           <DialogClose className="absolute right-4 top-4">
             <X className="h-4 w-4" />
             <span className="sr-only">Close</span>
           </DialogClose>
         </DialogHeader>
         <div className="py-4">
-          <p>Are you sure you want to remove this permission?</p>
+          <p>{desc}</p>
         </div>
         <DialogFooter className="flex justify-between">
           <Button
@@ -52,7 +58,7 @@ export function RemovePermissionDialog({
               onOpenChange(false);
             }}
           >
-            Yes, remove permission
+           {deleteNote}
           </Button>
         </DialogFooter>
       </DialogContent>

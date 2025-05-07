@@ -49,7 +49,7 @@ const RolesTab = ({
             value={itemsPerPage.toString()}
             onValueChange={(value) => setItemsPerPage(Number.parseInt(value))}
           >
-            <SelectTrigger className="w-16 bg-white">
+            <SelectTrigger className="w-19 bg-white">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -87,7 +87,7 @@ const RolesTab = ({
             >
               <div className="flex flex-1 gap-3  w-full ">
                 <div className="flex-1">
-                  <h3 className="font-normal text-[#515D68] text-sm md:text-[16px]">
+                  <h3 className="font-bold text-[#515D68] text-sm ">
                     {role.name}
                   </h3>
                 </div>

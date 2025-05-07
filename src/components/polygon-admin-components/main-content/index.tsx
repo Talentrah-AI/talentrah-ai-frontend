@@ -8,7 +8,6 @@ import RolesTab from "../roles-tab"
 import { useRouter } from "next/navigation"
 import { toast } from "@/hooks/use-toast"
 import PermissionTab from "../permission-tab"
-import { Adamina } from "next/font/google"
 import AdminTabPage from "../admin-tab-page"
 import { CreateRoleDialog } from "../dilogs-modal/create-role-modal"
 import { CreateAdminDialog } from "../dilogs-modal/create-admin-modal"
@@ -16,6 +15,7 @@ import { EditRoleDialog } from "../dilogs-modal/edit-role-modal"
 import { AddPermissionDialog } from "../dilogs-modal/add-permission-modal"
 import { EditPermissionDialog } from "../dilogs-modal/edit-permission-modal"
 import { RemovePermissionDialog } from "../dilogs-modal/remove-permission-modal"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 
 
  export interface AdminProps
@@ -350,21 +350,8 @@ const MainContentDashboard = () => {
     setRemovePermissionOpen(false);
   };
 
-  const EmptyState = () => (
-    <div className="flex flex-col items-center justify-center py-16 text-center">
-      <div className="mb-4 rounded-full bg-blue-50 p-4">
-        <FileText className="h-8 w-8 text-blue-500" />
-      </div>
-      <h3 className="mb-2 text-lg font-medium">No admins assigned yet</h3>
-      <p className="mb-6 max-w-md text-sm text-gray-500">
-        You haven't added any admins to manage Talentrah. Assign admins to help
-        oversee users, roles, and platform activities.
-      </p>
-      <Button onClick={() => setCreateAdminOpen(true)}>
-        <Plus className="mr-2 h-4 w-4" /> Add an admin
-      </Button>
-    </div>
-  );
+  
+
   return (
     <div>
       <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
@@ -382,7 +369,7 @@ const MainContentDashboard = () => {
                 setAddPermissionOpen(true);
               }
             }}
-            className="flex-1 h-[40px]"
+            className="flex-1 h-[40px] border border-[#0967D2] text-[#0967D2]"
             variant="outline"
           >
             <Plus className="mr-2 h-4 w-4" />
@@ -392,8 +379,9 @@ const MainContentDashboard = () => {
                 ? 'Create a role'
                 : 'Add permission'}
           </Button>
-          <Button className="flex-1 h-[40px]">
-            <Filter className="mr-2 h-4 w-4" /> Export
+          <Button className="flex-1 h-[40px] flex items-center">
+            <Filter className=" h-4 w-4" />
+            <span>Export</span>
           </Button>
         </div>
       </div>
@@ -402,7 +390,7 @@ const MainContentDashboard = () => {
           <TabsTrigger
             value="roles"
             className={cn(
-              'data-[state=active]:bg-gradient-to-r from-blue-500 to-teal-400 data-[state=active]:text-white transition-colors duration-500'
+              'data-[state=active]:bg-gradient-to-r from-blue-500 to-teal-400 cursor-pointer data-[state=active]:text-white transition-colors duration-500'
             )}
           >
             Roles
@@ -410,7 +398,7 @@ const MainContentDashboard = () => {
           <TabsTrigger
             value="admins"
             className={cn(
-              'data-[state=active]:bg-gradient-to-r from-blue-500 to-teal-400 data-[state=active]:text-white transition-colors duration-500'
+              'data-[state=active]:bg-gradient-to-r from-blue-500 to-teal-400  cursor-pointer data-[state=active]:text-white transition-colors duration-500'
             )}
           >
             Admins
@@ -418,7 +406,7 @@ const MainContentDashboard = () => {
           <TabsTrigger
             value="permissions"
             className={cn(
-              'data-[state=active]:bg-gradient-to-r from-blue-500 to-teal-400 data-[state=active]:text-white transition-colors duration-500'
+              'data-[state=active]:bg-gradient-to-r from-blue-500 to-teal-400  cursor-pointer data-[state=active]:text-white transition-colors duration-500'
             )}
           >
             Permissions
@@ -517,7 +505,42 @@ const MainContentDashboard = () => {
         open={removePermissionOpen}
         onOpenChange={setRemovePermissionOpen}
         onConfirm={handleRemovePermission}
+        title={'Remove permission?'}
+        desc={'Are you sure you want to remove this permission?'}
+        deleteNote={' Yes, remove permission'}
       />
+      <RemovePermissionDialog
+        open={deleteAdminOpen}
+        onOpenChange={setDeleteAdminOpen}
+        onConfirm={handleDeleteAdmin}
+        title={'Delete Admin'}
+        desc={
+          'Are you sure you want to delete this admin? This action cannot be undone.'
+        }
+        deleteNote={'Delete'}
+      />
+
+      {/* Add delete role dialog */}
+      <AlertDialog open={deleteRoleOpen} onOpenChange={setDeleteRoleOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Role</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this role? This action cannot be
+              undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteRole}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 } 

@@ -52,7 +52,7 @@ const AdminTabPage = ({
             value={itemsPerPage.toString()}
             onValueChange={(value) => setItemsPerPage(Number.parseInt(value))}
           >
-            <SelectTrigger className="w-16">
+            <SelectTrigger className="w-19 bg-white">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -143,7 +143,7 @@ const AdminTabPage = ({
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem asChild>
-                            <Link href={`/admin-details/${admin.id}`}>
+                            <Link href={`/Admin-management/${admin.id}`}>
                               View details
                             </Link>
                           </DropdownMenuItem>
