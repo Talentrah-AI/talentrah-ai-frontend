@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
@@ -24,13 +24,18 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-export default function AdminDetails({ params }: { params: { id: string } }) {
-  const router = useRouter();
+// interface PageProps {
+//   params: {
+//     id: string;
+//   };
+// }
+export default function AdminDetails() {
+  // const router = useRouter();
   const [activeTab, setActiveTab] = useState('permissions');
   const [changeRoleOpen, setChangeRoleOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [admin, setAdmin] = useState({
-    id: params.id,
+    // id: params.id,
     firstName: 'Daniel',
     lastName: 'Stephan',
     email: 'danielstephan123@gmail.com',
@@ -368,8 +373,8 @@ export default function AdminDetails({ params }: { params: { id: string } }) {
                     size="sm"
                     className="text-red-600 "
                     onClick={() => handleRemovePermission(permission)}
-                      >
-                          <Trash2 className='w-4 h-4'/>
+                  >
+                    <Trash2 className="w-4 h-4" />
                     Remove permission
                   </Button>
                 </div>
@@ -590,4 +595,6 @@ export default function AdminDetails({ params }: { params: { id: string } }) {
       />
     </>
   );
-}
+};
+
+

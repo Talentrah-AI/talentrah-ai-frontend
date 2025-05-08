@@ -69,8 +69,8 @@ const AdminTabPage = ({
           </div>
           <h3 className="mb-2 text-lg font-medium">No admins assigned yet</h3>
           <p className="mb-6 max-w-md text-sm text-gray-500">
-            You haven't added any admins to manage Talentrah. Assign admins to
-            help oversee users, roles, and platform activities.
+            You haven&apos;t added any admins to manage Talentrah. Assign admins
+            to help oversee users, roles, and platform activities.
           </p>
           <Button onClick={() => setCreateAdminOpen(true)}>
             <Plus className="mr-2 h-4 w-4" /> Add an admin
@@ -80,7 +80,7 @@ const AdminTabPage = ({
         <>
           <div className="rounded-md border">
             <Table>
-              <TableHeader >
+              <TableHeader>
                 <TableRow>
                   <TableHead className="w-12">
                     <Checkbox />
@@ -97,10 +97,7 @@ const AdminTabPage = ({
               </TableHeader>
               <TableBody>
                 {currentAdmins.map((admin) => (
-                  <TableRow
-                    key={admin.id}
-                   
-                  >
+                  <TableRow key={admin.id}>
                     <TableCell>
                       <Checkbox />
                     </TableCell>

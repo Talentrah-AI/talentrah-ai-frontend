@@ -10,20 +10,21 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Checkbox } from '@/components/ui/checkbox';
 
+interface feedBackProps {
+  id: string;
+  fullName: string;
+  email: string;
+  category: string;
+  feedback: string;
+  status: 'Pending' | 'Resolved';
+  date: string;
+}
 interface FeedbackCardProps {
-  feedback: {
-    id: string;
-    fullName: string;
-    email: string;
-    category: string;
-    feedback: string;
-    status: 'Pending' | 'Resolved';
-    date: string;
-  };
+  feedback: feedBackProps;
   isSelected: boolean;
   onSelect: (id: string) => void;
-  onEditStatus: (feedback: any) => void;
-  onDelete: (feedback: any) => void;
+  onEditStatus: (feedback: feedBackProps) => void;
+  onDelete: (feedback: feedBackProps) => void;
 }
 
 export function FeedbackCard({

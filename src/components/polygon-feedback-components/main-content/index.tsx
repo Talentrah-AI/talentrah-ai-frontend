@@ -233,9 +233,9 @@ const MainFeedBackContent = () => {
     setCurrentPage(1);
   };
 
-  const handleViewDetails = (id: string) => {
-    router.push(`/feedback-management/${id}`);
-  };
+//   const handleViewDetails = (id: string) => {
+//     router.push(`/feedback-management/${id}`);
+//   };
 
   const handleEditStatus = (feedback: Feedback) => {
     setCurrentFeedback(feedback);

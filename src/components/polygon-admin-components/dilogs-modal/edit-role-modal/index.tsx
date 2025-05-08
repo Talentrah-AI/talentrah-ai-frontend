@@ -16,12 +16,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import { RoleProps } from '../create-role-modal';
+
 
 interface EditRoleDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   roleName: string;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: RoleProps) => void;
 }
 
 export function EditRoleDialog({

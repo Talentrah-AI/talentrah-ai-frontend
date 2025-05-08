@@ -38,7 +38,7 @@ const indexGate = () => {
           src="https://res.cloudinary.com/dk5mfu099/image/upload/v1742584967/Ellipse_53_nhahx3.png"
           alt="Mercy Benjamin"
         />
-        <AvatarFallback</AvatarFallback>
+        <AvatarFallback>CN</AvatarFallback>
       </div>
     </div>
   );

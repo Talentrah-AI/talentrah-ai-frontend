@@ -1,13 +1,7 @@
 "use client";
-import { Gabarito } from 'next/font/google';
 import { SideBar, HeaderPolygon } from '@/components/polygon-admin-components';
 
 
-const gabarito = Gabarito({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  display: 'swap',
-});
 
 
 

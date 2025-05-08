@@ -24,10 +24,18 @@ import {
 } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
+export interface AdminFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  roleType: string;
+}
+
 interface CreateAdminDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: AdminFormData) => void;
 }
 
 export function CreateAdminDialog({
@@ -35,13 +43,15 @@ export function CreateAdminDialog({
   onOpenChange,
   onSubmit,
 }: CreateAdminDialogProps) {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    roleType: '',
-  });
+  const [formData, setFormData] =
+    useState <
+    AdminFormData>({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      roleType: '',
+    });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

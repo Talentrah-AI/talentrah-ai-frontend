@@ -80,7 +80,7 @@ export interface RoleTabProps {
   currentRoles: RolesProps[];
   handleEditRole: (roleName: string) => void;
   setDeleteRoleOpen: Dispatch<SetStateAction<boolean>>;
-  setRoleToDelete: Dispatch<any>;
+  setRoleToDelete: Dispatch<SetStateAction<RolesProps | null>>;
   filteredRoles: RolesProps[];
   itemsPerPage: number;
   indexOfFirstItem: number;
@@ -100,7 +100,7 @@ export interface AdminTabProps {
   adminSearchQuery: string;
   setAdminSearchQuery: Dispatch<SetStateAction<string>>;
   currentAdmins: AdminProps[];
-  setAdminToDelete: Dispatch<any>;
+  setAdminToDelete:  Dispatch<SetStateAction<AdminProps | null>>;
   setDeleteAdminOpen: Dispatch<SetStateAction<boolean>>;
   indexOfFirstItem: number;
   filteredAdmins: AdminProps[];

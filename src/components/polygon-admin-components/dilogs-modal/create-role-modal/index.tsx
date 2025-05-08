@@ -17,10 +17,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 
+export interface RoleProps {
+  roleName: string;
+  permissions: string[];
+}
 interface CreateRoleDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: RoleProps) => void;
 }
 
 export function CreateRoleDialog({

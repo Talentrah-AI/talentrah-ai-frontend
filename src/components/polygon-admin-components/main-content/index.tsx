@@ -2,15 +2,15 @@
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
-import { FileText, Filter, Plus } from "lucide-react"
+import { Filter, Plus } from "lucide-react"
 import { useState, useEffect } from "react"
 import RolesTab from "../roles-tab"
-import { useRouter } from "next/navigation"
+// import { useRouter } from "next/navigation"
 import { toast } from "@/hooks/use-toast"
 import PermissionTab from "../permission-tab"
 import AdminTabPage from "../admin-tab-page"
-import { CreateRoleDialog } from "../dilogs-modal/create-role-modal"
-import { CreateAdminDialog } from "../dilogs-modal/create-admin-modal"
+import { CreateRoleDialog, RoleProps } from "../dilogs-modal/create-role-modal"
+import { AdminFormData, CreateAdminDialog } from "../dilogs-modal/create-admin-modal"
 import { EditRoleDialog } from "../dilogs-modal/edit-role-modal"
 import { AddPermissionDialog } from "../dilogs-modal/add-permission-modal"
 import { EditPermissionDialog } from "../dilogs-modal/edit-permission-modal"
@@ -24,7 +24,7 @@ import { AdminProps, RolesProps } from "@/lib/polygon-types"
 
 const MainContentDashboard = () => {
   const [activeTab, setActiveTab] = useState('roles');
-  const router = useRouter();
+  // const router = useRouter();
   const [createAdminOpen, setCreateAdminOpen] = useState<boolean >(false);
   const [createRoleOpen, setCreateRoleOpen] = useState<boolean>(false);
   const [editRoleOpen, setEditRoleOpen] = useState<boolean>(false);
@@ -169,8 +169,8 @@ const MainContentDashboard = () => {
 
   const [deleteAdminOpen, setDeleteAdminOpen] = useState<boolean>(false);
   const [deleteRoleOpen, setDeleteRoleOpen] = useState<boolean>(false);
-  const [adminToDelete, setAdminToDelete] = useState<any>(null);
-  const [roleToDelete, setRoleToDelete] = useState<any>(null);
+  const [adminToDelete, setAdminToDelete] = useState<AdminProps | null>(null);
+  const [roleToDelete, setRoleToDelete] = useState<RolesProps | null>(null);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
@@ -242,9 +242,9 @@ const MainContentDashboard = () => {
   const handleDeleteRole = () => {
     if (roleToDelete) {
       // Remove the role from the list
-      const updatedRoles = roles.filter(
-        (role) => role.name !== roleToDelete.name
-      );
+      // const updatedRoles = roles.filter(
+      //   (role) => role.name !== roleToDelete.name
+      // );
 
       // Update the roles state
       // This is a mock implementation since we're not actually updating the roles array in state
@@ -269,7 +269,7 @@ const MainContentDashboard = () => {
     setEditRoleOpen(true);
   };
 
-  const handleCreateAdmin = (data: any) => {
+  const handleCreateAdmin = (data: AdminFormData) => {
     // In a real app, you would send this data to your API
     console.log('Creating admin with data:', data);
     setCreateAdminOpen(false);
@@ -289,13 +289,13 @@ const MainContentDashboard = () => {
     setAdmins([...admins, newAdmin]);
   };
 
-  const handleCreateRole = (data: any) => {
+  const handleCreateRole = (data: RoleProps) => {
     // In a real app, you would send this data to your API
     console.log('Creating role with data:', data);
     setCreateRoleOpen(false);
   };
 
-  const handleUpdateRole = (data: any) => {
+  const handleUpdateRole = (data:RoleProps ) => {
     // In a real app, you would send this data to your API
     console.log('Updating role with data:', data);
     setEditRoleOpen(false);
