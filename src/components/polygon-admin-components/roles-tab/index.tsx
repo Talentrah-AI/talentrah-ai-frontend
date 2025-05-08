@@ -3,26 +3,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, SquarePen, Trash2 } from 'lucide-react';
-import React, { Dispatch, SetStateAction } from 'react'
-import { RolesProps } from '../main-content';
+import { RoleTabProps } from '@/lib/polygon-types';
 
 
-interface RoleTabProps {
-  currentRoles: RolesProps[];
-  handleEditRole: (roleName: string) => void;
-  setDeleteRoleOpen: Dispatch<SetStateAction<boolean>>;
-  setRoleToDelete: Dispatch<any>;
-  filteredRoles: RolesProps[];
-  itemsPerPage: number;
-  indexOfFirstItem: number;
-  indexOfLastItem: number;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
-  currentPage: number;
-  totalRolePages: number;
-  setRoleSearchQuery: Dispatch<SetStateAction<string>>;
-  roleSearchQuery: string;
-  setItemsPerPage: Dispatch<SetStateAction<number>>;
-}
+
 const RolesTab = ({
   currentRoles,
   handleEditRole,

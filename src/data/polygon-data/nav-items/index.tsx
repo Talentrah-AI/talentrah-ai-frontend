@@ -37,12 +37,12 @@ export const NavItemList: NavItem[] = [
   {
     label: 'admin management',
     icon: <ShieldUser size={16} />,
-    href: '/polygon-dashboard',
+    href: '/Admin-management',
   },
   {
     label: 'feedbacks management',
     icon: <MessageCircleQuestion size={16} />,
-    href: '/polygon-dashboard',
+    href: '/feedbacks-management',
   },
   {
     label: 'settings',

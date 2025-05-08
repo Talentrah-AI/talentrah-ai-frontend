@@ -7,26 +7,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { FileText, MoreVertical, Plus, Search } from 'lucide-react';
 import Link from 'next/link';
-import React, { Dispatch, SetStateAction } from 'react'
-import { AdminProps } from '../main-content';
+import { AdminTabProps } from '@/lib/polygon-types';
 
 
-interface AdminTabProps {
-  itemsPerPage: number;
-  setItemsPerPage: Dispatch<SetStateAction<number>>;
-  adminSearchQuery: string;
-  setAdminSearchQuery: Dispatch<SetStateAction<string>>;
-  currentAdmins: AdminProps[];
-  setAdminToDelete: Dispatch<any>;
-  setDeleteAdminOpen: Dispatch<SetStateAction<boolean>>;
-  indexOfFirstItem: number;
-  filteredAdmins: AdminProps[];
-  setCurrentPage: Dispatch<SetStateAction<number>>;
-  currentPage:number;
-  indexOfLastItem: number;
-  totalAdminPages: number;
-  setCreateAdminOpen: Dispatch<SetStateAction<boolean>>;
-}
+
 const AdminTabPage = ({
   itemsPerPage,
   setItemsPerPage,

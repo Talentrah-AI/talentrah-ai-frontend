@@ -1,25 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { PermissionsProps } from '@/lib/polygon-types';
 import { ChevronLeft, ChevronRight, Edit, Search, Trash2 } from 'lucide-react';
-import React, { Dispatch, SetStateAction } from 'react'
 
-interface PermissionsProps {
-  itemsPerPage: number;
-  setItemsPerPage: Dispatch<SetStateAction<number>>;
-  permissionSearchQuery: string;
-  setPermissionSearchQuery: Dispatch<SetStateAction<string>>;
-  currentPermissions: string[];
-  setSelectedPermission: Dispatch<SetStateAction<string | null>>;
-  setEditPermissionOpen: Dispatch<SetStateAction<boolean>>;
-  setRemovePermissionOpen: Dispatch<SetStateAction<boolean>>;
-  filteredPermissions: string[];
-  indexOfFirstItem: number;
-  indexOfLastItem: number;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
-  currentPage: number;
-  totalPermissionPages: number;
-}
+
+
 const PermissionTab = ({
   itemsPerPage,
   setItemsPerPage,

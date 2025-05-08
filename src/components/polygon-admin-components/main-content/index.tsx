@@ -16,28 +16,11 @@ import { AddPermissionDialog } from "../dilogs-modal/add-permission-modal"
 import { EditPermissionDialog } from "../dilogs-modal/edit-permission-modal"
 import { RemovePermissionDialog } from "../dilogs-modal/remove-permission-modal"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
+import { AdminProps, RolesProps } from "@/lib/polygon-types"
 
 
- export interface AdminProps
-{
-  id: number
-  firstName: string 
-  lastName: string 
-  email: string 
-  role: string 
-  permissions: number 
-  dateAdded: string 
-  phone:string 
-  
-}
 
-export interface RolesProps
-{
-  name: string 
-  count: number 
-  permissions: number 
-  
-}
+
 
 const MainContentDashboard = () => {
   const [activeTab, setActiveTab] = useState('roles');
