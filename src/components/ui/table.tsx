@@ -5,13 +5,14 @@ import { FreeButton, PremiumButton } from './crownButton';
 interface Candidate {
   fullName: string;
   email: string;
+  usageCredit: string;
   metrics: {
     applications: number;
     shortlisted: number;
     rejected: number;
   };
   subscription: string;
-  completion: string;
+  signUpDate: string;
 }
 
 interface TableProps {
@@ -19,11 +20,10 @@ interface TableProps {
 }
 
 export function Table({ data }: TableProps) {
-  const getCompletionColor = (completion: string) => {
-    const value = parseInt(completion);
-    if (value >= 80) return 'bg-green-500';
-    if (value >= 60) return 'bg-orange-400';
-    return 'bg-red-500';
+  const getUsageCreditColor = (usageCredit: string) => {
+    if (usageCredit.includes('8/10')) return 'bg-blue-100 text-blue-700';
+    if (usageCredit.includes('2/10') || usageCredit.includes('0/10')) return 'bg-red-100 text-red-700';
+    return 'bg-gray-100 text-gray-700';
   };
 
   return (
@@ -41,19 +41,23 @@ export function Table({ data }: TableProps) {
               Email Address
             </th>
             <th className="px-1 py-3 text-left text-[12px] font-medium text-gray-500 uppercase tracking-wider">
+              Usage Credit
+            </th>
+            <th className="px-1 py-3 text-left text-[12px] font-medium text-gray-500 uppercase tracking-wider">
               Job Application Metrics
             </th>
             <th className="px-1 py-3 text-left text-[12px] font-medium text-gray-500 uppercase tracking-wider">
               Subscription Type
             </th>
             <th className="px-1 py-3 text-left text-[12px] font-medium text-gray-500 uppercase tracking-wider">
-              Profile Completion
+              Sign-up Date
             </th>
+            <th className="px-1 py-3 text-left text-[12px] font-medium text-gray-500 uppercase tracking-wider"></th>
           </tr>
         </thead>
         <tbody>
           {data.map((candidate, index) => (
-            <tr key={index}>
+            <tr key={index} className="hover:bg-gray-50">
               <td className="px-6 py-4 whitespace-nowrap">
                 <input type="checkbox" className="rounded h-[20px] w-[20px] border-gray-300" />
               </td>
@@ -64,16 +68,13 @@ export function Table({ data }: TableProps) {
                 {candidate.email}
               </td>
               <td className="px-1 py-4 whitespace-nowrap">
-                <div className="flex gap-[4px] w-[113px] h-[32px] bg-white p-1 px-1 py-1 rounded-lg shadow">
-                  <span className="px-3 py-1 w-[33px] h-[24px] bg-[#FCEFE6] text-orange-800 rounded-lg text-sm">
-                    {candidate.metrics.applications}
-                  </span>
-                  <span className="px-3 py-1 w-[33px] h-[24px] bg-green-100 text-green-800 rounded-lg text-sm">
-                    {candidate.metrics.shortlisted}
-                  </span>
-                  <span className="px-3 py-1 w-[33px] h-[24px] bg-[#E6F0FB] text-gray-800 rounded-lg text-sm">
-                    {candidate.metrics.rejected}
-                  </span>
+                <span className={`px-3 py-1 rounded-lg text-xs font-semibold ${getUsageCreditColor(candidate.usageCredit)}`}>{candidate.usageCredit}</span>
+              </td>
+              <td className="px-1 py-4 whitespace-nowrap">
+                <div className="flex gap-2">
+                  <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded-lg text-xs font-semibold min-w-[28px] text-center">{candidate.metrics.applications}</span>
+                  <span className="px-2 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-semibold min-w-[28px] text-center">{candidate.metrics.shortlisted}</span>
+                  <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold min-w-[28px] text-center">{candidate.metrics.rejected}</span>
                 </div>
               </td>
               <td className="px-1 py-4 whitespace-nowrap">
@@ -83,18 +84,17 @@ export function Table({ data }: TableProps) {
                   <FreeButton />
                 )}
               </td>
-              <td className="px-1 py-4 whitespace-nowrap">
-                <div className="flex items-center">
-                  <div className="w-24 bg-gray-200 rounded-full h-2 mr-2">
-                    <div
-                      className={`h-2 rounded-full ${getCompletionColor(candidate.completion)}`}
-                      style={{ width: candidate.completion }}
-                    ></div>
-                  </div>
-                  <span className="text-sm text-gray-500">
-                    {candidate.completion}
-                  </span>
-                </div>
+              <td className="px-1 py-4 whitespace-nowrap text-sm text-gray-700">
+                {candidate.signUpDate}
+              </td>
+              <td className="px-1 py-4 whitespace-nowrap text-right">
+                <button className="p-2 rounded-full hover:bg-gray-100">
+                  <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="text-gray-400">
+                    <circle cx="12" cy="5" r="1.5"/>
+                    <circle cx="12" cy="12" r="1.5"/>
+                    <circle cx="12" cy="19" r="1.5"/>
+                  </svg>
+                </button>
               </td>
             </tr>
           ))}
