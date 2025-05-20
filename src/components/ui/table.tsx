@@ -52,19 +52,17 @@ export function Table({ data, showUsageCredit = false }: TableProps) {
               Email Address
             </th>
             <th className="px-2 sm:px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px]">
+              Usage Credit
+            </th>
+            <th className="px-2 sm:px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px]">
               Job Application Metrics
             </th>
             <th className="px-2 sm:px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[80px] hidden md:table-cell">
               Subscription Type
             </th>
-            {/* Profile Completion or Usage Credit */}
             <th className="px-2 sm:px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px]">
-              {showUsageCredit ? 'Usage Credit' : 'Profile Completion'}
-            </th>
-            {/* Remove sign-up date for overview */}
-            {/* <th className="px-2 sm:px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px] hidden lg:table-cell">
               Sign-up Date
-            </th> */}
+            </th>
             <th className="px-2 sm:px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[40px]"></th>
           </tr>
         </thead>
@@ -79,6 +77,13 @@ export function Table({ data, showUsageCredit = false }: TableProps) {
               </td>
               <td className="px-2 sm:px-4 py-3 whitespace-nowrap text-sm text-black hidden sm:table-cell">
                 {candidate.email}
+              </td>
+              <td className="px-2 sm:px-4 py-3 whitespace-nowrap">
+                <span
+                  className={`px-2 py-1 rounded-lg text-xs font-semibold ${getUsageCreditColor(candidate.usageCredit)}`}
+                >
+                  {candidate.usageCredit || 'N/A'}
+                </span>
               </td>
               <td className="px-2 sm:px-4 py-3 whitespace-nowrap">
                 <div className="flex gap-1 sm:gap-2 bg-white shadow py-2 px-2 rounded-lg border-gray-300 w-[117px] h-[37px]">
@@ -100,27 +105,8 @@ export function Table({ data, showUsageCredit = false }: TableProps) {
                   <FreeButton />
                 )}
               </td>
-              {/* Profile Completion or Usage Credit */}
-              <td className="px-2 sm:px-4 py-3 whitespace-nowrap">
-                {showUsageCredit ? (
-                  <span
-                    className={`px-2 py-1 rounded-lg text-xs font-semibold ${getUsageCreditColor(candidate.usageCredit)}`}
-                  >
-                    {candidate.usageCredit || 'N/A'}
-                  </span>
-                ) : (
-                  <div className="flex items-center gap-2 min-w-[100px]">
-                    <span className="text-xs font-semibold text-gray-900 min-w-[32px]">
-                      {candidate.completion || 'N/A'}
-                    </span>
-                    <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
-                      <div
-                        className={`h-2 rounded-full ${getCompletionBarColor(candidate.completion)}`}
-                        style={{ width: candidate.completion ? candidate.completion : '0%' }}
-                      ></div>
-                    </div>
-                  </div>
-                )}
+              <td className="px-2 sm:px-4 py-3 whitespace-nowrap text-sm text-black">
+                {candidate.signUpDate || 'N/A'}
               </td>
               <td className="px-2 sm:px-4 py-3 whitespace-nowrap text-right">
                 <button className="p-1 sm:p-2 rounded-full hover:bg-gray-100">

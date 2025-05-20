@@ -23,6 +23,7 @@ export default function Candidates() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [filter, setFilter] = useState({ subscription: "", usageCredit: "", dateFrom: "", dateTo: "" });
+  const [activeTab, setActiveTab] = useState("active");
   const router = useRouter();
 
   useEffect(() => {
@@ -103,69 +104,144 @@ export default function Candidates() {
             <div>
               <h1 className="text-2xl font-bold">Candidates</h1>
             </div>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">Export</button>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+              <img src="/icons/export.png" alt="Export" className="w-5 h-5" />
+              Export
+            </button>
           </div>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-6 gap-4 flex-wrap">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mt-6 gap-3 flex-wrap">
             <div className="flex space-x-2 sm:space-x-4">
-              <button className="bg-white border border-gray-200 px-3 py-2 rounded-lg text-gray-700 text-sm">Active candidates</button>
-              <button className="bg-white border border-gray-200 px-3 py-2 rounded-lg text-gray-700 text-sm">Deactivated candidates</button>
-              <button className="bg-white border border-gray-200 px-3 py-2 rounded-lg text-gray-700 text-sm">Deleted accounts</button>
+              <button
+                className={`px-3 py-2 rounded-lg text-sm font-medium border border-gray-200 ${activeTab === "active" ? "bg-blue-600 text-white" : "bg-white text-gray-700"}`}
+                onClick={() => setActiveTab("active")}
+              >
+                Active candidates
+              </button>
+              <button
+                className={`px-3 py-2 rounded-lg text-sm font-medium border border-gray-200 ${activeTab === "deactivated" ? "bg-blue-600 text-white" : "bg-white text-gray-700"}`}
+                onClick={() => setActiveTab("deactivated")}
+              >
+                Deactivated candidates
+              </button>
+              <button
+                className={`px-3 py-2 rounded-lg text-sm font-medium border border-gray-200 ${activeTab === "deleted" ? "bg-blue-600 text-white" : "bg-white text-gray-700"}`}
+                onClick={() => setActiveTab("deleted")}
+              >
+                Deleted accounts
+              </button>
             </div>
-            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 flex-wrap">
-              <select
-                className="bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm"
-                onChange={(e) => handleFilterChange("subscription", e.target.value)}
-                value={filter.subscription}
-              >
-                <option value="">Subscription type</option>
-                <option value="Premium">Premium</option>
-                <option value="Freemium">Freemium</option>
-              </select>
-              <select
-                className="bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm"
-                onChange={(e) => handleFilterChange("usageCredit", e.target.value)}
-                value={filter.usageCredit}
-              >
-                <option value="">Usage credit</option>
-                <option value="UC - 8/10">UC - 8/10</option>
-                <option value="UC - 2/10">UC - 2/10</option>
-                <option value="UC - 0/10">UC - 0/10</option>
-              </select>
-              <div className="flex space-x-2">
-                <input
-                  type="date"
-                  className="bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm"
-                  onChange={(e) => handleFilterChange("dateFrom", e.target.value)}
-                  value={filter.dateFrom}
-                />
-                <input
-                  type="date"
-                  className="bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm"
-                  onChange={(e) => handleFilterChange("dateTo", e.target.value)}
-                  value={filter.dateTo}
-                />
+            {/* Only show the filter bar and table for the active tab */}
+            {activeTab === "active" && (
+              <>
+                {/* middle bar */}
+                <div className="flex items-center flex-wrap gap-2 md:gap-3 w-full mt-4">
+                  <span className="text-[#07A2A8] font-medium mr-2">Filter by</span>
+                  <span className="text-gray-700 ml-2">Show</span>
+                  <input
+                    type="number"
+                    min={1}
+                    value={10}
+                    className="w-14 px-2 py-1 border border-gray-200 rounded-lg text-center text-sm bg-white"
+                    // onChange={...}
+                  />
+                  <div className="flex items-center bg-white border border-gray-200 rounded-lg px-3 py-2">
+                    <img src="/icons/filter.png" alt="Filter" className="w-4 h-4 mr-2" />
+                    <select
+                      className="bg-transparent outline-none text-sm"
+                      onChange={(e) => handleFilterChange('subscription', e.target.value)}
+                      value={filter.subscription}
+                    >
+                      <option value="">Subscription type</option>
+                      <option value="Premium">Premium</option>
+                      <option value="Freemium">Freemium</option>
+                    </select>
+                  </div>
+                  <div className="flex items-center bg-white border border-gray-200 rounded-lg px-3 py-2">
+                    <img src="/icons/filter.png" alt="Filter" className="w-4 h-4 mr-2" />
+                    <select
+                      className="bg-transparent outline-none text-sm"
+                      onChange={(e) => handleFilterChange('usageCredit', e.target.value)}
+                      value={filter.usageCredit}
+                    >
+                      <option value="">Usage credit</option>
+                      <option value="UC - 8/10">UC - 8/10</option>
+                      <option value="UC - 2/10">UC - 2/10</option>
+                      <option value="UC - 0/10">UC - 0/10</option>
+                    </select>
+                  </div>
+                  <span className="ml-2 text-gray-700">From</span>
+                  <div className="flex items-center bg-white border border-gray-200 rounded-lg px-3 py-2">
+                    <img
+                      src="/icons/calendar.png"
+                      alt="Calendar"
+                      className="w-4 h-4 mr-2 cursor-pointer"
+                      onClick={() => document.getElementById('dateFromInput')?.focus()}
+                    />
+                    <input
+                      id="dateFromInput"
+                      type="date"
+                      className="bg-transparent outline-none text-sm"
+                      onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
+                      value={filter.dateFrom}
+                    />
+                  </div>
+                  <span className="ml-2 text-gray-700">To</span>
+                  <div className="flex items-center bg-white border border-gray-200 rounded-lg px-3 py-2">
+                    <img
+                      src="/icons/calendar.png"
+                      alt="Calendar"
+                      className="w-4 h-4 mr-2 cursor-pointer"
+                      onClick={() => document.getElementById('dateToInput')?.focus()}
+                    />
+                    <input
+                      id="dateToInput"
+                      type="date"
+                      className="bg-transparent outline-none text-sm"
+                      onChange={(e) => handleFilterChange('dateTo', e.target.value)}
+                      value={filter.dateTo}
+                    />
+                  </div>
+                  <button
+                    className="bg-[#07A2A8] text-white px-4 py-2 rounded-lg ml-2"
+                    onClick={() => { }}
+                  >
+                    Apply filter
+                  </button>
+                  <button
+                    className="text-gray-500 ml-2"
+                    onClick={() => setFilter({ subscription: '', usageCredit: '', dateFrom: '', dateTo: '' })}
+                  >
+                    Clear filter
+                  </button>
+                  <div className="relative ml-2 w-[200px] max-w-sm bg-white rounded-lg">
+                    <img
+                      src="/icons/search-normal.png"
+                      alt="Search"
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      className="border border-gray-200 pl-10 pr-3 py-2 rounded-lg text-sm w-full bg-white"
+                    />
+                  </div>
+                </div>
+                {/* Table */}
+                <div className="mt-6 bg-white p-4 sm:p-6 rounded-2xl shadow w-full">
+                  <Table data={filteredCandidates} showUsageCredit={true} />
+                </div>
+              </>
+            )}
+            {activeTab === "deactivated" && (
+              <div className="w-full mt-6 bg-white p-8 rounded-2xl shadow text-center text-gray-400 text-lg">
+                No deactivated candidates.
               </div>
-              <button
-                className="bg-[#07A2A8] text-white px-3 py-2 rounded-lg text-sm"
-                onClick={() => {}}
-              >
-                Apply filter
-              </button>
-              <button
-                className="bg-white border border-gray-200 px-3 py-2 rounded-lg text-gray-700 text-sm"
-                onClick={() => setFilter({ subscription: "", usageCredit: "", dateFrom: "", dateTo: "" })}
-              >
-                Clear filter
-              </button>
-              <input
-                type="text"
-                placeholder="Search"
-                className="border border-gray-200 px-3 py-2 rounded-lg text-sm"
-              />
-            </div>
-          </div>
-          <div className="mt-6 bg-white p-4 sm:p-6 rounded-2xl shadow w-full">
-            <Table data={filteredCandidates} showUsageCredit={true} />
+            )}
+            {activeTab === "deleted" && (
+              <div className="w-full mt-6 bg-white p-8 rounded-2xl shadow text-center text-gray-400 text-lg">
+                No deleted accounts.
+              </div>
+            )}
           </div>
           <div className="flex justify-center mt-4">
             <button className="px-3 py-1">1</button>
@@ -176,6 +252,23 @@ export default function Candidates() {
           </div>
         </main>
       </div>
+      <style jsx global>{`
+        /* Hide browser default date icon for Chrome, Safari, Edge */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+          opacity: 0;
+          display: none;
+        }
+        /* Hide for Firefox */
+        input[type="date"]::-moz-calendar-picker-indicator {
+          opacity: 0;
+          display: none;
+        }
+        /* Hide for IE */
+        input[type="date"]::-ms-input-placeholder {
+          opacity: 0;
+          display: none;
+        }
+      `}</style>
     </div>
   );
 }
