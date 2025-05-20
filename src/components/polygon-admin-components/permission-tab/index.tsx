@@ -3,6 +3,8 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { PermissionsProps } from '@/lib/polygon-types';
 import { ChevronLeft, ChevronRight, Edit, Search, Trash2 } from 'lucide-react';
+import NoDataState from '../no-data-state';
+import EmptySearchState from '../empty-search-state';
 
 
 
@@ -21,6 +23,8 @@ const PermissionTab = ({
   setCurrentPage,
   currentPage,
   totalPermissionPages,
+  permissions,
+  setAddPermissionOpen
 }:PermissionsProps) => {
   return (
     <div>
@@ -59,9 +63,18 @@ const PermissionTab = ({
 
       <div className="space-y-4">
         {currentPermissions.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-8 text-center">
-            <p className="text-gray-500">No permissions found</p>
-          </div>
+          permissions.length === 0 ? (
+            <NoDataState tabType="permissions" setCreateTab={setAddPermissionOpen}/>
+          ) : permissionSearchQuery ? (
+            <EmptySearchState
+              searchQuery={permissionSearchQuery}
+              tabType="permissions"
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <p className="text-gray-500">No permissions found</p>
+            </div>
+          )
         ) : (
           currentPermissions.map((permission, index) => (
             <div

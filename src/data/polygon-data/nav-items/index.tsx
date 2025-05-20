@@ -37,12 +37,12 @@ export const NavItemList: NavItem[] = [
   {
     label: 'admin management',
     icon: <ShieldUser size={16} />,
-    href: '/Admin-management',
+    href: '/admin/admin-management',
   },
   {
     label: 'feedbacks management',
     icon: <MessageCircleQuestion size={16} />,
-    href: '/feedbacks-management',
+    href: '/admin/feedbacks-management',
   },
   {
     label: 'settings',

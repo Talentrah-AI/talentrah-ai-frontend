@@ -52,6 +52,7 @@ export interface AdminProps {
   permissions: number;
   dateAdded: string;
   phone: string;
+
 }
 
 export interface RolesProps {
@@ -75,6 +76,8 @@ export interface PermissionsProps {
   setCurrentPage: Dispatch<SetStateAction<number>>;
   currentPage: number;
   totalPermissionPages: number;
+  permissions: string[];
+  setAddPermissionOpen: Dispatch<SetStateAction<boolean>>;
 }
 export interface RoleTabProps {
   currentRoles: RolesProps[];
@@ -91,6 +94,9 @@ export interface RoleTabProps {
   setRoleSearchQuery: Dispatch<SetStateAction<string>>;
   roleSearchQuery: string;
   setItemsPerPage: Dispatch<SetStateAction<number>>;
+  roles: RolesProps[];
+  setCreateRoleOpen: Dispatch<SetStateAction<boolean>>;
+  
 }
 
 
@@ -100,7 +106,7 @@ export interface AdminTabProps {
   adminSearchQuery: string;
   setAdminSearchQuery: Dispatch<SetStateAction<string>>;
   currentAdmins: AdminProps[];
-  setAdminToDelete:  Dispatch<SetStateAction<AdminProps | null>>;
+  setAdminToDelete: Dispatch<SetStateAction<AdminProps | null>>;
   setDeleteAdminOpen: Dispatch<SetStateAction<boolean>>;
   indexOfFirstItem: number;
   filteredAdmins: AdminProps[];
@@ -109,4 +115,28 @@ export interface AdminTabProps {
   indexOfLastItem: number;
   totalAdminPages: number;
   setCreateAdminOpen: Dispatch<SetStateAction<boolean>>;
+  admins: AdminProps[];
+  roleTypeFilter: string | null;
+  setRoleTypeFilter: Dispatch<SetStateAction<string | null>>;
+  setPermissionsFilter: Dispatch<SetStateAction<number | null>>;
+  permissionsFilter: number | null;
+  handleClearFilter: () => void;
+  handleApplyFilter: () => void;
+  formatDate: (date?: Date) => string;
+  handleOpenCalendar: (type: 'from' | 'to') => void;
+  dateRange: {
+    from: Date | undefined;
+    to: Date | undefined;
+  };
+  calendarOpen: boolean;
+  setCalendarOpen: Dispatch<SetStateAction<boolean>>;
+  handleSelectDate: (date: Date) => void;
 }
+
+export type AdminCard = {
+  isMobile: boolean;
+  setAdminToDelete: Dispatch<SetStateAction<AdminProps | null>>;
+  setDeleteAdminOpen: Dispatch<SetStateAction<boolean>>;
+  admin: AdminProps;
+};
+

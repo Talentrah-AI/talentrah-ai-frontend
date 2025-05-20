@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, SquarePen, Trash2 } from 'lucide-react';
 import { RoleTabProps } from '@/lib/polygon-types';
+import NoDataState from '../no-data-state';
+import EmptySearchState from '../empty-search-state';
 
 
 
@@ -22,6 +24,8 @@ const RolesTab = ({
   roleSearchQuery,
   setRoleSearchQuery,
   setItemsPerPage,
+  roles,
+  setCreateRoleOpen,
 }: RoleTabProps) => {
   return (
     <div>
@@ -60,9 +64,15 @@ const RolesTab = ({
       </div>
       <div className="space-y-4">
         {currentRoles.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-8 text-center">
-            <p className="text-gray-500">No roles found</p>
-          </div>
+          roles.length === 0 ? (
+            <NoDataState tabType="roles" setCreateTab={setCreateRoleOpen} />
+          ) : roleSearchQuery ? (
+            <EmptySearchState searchQuery={roleSearchQuery} tabType="roles" />
+          ) : (
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <p className="text-gray-500">No roles found</p>
+            </div>
+          )
         ) : (
           currentRoles.map((role, index) => (
             <div

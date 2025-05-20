@@ -121,7 +121,7 @@ export function CalendarDatePicker({
       <DialogContent className="p-0 max-w-xs">
         <div className="p-0">
           <div className="flex flex-col">
-            <div className="flex items-center justify-between p-4">
+            <div className="flex items-center justify-between p-6">
               <button onClick={handlePrevMonth} className="text-gray-600">
                 <ChevronLeft className="h-5 w-5" />
               </button>
