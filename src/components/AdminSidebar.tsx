@@ -1,19 +1,28 @@
+'use client';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
+import Menu from '@/icons/Menu.svg';
+import Candidates from '@/icons/Candidates.svg';
+import Briefcase from '@/icons/Briefcase.svg';
+import Call from '@/icons/call.svg';
+import Admin from '@/icons/Admin.svg';
+import MessageQuestion from '@/icons/message-question.svg';
+import Setting from '@/icons/setting.svg';
 
 export function AdminSidebar() {
   const pathname = usePathname();
 
   const navItems = [
-    { name: 'Overview', href: '/admin/overview', icon: '/menu.png', highlight: true },
-    { name: 'Candidates', href: '/admin/candidates', icon: '/profile-2user(white).png' },
-    { name: 'Job management', href: '/admin/job-Management', icon: '/briefcasewhite.svg' },
-    { name: 'Mentorship request', href: '/admin/mentorship-request', icon: '/call(white).png' },
-    { name: 'Mentors management', href: '/admin/mentors-management', icon: '/profile-2user(white).png' },
-    { name: 'Admin Management', href: '/admin/admin-management', icon: '/ROles.png' },
-    { name: 'Feedbacks management', href: '/admin/feedbacks-management', icon: '/message-question(white).png' },
-    { name: 'Settings', href: '/admin/settings', icon: '/setting-2.png' },
+    { name: 'Overview', href: '/admin/overview', icon: Menu },
+    { name: 'Candidates', href: '/admin/candidates', icon: Candidates },
+    { name: 'Job management', href: '/admin/job-Management', icon: Briefcase },
+    { name: 'Mentorship request', href: '/admin/mentorship-request', icon: Call },
+    { name: 'Mentors management', href: '/admin/mentors-management', icon: Candidates },
+    { name: 'Admin Management', href: '/admin/admin-management', icon: Admin },
+    { name: 'Feedbacks management', href: '/admin/feedbacks-management', icon: MessageQuestion },
+    { name: 'Settings', href: '/admin/settings', icon: Setting },
   ];
 
   return (
@@ -27,19 +36,24 @@ export function AdminSidebar() {
         </div>
 
         <nav className="flex flex-col gap-3">
-          {navItems.map(({ name, href, icon, highlight }) => {
+          {navItems.map(({ name, href, icon: Icon }) => {
             const isActive = pathname === href;
             return (
               <Link
                 key={name}
                 href={href}
                 className={`flex items-center gap-3 px-4 py-2 rounded-xl text-sm font-medium
-                  ${isActive && highlight ? 'bg-white text-[#0752A8]' : ''}
-                  ${isActive && !highlight ? 'bg-[#0967D2]' : ''}
-                  ${!isActive ? 'text-white hover:bg-[#0967D2]' : ''}
-                `}
+                  ${isActive ? 'bg-white text-[#0752A8]' : 'text-white hover:bg-[#0967D2]'}`}
               >
-                <Image src={icon} alt={name} width={18} height={18} />
+                <span className="w-[18px] h-[18px]">
+                  <Icon
+                    width={18}
+                    height={18}
+                    stroke={isActive ? '#0752A8' : '#fff'}
+                    fill="none"
+                    strokeWidth={2}
+                  />
+                </span>
                 {name}
               </Link>
             );

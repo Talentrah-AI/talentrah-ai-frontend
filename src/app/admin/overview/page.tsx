@@ -28,13 +28,16 @@ export default function Overview() {
   useEffect(() => {
     const token = getAuthToken();
     console.log('Token from cookies:', token);
+
+    // If no token, use fallback data instead of redirecting
     if (!token) {
-      console.log('No token found, redirecting to /admin/login');
-      setError("No authentication token found. Please log in again.");
-      router.push("/admin/login");
+      console.log('No token found, using fallback data');
+      setUser({ username: "Guest" }); // Fallback user data
+      setLoading(false);
       return;
     }
 
+    // Fetch user data if token exists
     const fetchUser = async () => {
       try {
         console.log('Fetching user with token:', token);
@@ -47,10 +50,8 @@ export default function Overview() {
           response: error.response?.data,
           status: error.response?.status,
         });
-        setError(`Failed to load user data: ${error.message}. Please try logging in again.`);
-        // Only remove token and redirect after showing the error
-        // removeAuthToken();
-        // router.push("/admin/login");
+        setError(`Failed to load user data: ${error.message}. Using guest mode.`);
+        setUser({ username: "Guest" }); // Fallback on error
       } finally {
         setLoading(false);
       }
@@ -59,9 +60,20 @@ export default function Overview() {
     fetchUser();
   }, [router]);
 
-  if (loading) return <div>Loading user data...</div>;
+  if (loading) return <div>Loading data...</div>;
   if (error) return <div className="text-red-500 text-center">{error}</div>;
-  if (!user) return null;
+
+  const transformedCandidates = mockData.latestCandidates.map((candidate) => ({
+    fullName: candidate.fullName,
+    email: candidate.email,
+    completion: candidate.completion,
+    metrics: {
+      applications: candidate.metrics.applications,
+      shortlisted: candidate.metrics.shortlisted,
+      rejected: candidate.metrics.rejected,
+    },
+    subscription: candidate.subscription,
+  }));
 
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-100">
@@ -73,7 +85,7 @@ export default function Overview() {
         <main className="flex-1 p-6 overflow-y-auto overflow-x-hidden">
           <div className="flex items-start justify-between mt-4">
             <div>
-              <h1 className="text-2xl font-bold">Welcome back, {user.username}</h1>
+              <h1 className="text-2xl font-bold">Welcome back, {user?.username || "Guest"}</h1>
               <p className="text-gray-600">
                 Get real-time insights, track engagement, and manage candidates with ease.
               </p>
@@ -126,13 +138,12 @@ export default function Overview() {
                   <DropdownMenuItem className="text-sm w-[144px] ml-1 h-[50px] text-gray-400 rounded-[15px]">Customize</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              
             </div>
           </div>
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
             <div className="bg-white p-4 rounded-lg shadow">
               <div className="mb-2">
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#E6F0FB] shadow-sm">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#E6  shadow-sm">
                   <Image
                     src="/profile-2user(color).png"
                     alt="People Icon"
@@ -293,7 +304,7 @@ export default function Overview() {
                 View all candidates
               </Link>
             </div>
-            <Table data={mockData.latestCandidates} />
+            <Table data={transformedCandidates} showUsageCredit={false} />
           </div>
         </main>
       </div>
