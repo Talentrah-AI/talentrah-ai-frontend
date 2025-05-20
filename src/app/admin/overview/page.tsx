@@ -23,6 +23,7 @@ export default function Overview() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedMetric, setSelectedMetric] = useState("Job applied");
   const router = useRouter();
 
   useEffect(() => {
@@ -85,7 +86,7 @@ export default function Overview() {
         <main className="flex-1 p-6 overflow-y-auto overflow-x-hidden">
           <div className="flex items-start justify-between mt-4">
             <div>
-              <h1 className="text-2xl font-bold">Welcome back, {user?.username || "Guest"}</h1>
+              <h1 className="text-2xl font-bold">Welcome back, {user?.username || "Admin"}</h1>
               <p className="text-gray-600">
                 Get real-time insights, track engagement, and manage candidates with ease.
               </p>
@@ -224,33 +225,63 @@ export default function Overview() {
             <div className="col-span-1 lg:col-span-2 bg-white p-6 rounded-2xl shadow flex flex-col">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-l font-semibold text-gray-900">
-                  Job Applications
+                  {selectedMetric === "Resume created"
+                    ? "Resumes created"
+                    : selectedMetric === "Cover letter created"
+                    ? "Cover letters created"
+                    : selectedMetric === "Mentorship request"
+                    ? "Mentorship request"
+                    : "Job Applications"}
                 </h2>
                 <div className="flex items-center gap-6">
-                  <div className="flex items-center gap-2 mr-6">
-                    <div className="h-3 w-3 rounded-full bg-blue-500" />
-                    <span className="text-[10px] text-gray-500">
-                      Paid candidates
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-full bg-orange-500" />
-                    <span className="text-[10px] text-gray-500">
-                      Free candidates
-                    </span>
-                  </div>
+                  {selectedMetric === "Job applied" && (
+                    <>
+                      <div className="flex items-center gap-2 mr-6">
+                        <div className="h-3 w-3 rounded-full bg-blue-500" />
+                        <span className="text-[10px] text-gray-500">
+                          Paid candidates
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="h-3 w-3 rounded-full bg-orange-500" />
+                        <span className="text-[10px] text-gray-500">
+                          Free candidates
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
                 <div className="flex items-center gap-2">
                   <DropdownMenu>
                     <DropdownMenuTrigger className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-lg hover:bg-gray-50">
                       <Image src="/sort.png" alt="Filter" width={15} height={15} />
-                      <span>Job applied</span>
+                      <span>{selectedMetric === "Job applied" ? "Job applied" : "Resume created"}</span>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="divide-y divide-gray-200 w-[209px] h-[215px] justify-center rounded-[15px]">
-                      <DropdownMenuItem className="text-sm justify-start ml-1 mt-1 bg-[#CEE1F6] w-[193px] h-[50px] rounded-[15px]">Job applied</DropdownMenuItem>
-                      <DropdownMenuItem className="text-sm w-[193px] ml-1 h-[50px] text-gray-400 rounded-[15px]">Resume created</DropdownMenuItem>
-                      <DropdownMenuItem className="text-sm w-[193px] ml-1 h-[50px] text-gray-400 rounded-[15px]">Cover letter created</DropdownMenuItem>
-                      <DropdownMenuItem className="text-sm w-[193px] ml-1 h-[50px] text-gray-400 rounded-[15px]">Active candidate</DropdownMenuItem>
+                      <DropdownMenuItem
+                        className={`text-sm justify-start ml-1 mt-1 w-[193px] h-[50px] rounded-[15px] ${selectedMetric === "Job applied" ? "bg-[#CEE1F6]" : "text-gray-400"}`}
+                        onClick={() => setSelectedMetric("Job applied")}
+                      >
+                        Job applied
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className={`text-sm w-[193px] ml-1 h-[50px] rounded-[15px] ${selectedMetric === "Resume created" ? "bg-[#CEE1F6]" : "text-gray-400"}`}
+                        onClick={() => setSelectedMetric("Resume created")}
+                      >
+                        Resume created
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className={`text-sm w-[193px] ml-1 h-[50px] rounded-[15px] ${selectedMetric === "Cover letter created" ? "bg-[#CEE1F6]" : "text-gray-400"}`}
+                        onClick={() => setSelectedMetric("Cover letter created")}
+                      >
+                        Cover letter created
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className={`text-sm w-[193px] ml-1 h-[50px] rounded-[15px] ${selectedMetric === "Mentorship request" ? "bg-[#CEE1F6]" : "text-gray-400"}`}
+                        onClick={() => setSelectedMetric("Mentorship request")}
+                      >
+                        Mentorship request
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                   <button className="flex items-center gap-1 bg-white border border-gray-200 px-4 py-2 rounded-lg text-[10px] text-gray-700 shadow-lg hover:bg-gray-50">
@@ -260,9 +291,21 @@ export default function Overview() {
                 </div>
               </div>
               <div className="h-[360px] -mt-2 -mb-4">
-                <LineChart data={mockData.jobApplications} />
+                {selectedMetric === "Job applied" && (
+                  <LineChart data={mockData.jobApplications} />
+                )}
+                {selectedMetric === "Resume created" && (
+                  <LineChart data={mockData.resumesCreated} />
+                )}
+                {selectedMetric === "Cover letter created" && (
+                  <LineChart data={mockData.coverLettersCreated} />
+                )}
+                {selectedMetric === "Mentorship request" && (
+                  <LineChart data={mockData.mentorshipRequest} />
+                )}
               </div>
             </div>
+            
             <div className="w-full bg-white w-[400px] p-6 rounded-2xl shadow flex flex-col items-center">
               <div className="flex items-center justify-between w-full mb-6">
                 <h2 className="text-l font-semibold text-gray-900">

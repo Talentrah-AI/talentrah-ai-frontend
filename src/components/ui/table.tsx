@@ -81,7 +81,7 @@ export function Table({ data, showUsageCredit = false }: TableProps) {
                 {candidate.email}
               </td>
               <td className="px-2 sm:px-4 py-3 whitespace-nowrap">
-                <div className="flex gap-1 sm:gap-2">
+                <div className="flex gap-1 sm:gap-2 bg-white shadow py-2 px-2 rounded-lg border-gray-300 w-[117px] h-[37px]">
                   <span className="px-1 sm:px-2 py-1 bg-orange-100 text-orange-700 rounded-lg text-xs font-semibold min-w-[24px] text-center">
                     {candidate.metrics.applications ?? 'N/A'}
                   </span>

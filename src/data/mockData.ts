@@ -128,4 +128,19 @@ export const mockData = {
             signUpDate: "12/05/2025, 10:00AM",
         },
     ],
+    resumesCreated: {
+        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        paid: [120, 300, 550, 320, 600, 1100, 700],
+        free: [],
+    },
+    coverLettersCreated: {
+        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        paid: [100, 500, 900, 1300, 300, 600, 1400],
+        free: [],
+    },
+    mentorshipRequest: {
+        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        paid: [100, 600, 900, 1300, 300, 600, 1400],
+        free: [],
+    },
 };

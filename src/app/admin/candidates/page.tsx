@@ -146,7 +146,7 @@ export default function Candidates() {
                 />
               </div>
               <button
-                className="bg-green-600 text-white px-3 py-2 rounded-lg text-sm"
+                className="bg-[#07A2A8] text-white px-3 py-2 rounded-lg text-sm"
                 onClick={() => {}}
               >
                 Apply filter
