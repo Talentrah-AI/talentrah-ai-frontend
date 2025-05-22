@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils"
 import { FileText, Filter, Plus, Search } from "lucide-react"
 import { useState, useEffect } from "react"
 import RolesTab from "../roles-tab"
-// import { useRouter } from "next/navigation"
 import { toast } from "@/hooks/use-toast"
 import PermissionTab from "../permission-tab"
 import AdminTabPage from "../admin-tab-page"
@@ -169,12 +168,8 @@ const MainContentDashboard = () =>
   const [permissionSearchQuery, setPermissionSearchQuery] = useState("")
   const [roleTypeFilter, setRoleTypeFilter] = useState<string | null>(null)
   const [permissionsFilter, setPermissionsFilter] = useState<number | null>(null)
-  // const [fromDate, setFromDate] = useState<Date | undefined>(undefined)
-  // const [toDate, setToDate] = useState<Date | undefined>(undefined)
-  // const [showFromCalendar, setShowToCalendar] = useState(false)
-  // const [showToCalendar, setShowFromCalendar] = useState(false)
-   const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
-   const [calendarType, setCalendarType] = useState<'from' | 'to'>('from');
+  const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
+  const [calendarType, setCalendarType] = useState<'from' | 'to'>('from');
   const [dateRange, setDateRange] = useState<{
     from: Date | undefined;
     to: Date | undefined;
@@ -204,12 +199,8 @@ const MainContentDashboard = () =>
 
       const matchesRoleType = !roleTypeFilter || admin.role === roleTypeFilter
       const matchesPermissions = !permissionsFilter || admin.permissions === permissionsFilter
-      // const adminDate = new Date(admin.dateAdded.split(",")[0])
-      // const matchesFromDate = !fromDate || adminDate >= fromDate
-      // const matchesToDate = !toDate || adminDate <= toDate
-      
-        const adminDate = new Date(admin.dateAdded.split(',')[0]);
-        const matchesDateRange =
+      const adminDate = new Date(admin.dateAdded.split(',')[0]);
+      const matchesDateRange =
           (!dateRange.from || adminDate >= dateRange.from) &&
           (!dateRange.to || adminDate <= dateRange.to);
 

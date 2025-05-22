@@ -69,95 +69,140 @@ const AdminTabPage = ({
           </Select>
           <span className="text-sm">entries</span>
         </div>
+        <div className="w-full flex gap-4 md:w-auto md:gap-2">
+          {/* Role type */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2 flex-1 bg-[#FFFFFF]"
+              >
+                <span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M14 5.16602H2C1.72667 5.16602 1.5 4.93935 1.5 4.66602C1.5 4.39268 1.72667 4.16602 2 4.16602H14C14.2733 4.16602 14.5 4.39268 14.5 4.66602C14.5 4.93935 14.2733 5.16602 14 5.16602Z"
+                      fill="#292D32"
+                    />
+                    <path
+                      d="M12 8.5H4C3.72667 8.5 3.5 8.27333 3.5 8C3.5 7.72667 3.72667 7.5 4 7.5H12C12.2733 7.5 12.5 7.72667 12.5 8C12.5 8.27333 12.2733 8.5 12 8.5Z"
+                      fill="#292D32"
+                    />
+                    <path
+                      d="M9.33073 11.834H6.66406C6.39073 11.834 6.16406 11.6073 6.16406 11.334C6.16406 11.0607 6.39073 10.834 6.66406 10.834H9.33073C9.60406 10.834 9.83073 11.0607 9.83073 11.334C9.83073 11.6073 9.60406 11.834 9.33073 11.834Z"
+                      fill="#292D32"
+                    />
+                  </svg>
+                </span>
+                <span className="text-[#B0B5BB]">Role type</span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-48" align="start">
+              <div className="flex flex-col space-y-2">
+                <Button
+                  variant={!roleTypeFilter ? 'default' : 'ghost'}
+                  className="justify-start"
+                  onClick={() => setRoleTypeFilter(null)}
+                >
+                  All
+                </Button>
+                <Button
+                  variant={roleTypeFilter === 'Admin' ? 'default' : 'ghost'}
+                  className="justify-start"
+                  onClick={() => setRoleTypeFilter('Admin')}
+                >
+                  Admin
+                </Button>
+                <Button
+                  variant={
+                    roleTypeFilter === 'Support Agent' ? 'default' : 'ghost'
+                  }
+                  className="justify-start"
+                  onClick={() => setRoleTypeFilter('Support Agent')}
+                >
+                  Support Agent
+                </Button>
+                <Button
+                  variant={
+                    roleTypeFilter === 'Finance Manager' ? 'default' : 'ghost'
+                  }
+                  className="justify-start"
+                  onClick={() => setRoleTypeFilter('Finance Manager')}
+                >
+                  Finance Manager
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
+          {/* permissions */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2 flex-1 bg-[#FFFFFF]"
+              >
+                <span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M14 5.16602H2C1.72667 5.16602 1.5 4.93935 1.5 4.66602C1.5 4.39268 1.72667 4.16602 2 4.16602H14C14.2733 4.16602 14.5 4.39268 14.5 4.66602C14.5 4.93935 14.2733 5.16602 14 5.16602Z"
+                      fill="#292D32"
+                    />
+                    <path
+                      d="M12 8.5H4C3.72667 8.5 3.5 8.27333 3.5 8C3.5 7.72667 3.72667 7.5 4 7.5H12C12.2733 7.5 12.5 7.72667 12.5 8C12.5 8.27333 12.2733 8.5 12 8.5Z"
+                      fill="#292D32"
+                    />
+                    <path
+                      d="M9.33073 11.834H6.66406C6.39073 11.834 6.16406 11.6073 6.16406 11.334C6.16406 11.0607 6.39073 10.834 6.66406 10.834H9.33073C9.60406 10.834 9.83073 11.0607 9.83073 11.334C9.83073 11.6073 9.60406 11.834 9.33073 11.834Z"
+                      fill="#292D32"
+                    />
+                  </svg>
+                </span>
+                <span className="text-[#B0B5BB]">No. of permissions</span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-48" align="start">
+              <div className="flex flex-col space-y-2">
+                <Button
+                  variant={!permissionsFilter ? 'default' : 'ghost'}
+                  className="justify-start"
+                  onClick={() => setPermissionsFilter(null)}
+                >
+                  All
+                </Button>
+                <Button
+                  variant={permissionsFilter === 12 ? 'default' : 'ghost'}
+                  className="justify-start"
+                  onClick={() => setPermissionsFilter(12)}
+                >
+                  12
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
 
-        {/* Role type */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-            >
-              <span>Role type</span>
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-48" align="start">
-            <div className="flex flex-col space-y-2">
-              <Button
-                variant={!roleTypeFilter ? 'default' : 'ghost'}
-                className="justify-start"
-                onClick={() => setRoleTypeFilter(null)}
-              >
-                All
-              </Button>
-              <Button
-                variant={roleTypeFilter === 'Admin' ? 'default' : 'ghost'}
-                className="justify-start"
-                onClick={() => setRoleTypeFilter('Admin')}
-              >
-                Admin
-              </Button>
-              <Button
-                variant={
-                  roleTypeFilter === 'Support Agent' ? 'default' : 'ghost'
-                }
-                className="justify-start"
-                onClick={() => setRoleTypeFilter('Support Agent')}
-              >
-                Support Agent
-              </Button>
-              <Button
-                variant={
-                  roleTypeFilter === 'Finance Manager' ? 'default' : 'ghost'
-                }
-                className="justify-start"
-                onClick={() => setRoleTypeFilter('Finance Manager')}
-              >
-                Finance Manager
-              </Button>
-            </div>
-          </PopoverContent>
-        </Popover>
-        {/* permissions */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-            >
-              <span>No. of permissions</span>
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-48" align="start">
-            <div className="flex flex-col space-y-2">
-              <Button
-                variant={!permissionsFilter ? 'default' : 'ghost'}
-                className="justify-start"
-                onClick={() => setPermissionsFilter(null)}
-              >
-                All
-              </Button>
-              <Button
-                variant={permissionsFilter === 12 ? 'default' : 'ghost'}
-                className="justify-start"
-                onClick={() => setPermissionsFilter(12)}
-              >
-                12
-              </Button>
-            </div>
-          </PopoverContent>
-        </Popover>
-
-        <div className="flex flex-wrap gap-2 items-center">
+        <div className="flex md:flex-wrap gap-2 items-center w-full md:w-auto">
           <Button
             variant="outline"
             size="sm"
-            className="flex items-center gap-2"
+            className="flex items-center gap-4 md:gap-2 flex-1 bg-[#FFFFFF]"
             onClick={() => handleOpenCalendar('from')}
           >
             <Calendar className="h-4 w-4" />
-            <span className="text-xs sm:text-sm">
+            <span className="text-sm text-[#B0B5BB]">
               From: {formatDate(dateRange.from)}
             </span>
           </Button>
@@ -165,11 +210,11 @@ const AdminTabPage = ({
           <Button
             variant="outline"
             size="sm"
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 flex-1 bg-[#FFFFFF]"
             onClick={() => handleOpenCalendar('to')}
           >
             <Calendar className="h-4 w-4" />
-            <span className="text-xs sm:text-sm">
+            <span className="text-sm text-[#B0B5BB]">
               To: {formatDate(dateRange.to)}
             </span>
           </Button>
@@ -182,13 +227,18 @@ const AdminTabPage = ({
         />
         <Button
           size="sm"
-          className="bg-teal-500 hover:bg-teal-600"
+          className="bg-teal-500 hover:bg-teal-600 h-[40px] md:h-auto"
           onClick={handleApplyFilter}
         >
           Apply filter
         </Button>
 
-        <Button variant="outline" size="sm" onClick={handleClearFilter}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleClearFilter}
+          className="h-[40px] md:h-auto"
+        >
           Clear filter
         </Button>
 
@@ -198,7 +248,7 @@ const AdminTabPage = ({
             <Input
               type="search"
               placeholder="Search"
-              className="pl-8"
+              className="pl-8 bg-white"
               value={adminSearchQuery}
               onChange={(e) => setAdminSearchQuery(e.target.value)}
             />
@@ -280,7 +330,10 @@ const AdminTabPage = ({
                               <MoreVertical className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
+                          <DropdownMenuContent
+                            align="end"
+                            avoidCollisions={false}
+                          >
                             <DropdownMenuItem asChild>
                               <Link
                                 href={`/admin/admin-management/${admin.id}`}

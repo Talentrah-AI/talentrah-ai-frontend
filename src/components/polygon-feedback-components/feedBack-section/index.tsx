@@ -16,6 +16,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { ExportDropdown } from '../feedbacks-modal/export-dropdown';
 import { FeedbackCard } from '../feedBack-card';
 import { FeedbackProps } from '@/lib/polygon-types';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 
 
@@ -80,18 +81,22 @@ const FeedBakSection = ({
 
       <div className="flex flex-wrap gap-2 items-center">
         <div className="text-teal-500 text-sm font-medium">Filter by</div>
-
         <div className="flex items-center gap-2">
           <span className="text-sm">Show</span>
-          <select
-            className="border rounded-md px-2 py-1 text-sm"
-            value={itemsPerPage}
-            onChange={(e) => setItemsPerPage(Number(e.target.value))}
+          <Select
+            value={itemsPerPage.toString()}
+            onValueChange={(value) => setItemsPerPage(Number.parseInt(value))}
           >
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-          </select>
+           <SelectTrigger className="w-19 bg-white">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="5">5</SelectItem>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+            </SelectContent>
+            </Select>
         </div>
 
         <Popover open={statusFilterOpen} onOpenChange={setStatusFilterOpen}>
@@ -309,7 +314,10 @@ const FeedBakSection = ({
                             <span className="sr-only">Open menu</span>
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="p-2 shadow-lg">
+                        <DropdownMenuContent
+                          align="end"
+                          className="p-2 shadow-lg"
+                        >
                           <DropdownMenuItem
                             onClick={() => handleEditStatus(feedback)}
                           >
