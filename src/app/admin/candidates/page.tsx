@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { AdminHeader } from "@/components/AdminHeader";
 import { AdminSidebar } from "@/components/AdminSidebar";
-import { Table } from "@/components/ui/table";
+import { Table } from "@/components/ui/tablee1";
 import { mockData } from "@/data/mockData";
 import Image from "next/image";
 import Link from "next/link";

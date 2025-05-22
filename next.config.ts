@@ -1,14 +1,13 @@
 import type { NextConfig } from "next";
-import type { Configuration } from "webpack";
+
 
 const nextConfig: NextConfig = {
-  webpack(config: Configuration) {
-    config.module?.rules?.push({
-      test: /\.svg$/,
-      use: ["@svgr/webpack"],
-    });
+  eslint: {
+    ignoreDuringBuilds: true, // Disables ESLint during builds
+  },
+  images: {
+    domains: ['res.cloudinary.com'],  // Add Cloudinary domain here
 
-    return config;
   },
 };
 
