@@ -1,8 +1,11 @@
+import MainMentorsPage from '@/components/polygon-mentors-management/main-content'
 import React from 'react'
 
 const MentorManagement = () => {
   return (
-    <div>MentorManagement</div>
+      <div>
+          <MainMentorsPage />
+      </div>
   )
 }
 
