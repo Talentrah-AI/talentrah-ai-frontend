@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Allow public routes
-  const publicRoutes = ['/', '/waitlist', '/admin/overview', '/admin/candidates', '/admin/login', '/admin/sign-up', '/admin/forgot-password', '/admin/email-sent', '/admin/reset-password', '/admin/confirm-email', '/admin/register', '/admin/register/step2'];
+  const publicRoutes = ['/', '/waitlist', '/admin/overview','/candidates',  '/admin/candidates', '/admin/login', '/admin/sign-up', '/admin/forgot-password', '/admin/email-sent', '/admin/reset-password', '/admin/confirm-email', '/admin/register', '/admin/register/step2'];
   if (publicRoutes.includes(pathname)) {
     return NextResponse.next();
   }
@@ -25,7 +25,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Redirect other routes to /waitlist
-  return NextResponse.redirect(new URL('/waitlist', request.url));
+  // return NextResponse.redirect(new URL('/waitlist', request.url));
 }
 
 export const config = {
