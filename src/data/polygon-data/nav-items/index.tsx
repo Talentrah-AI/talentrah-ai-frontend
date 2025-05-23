@@ -32,7 +32,7 @@ export const NavItemList: NavItem[] = [
   {
     label: 'mentors manangement',
     icon: <UsersRound size={16} />,
-    href: '/polygon-dashboard',
+    href: '/admin/mentors-management',
   },
   {
     label: 'admin management',
