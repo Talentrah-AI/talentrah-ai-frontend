@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import  AdminHeader  from "@/components/AdminHeader";
+import {AdminHeader}  from "@/components/AdminHeader";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { Table } from "@/components/ui/tablee1";
 import { mockData } from "@/data/mockData";
