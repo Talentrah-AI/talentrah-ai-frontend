@@ -1,16 +1,11 @@
 'use client';
 
-import type React from 'react';
-
-import { useState } from 'react';
-import { X } from 'lucide-react';
+import * as React from 'react';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogClose,
+  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,186 +17,145 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
+import { DialogTitle } from '@radix-ui/react-dialog';
+import Image from 'next/image';
 
 interface CreateMentorDialogProps {
   open: boolean;
+  onClose: () => void;
+  onSubmit: (data: string) => void;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: any) => void;
 }
 
 export function CreateMentorDialog({
   open,
+  onClose,
   onOpenChange,
-  onSubmit,
 }: CreateMentorDialogProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = React.useState({
     firstName: '',
     lastName: '',
     email: '',
-    gender: '',
-    country: '',
-    expertise: [] as string[],
+    phone: '',
+    role: '',
   });
 
-  const expertiseOptions = [
-    'Product',
-    'Design',
-    'Marketing',
-    'Development',
-    'Business',
-    'Finance',
-    'HR',
-  ];
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSelectChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const handleRoleChange = (value: string) => {
+    setFormData((prev) => ({ ...prev, role: value }));
   };
 
-  const handleExpertiseChange = (expertise: string, checked: boolean) => {
-    if (checked) {
-      setFormData((prev) => ({
-        ...prev,
-        expertise: [...prev.expertise, expertise],
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        expertise: prev.expertise.filter((exp) => exp !== expertise),
-      }));
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      gender: '',
-      country: '',
-      expertise: [],
-    });
-  };
+  const allFieldsFilled = Object.values(formData).every(
+    (field) => field.trim() !== ''
+  );
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Add a mentor</DialogTitle>
-          <DialogClose className="absolute right-4 top-4">
-            <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
-          </DialogClose>
-        </DialogHeader>
-        <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="firstName">First Name</Label>
-                <Input
-                  id="firstName"
-                  name="firstName"
-                  placeholder="Enter first name"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="lastName">Last Name</Label>
-                <Input
-                  id="lastName"
-                  name="lastName"
-                  placeholder="Enter last name"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+      <DialogContent className="w-[884px] h-[473px] py-[25px] px-[28px] ">
+        <DialogTitle className="text-lg font-semibold">
+          Add a mentor
+        </DialogTitle>
+
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2 w-[396.5px]">
+              <Label htmlFor="firstName">First Name</Label>
+              <Input
+                id="firstName"
+                className="rounded-[12px] shadow-none border-[1.5px] border-grey text-[12px] h-[50px]"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder="Enter your first name"
+              />
             </div>
-            <div>
+            <div className="space-y-2 w-[396.5px]">
+              <Label htmlFor="lastName">Last Name</Label>
+              <Input
+                id="lastName"
+                className="rounded-[12px] border-[1.5px] shadow-none !important border-grey text-[12px] h-[50px]"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder="Enter your last name"
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-[35px] w-full">
+            <div className="space-y-2 w-[396.5px] ">
               <Label htmlFor="email">Email Address</Label>
               <Input
                 id="email"
-                name="email"
+                className="rounded-[12px] border-[1.5px] shadow-none border-grey text-[12px] h-[50px]"
                 type="email"
-                placeholder="Enter email address"
                 value={formData.email}
                 onChange={handleChange}
-                required
+                placeholder="Enter your email"
               />
             </div>
-            <div>
-              <Label htmlFor="gender">Gender</Label>
-              <Select
-                value={formData.gender}
-                onValueChange={(value) => handleSelectChange('gender', value)}
-                required
-              >
-                <SelectTrigger id="gender">
-                  <SelectValue placeholder="Select gender" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Male">Male</SelectItem>
-                  <SelectItem value="Female">Female</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="country">Country</Label>
-              <Select
-                value={formData.country}
-                onValueChange={(value) => handleSelectChange('country', value)}
-                required
-              >
-                <SelectTrigger id="country">
-                  <SelectValue placeholder="Select country" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Nigeria">Nigeria</SelectItem>
-                  <SelectItem value="Canada">Canada</SelectItem>
-                  <SelectItem value="South Africa">South Africa</SelectItem>
-                  <SelectItem value="United States">United States</SelectItem>
-                  <SelectItem value="United Kingdom">United Kingdom</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label className="mb-2 block">Expertise</Label>
-              <div className="grid grid-cols-2 gap-2">
-                {expertiseOptions.map((expertise) => (
-                  <div key={expertise} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`expertise-${expertise}`}
-                      checked={formData.expertise.includes(expertise)}
-                      onCheckedChange={(checked) =>
-                        handleExpertiseChange(expertise, !!checked)
-                      }
-                    />
-                    <label
-                      htmlFor={`expertise-${expertise}`}
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      {expertise}
-                    </label>
-                  </div>
-                ))}
-              </div>
+
+            <div className="space-y-2 w-[396.5px]">
+              <Label htmlFor="phone">Phone number</Label>
+              <Input
+                id="phone"
+                className="rounded-[12px] border-[1.5px] shadow-none border-grey text-[12px] h-[50px]"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Enter your digit"
+              />
             </div>
           </div>
-          <DialogFooter>
-            <Button type="submit" disabled={formData.expertise.length === 0}>
-              Add mentor
-            </Button>
-          </DialogFooter>
-        </form>
+
+          <div className="space-y-2">
+            <Label htmlFor="role">Role type</Label>
+            <Select onValueChange={handleRoleChange} value={formData.role}>
+              <SelectTrigger className="rounded-[12px] border-[1.5px] shadow-none border-grey text-[12px] h-[50px] w-full">
+                <SelectValue placeholder="Choose role type" />
+              </SelectTrigger>
+              <SelectContent className="rounded-[18px] border[0.5px] shadow p-[8px]">
+                <SelectItem
+                  value="mentor"
+                  className="rounded-[12px] py-[15px] px-[20px] focus:bg-[#CEE1F6] hover:text-black hover:bg-[#CEE1F6] focus:text-black"
+                >
+                  Mentor
+                </SelectItem>
+                <SelectItem
+                  value="admin"
+                  className="rounded-[12px] py-[15px] px-[20px] focus:bg-[#CEE1F6] hover:text-black hover:bg-[#CEE1F6] focus:text-black"
+                >
+                  Admin
+                </SelectItem>
+                <SelectItem
+                  value="both"
+                  className="rounded-[12px] py-[15px] px-[20px] focus:bg-[#CEE1F6] hover:text-black hover:bg-[#CEE1F6] focus:text-black"
+                >
+                  Both
+                </SelectItem>
+              </SelectContent>
+            </Select>
+
+            {allFieldsFilled && (
+              <p className="flex items-center text-[12px] text-[#0967D2] p-[5px] gap-[10px] rounded-[12px] border-[#9DC2ED] border-[2px] bg-[#E6F0FB]">
+                <Image
+                  src="/images/information-circle.png"
+                  alt="information"
+                  className="w-[20px] h-[20px] !important"
+                  width={20}
+                  height={20}
+                />
+                Twenty three (23) permissions will be given to{' '}
+                {formData.firstName} {formData.lastName} as a mentor
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="flex justify-end">
+          <Button type="submit">+ Add a mentor</Button>
+        </div>
       </DialogContent>
     </Dialog>
   );

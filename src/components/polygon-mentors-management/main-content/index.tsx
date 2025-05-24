@@ -35,7 +35,14 @@ import { DeleteMentorDialog } from '@/components/polygon-mentors-management/ment
 import { DeleteSuccessDialog } from '@/components/polygon-mentors-management/mentorsdialog/delete-success-modal/index';
 import { MentorCard } from '@/components/polygon-mentors-management/mentorsdialog/mentor-card/index';
 import Link from 'next/link';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { AddMentorModal } from './modals/AddMentorDialog';
 
 export default function MentorsManagement() {
   const router = useRouter();
@@ -320,6 +327,11 @@ export default function MentorsManagement() {
       <Button onClick={() => setCreateMentorOpen(true)}>
         <Plus className="mr-2 h-4 w-4" /> Add a mentor
       </Button>
+      <AddMentorModal
+        open={createMentorOpen}
+        onClose={() => setCreateMentorOpen(false)}
+        onSubmit={handleCreateMentor}
+      />
     </div>
   );
 
@@ -586,7 +598,11 @@ export default function MentorsManagement() {
             Apply filter
           </Button>
 
-          <Button className='bg-transparent text-gray-700 outline-0 shadow-none hover:bg-transparent' size="sm" onClick={handleClearFilter}>
+          <Button
+            className="bg-transparent text-gray-700 outline-0 shadow-none hover:bg-transparent"
+            size="sm"
+            onClick={handleClearFilter}
+          >
             Clear filter
           </Button>
         </div>
@@ -822,6 +838,7 @@ export default function MentorsManagement() {
       {/* Dialogs */}
       <CreateMentorDialog
         open={createMentorOpen}
+        onClose={() => setCreateMentorOpen(false)}
         onOpenChange={setCreateMentorOpen}
         onSubmit={handleCreateMentor}
       />
