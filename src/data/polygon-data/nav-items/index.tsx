@@ -1,11 +1,18 @@
-import { BriefcaseBusiness, LayoutGrid, MessageCircleQuestion, Phone, Settings, ShieldUser, UsersRound } from "lucide-react"
-import { JSX } from "react"
+import {
+  BriefcaseBusiness,
+  LayoutGrid,
+  MessageCircleQuestion,
+  Phone,
+  Settings,
+  ShieldUser,
+  UsersRound,
+} from 'lucide-react';
+import { JSX } from 'react';
 
-interface NavItem
-{
-    label: string,
-    icon: JSX.Element,
-    href:string,
+interface NavItem {
+  label: string;
+  icon: JSX.Element;
+  href: string;
 }
 
 export const NavItemList: NavItem[] = [
@@ -47,6 +54,6 @@ export const NavItemList: NavItem[] = [
   {
     label: 'settings',
     icon: <Settings size={16} />,
-    href: '/polygon-dashboard',
+    href: '/admin/settings',
   },
 ];
