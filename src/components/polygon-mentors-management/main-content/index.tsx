@@ -380,11 +380,7 @@ export default function MentorsManagement() {
                 <Trash2 className="h-4 w-4" />
                 <span className="hidden sm:inline">Delete</span>
               </Button>
-              <Button
-                variant="outline"
-                className="flex items-center gap-2"
-                
-              >
+              <Button variant="outline" className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
                 <span className="hidden sm:inline">Send email</span>
               </Button>
@@ -850,13 +846,7 @@ export default function MentorsManagement() {
       )}
 
       {/* Dialogs */}
-      <CreateMentorDialog
-        open={createMentorOpen}
-        onClose={() => setCreateMentorOpen(false)}
-        onOpenChange={setCreateMentorOpen}
-        onSubmit={handleCreateMentor}
-      />
-
+      
       <DeleteMentorDialog
         open={deleteMentorOpen}
         onOpenChange={setDeleteMentorOpen}
@@ -868,8 +858,6 @@ export default function MentorsManagement() {
         onOpenChange={setDeleteSuccessOpen}
         entityType="Mentor"
       />
-     
-     
     </>
   );
 }
