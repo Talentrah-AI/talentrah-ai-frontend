@@ -30,7 +30,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
-import { CreateMentorDialog } from '@/components/polygon-mentors-management/mentorsdialog/create-mentor-modal/index';
+// import { CreateMentorDialog } from '@/components/polygon-mentors-management/mentorsdialog/create-mentor-modal/index';
 import { DeleteMentorDialog } from '@/components/polygon-mentors-management/mentorsdialog/delete-mentor-modal/index';
 import { DeleteSuccessDialog } from '@/components/polygon-mentors-management/mentorsdialog/delete-success-modal/index';
 import { MentorCard } from '@/components/polygon-mentors-management/mentorsdialog/mentor-card/index';
@@ -299,23 +299,8 @@ export default function MentorsManagement() {
     });
   };
 
-  // Handle send email
-  const handleSendEmail = () => {
-    if (selectedMentors.length > 0) {
-      const selectedEmails = mentors
-        .filter((mentor) => selectedMentors.includes(mentor.id))
-        .map((mentor) => mentor.email)
-        .join(', ');
-
-      window.location.href = `mailto:${selectedEmails}`;
-
-      toast({
-        title: 'Email client opened',
-        description: `Preparing to send email to ${selectedMentors.length} mentor(s)`,
-      });
-    }
-  };
-
+  
+ 
   // Handle apply filter
   const handleApplyFilter = () => {
     toast({
@@ -395,11 +380,7 @@ export default function MentorsManagement() {
                 <Trash2 className="h-4 w-4" />
                 <span className="hidden sm:inline">Delete</span>
               </Button>
-              <Button
-                variant="outline"
-                className="flex items-center gap-2"
-                onClick={handleSendEmail}
-              >
+              <Button variant="outline" className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
                 <span className="hidden sm:inline">Send email</span>
               </Button>
@@ -531,6 +512,16 @@ export default function MentorsManagement() {
                   }}
                 >
                   South Africa
+                </Button>
+                <Button
+                  variant={countryFilter === 'America' ? 'default' : 'ghost'}
+                  className="justify-start"
+                  onClick={() => {
+                    setCountryFilter('America');
+                    setShowCountryFilter(false);
+                  }}
+                >
+                  America
                 </Button>
               </div>
             </PopoverContent>
@@ -855,13 +846,7 @@ export default function MentorsManagement() {
       )}
 
       {/* Dialogs */}
-      <CreateMentorDialog
-        open={createMentorOpen}
-        onClose={() => setCreateMentorOpen(false)}
-        onOpenChange={setCreateMentorOpen}
-        onSubmit={handleCreateMentor}
-      />
-
+      
       <DeleteMentorDialog
         open={deleteMentorOpen}
         onOpenChange={setDeleteMentorOpen}
