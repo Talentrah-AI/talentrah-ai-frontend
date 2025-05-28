@@ -6,8 +6,15 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true, // Disables ESLint during builds
   },
   images: {
-    domains: ['res.cloudinary.com'],  // Add Cloudinary domain here
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**', // matches any image path
+      },
+    ],
   },
 };
 
 export default nextConfig;
+// domains: ['res.cloudinary.com'],  // Add Cloudinary domain here

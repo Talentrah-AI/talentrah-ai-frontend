@@ -1,6 +1,6 @@
 'use client';
 
-import { MoreVertical, Mail, Trash2 } from 'lucide-react';
+import { Mail, MoreVertical, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -43,7 +43,7 @@ export function MentorCard({
             onCheckedChange={() => onSelect(mentor.id)}
           />
           <div>
-            <h3 className="font-medium">{mentor.fullName}</h3>
+            <h3 className="font-medium text-[16px]">{mentor.fullName}</h3>
             <p className="text-sm text-gray-500">{mentor.email}</p>
           </div>
         </div>
@@ -71,11 +71,11 @@ export function MentorCard({
       <div className="grid grid-cols-2 gap-3 mb-3">
         <div>
           <div className="text-xs font-medium text-gray-500 mb-1">GENDER</div>
-          <div>{mentor.gender}</div>
+          <div className="text-[16px]">{mentor.gender}</div>
         </div>
         <div>
           <div className="text-xs font-medium text-gray-500 mb-1">COUNTRY</div>
-          <div>{mentor.country}</div>
+          <div className="text-[16px]">{mentor.country}</div>
         </div>
       </div>
 
