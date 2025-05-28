@@ -102,9 +102,12 @@ export function CreateMentorDialog({
     setFormData((prev) => ({ ...prev, role: value }));
   };
 
-  const allFieldsFilled = Object.values(formData).every(
-    (field) => field.trim() !== ''
-  );
+  const allFieldsFilled = Object.entries(formData).every(([key, value]) => {
+    if (Array.isArray(value)) return value.length > 0; // Check arrays
+    if (typeof value === 'boolean') return true; // Skip booleans
+    if (typeof value === 'string') return value.trim() !== ''; // Only trim strings
+    return !!value; // Fallback for numbers/others
+  });
 
   const handleArrayChange = (
     field: keyof FormData,
@@ -636,9 +639,9 @@ export function CreateMentorDialog({
       {/* Confirmation Dialog */}
       <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
         <DialogContent className="w-[500px] py-[25px] px-[28px] text-center">
-          <h2 className="text-2xl font-bold mb-4">
+          <DialogTitle className="text-2xl font-bold mb-4">
             Stay up to date with your sessions
-          </h2>
+          </DialogTitle>
           <p className="mb-6">
             Get notified on your browser when you have a session upcoming or a
             new message
