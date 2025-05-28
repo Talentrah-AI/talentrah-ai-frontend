@@ -34,9 +34,15 @@ import { toast } from '@/components/ui/use-toast';
 import { DeleteMentorDialog } from '@/components/polygon-mentors-management/mentorsdialog/delete-mentor-modal/index';
 import { DeleteSuccessDialog } from '@/components/polygon-mentors-management/mentorsdialog/delete-success-modal/index';
 import { MentorCard } from '@/components/polygon-mentors-management/mentorsdialog/mentor-card/index';
-import Link from 'next/link' 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
+import Link from 'next/link';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { AddMentorModal } from './modals/AddMentorDialog';
 
 export default function MentorsManagement() {
   const router = useRouter();
@@ -246,18 +252,42 @@ export default function MentorsManagement() {
   };
 
   // Handle create mentor
-  const handleCreateMentor = (data: any) => {
+  const handleCreateMentor = (data: {
+    firstName: string;
+    lastName: string;
+    email?: string; // Assuming email is still part of the data, maybe from a step not yet defined
+    gender: string;
+    country: string;
+    language: string;
+    company: string;
+    title: string;
+    yearsExp: string;
+    monthsExp: string;
+    linkedinUrl: string;
+    primaryExpertise: string;
+    secondaryExpertise: string[];
+    disciplines: string[];
+    skills: string[];
+    tools: string[];
+    introduction: string;
+    infoConfirmed: boolean;
+    enableNotifications: boolean;
+    // Add any other fields from FormData that should be used here
+  }) => {
     // In a real app, you would send this data to your API
     console.log('Creating mentor with data:', data);
 
     // For demo purposes, add the new mentor to the list
     const newMentor = {
-      id: (mentors.length + 1).toString(),
+      id: (mentors.length + 1).toString(), // Simple ID generation
       fullName: `${data.firstName} ${data.lastName}`,
-      email: data.email,
+      email: data.email || '', // Use email if available
       gender: data.gender,
       country: data.country,
-      expertise: data.expertise,
+      expertise: [data.primaryExpertise, ...data.secondaryExpertise].filter(
+        Boolean
+      ), // Combine primary and secondary expertise
+      // Add other relevant fields from the onboarding data if needed in the mentor list structure
     };
 
     setMentors([...mentors, newMentor]);
@@ -820,13 +850,12 @@ export default function MentorsManagement() {
       )}
 
       {/* Dialogs */}
-
-      {/* <CreateMentorDialog
+      <CreateMentorDialog
         open={createMentorOpen}
+        onClose={() => setCreateMentorOpen(false)}
         onOpenChange={setCreateMentorOpen}
         onSubmit={handleCreateMentor}
       />
-      */}
 
       <DeleteMentorDialog
         open={deleteMentorOpen}
