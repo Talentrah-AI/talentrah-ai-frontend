@@ -196,3 +196,8 @@ Image{
   width:100%;
 }
 }
+
+.gradient-tab{
+  background: linear-gradient(to right, #0967D2, #09CBD2);
+
+}
