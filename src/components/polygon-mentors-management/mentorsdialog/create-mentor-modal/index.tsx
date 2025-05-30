@@ -232,19 +232,18 @@ export function CreateMentorDialog({
                 </SelectContent>
               </Select>
 
-              {allFieldsFilled && (
-                <p className="flex items-center text-[12px] text-[#0967D2] p-[5px] gap-[10px] rounded-[12px] border-[#9DC2ED] border-[2px] bg-[#E6F0FB]">
-                  <Image
-                    src="/images/information-circle.png"
-                    alt="information"
-                    className="w-[20px]!important h-[20px] "
-                    width={20}
-                    height={20}
-                  />
-                  Twenty three (23) permissions will be given to{' '}
-                  {formData.firstName} {formData.lastName} as a mentor
-                </p>
-              )}
+              <p className="flex items-center text-[12px] text-[#0967D2] p-[5px] gap-[10px] rounded-[12px] border-[#9DC2ED] border-[2px] bg-[#E6F0FB]">
+                <Image
+                  style={{ width: '20px', height: '20px' }}
+                  src="/images/information-circle.png"
+                  alt="information"
+                  className="w-[20px]!important h-[20px] "
+                  width={20}
+                  height={20}
+                />
+                Twenty three (23) permissions will be given to{' '}
+                {formData.firstName} {formData.lastName} as a mentor
+              </p>
             </div>
           </div>
 
@@ -638,7 +637,14 @@ export function CreateMentorDialog({
 
       {/* Confirmation Dialog */}
       <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <DialogContent className="w-[500px] py-[25px] px-[28px] text-center">
+        <DialogContent className="w-[500px] py-[25px] px-[28px] gap-[32px] text-center flex flex-col justify-center ">
+          <Image
+            style={{ width: '85px', height: '85px', marginInline: 'auto' }}
+            src="/images/bell.png"
+            alt="bell icon"
+            width={85}
+            height={85}
+          />
           <DialogTitle className="text-2xl font-bold mb-4">
             Stay up to date with your sessions
           </DialogTitle>
@@ -648,13 +654,6 @@ export function CreateMentorDialog({
           </p>
           <Button className="w-full" onClick={handleCompleteOnboarding}>
             Yes, stay updated!
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full mt-2"
-            onClick={handleCompleteOnboarding}
-          >
-            Skip for now
           </Button>
         </DialogContent>
       </Dialog>
