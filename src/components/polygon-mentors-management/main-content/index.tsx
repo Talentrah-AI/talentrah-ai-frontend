@@ -43,6 +43,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { AddMentorModal } from './modals/AddMentorDialog';
+import { CreateMentorDialog } from '../mentorsdialog/create-mentor-modal';
 
 export default function MentorsManagement() {
   const router = useRouter();
@@ -299,8 +300,6 @@ export default function MentorsManagement() {
     });
   };
 
-  
- 
   // Handle apply filter
   const handleApplyFilter = () => {
     toast({
@@ -846,7 +845,13 @@ export default function MentorsManagement() {
       )}
 
       {/* Dialogs */}
-      
+      <CreateMentorDialog
+        open={createMentorOpen}
+        onOpenChange={setCreateMentorOpen}
+        onSubmit={handleCreateMentor}
+        onClose={() => setCreateMentorOpen(false)}
+      />
+
       <DeleteMentorDialog
         open={deleteMentorOpen}
         onOpenChange={setDeleteMentorOpen}
