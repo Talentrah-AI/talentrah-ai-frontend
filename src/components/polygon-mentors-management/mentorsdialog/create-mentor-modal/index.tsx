@@ -251,6 +251,7 @@ export function CreateMentorDialog({
             <Button
               onClick={() => {
                 setShowOnboarding(true);
+                onClose();
               }}
             >
               + Add a mentor
