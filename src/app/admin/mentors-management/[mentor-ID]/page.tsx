@@ -168,7 +168,7 @@ const MentorsId = () => {
 
                 {/* Stats Cards */}
                 <div className=" flex flex-col px-3 py-4 min-h-[100px] rounded-md shadow-nav">
-                  <h2>Statistic</h2>
+                  <h2>Statistics</h2>
                   <div className="flex gap-4  items-center ">
                     <Card className="bg-white">
                       <CardContent className="p-2 item-center  flex gap-2">
