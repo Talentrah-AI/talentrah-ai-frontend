@@ -11,6 +11,8 @@ import {
   Globe,
   X,
   Plus,
+  Briefcase,
+  TrendingUp,
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Image from 'next/image';
@@ -164,6 +166,60 @@ const MentorsId = () => {
                   </p>
                 </div>
 
+                {/* Stats Cards */}
+                <div className=" flex flex-col px-3 py-4 min-h-[100px] rounded-md shadow-nav">
+                  <h2>Statistics</h2>
+                  <div className="flex gap-4  items-center ">
+                    <Card className="bg-white">
+                      <CardContent className="p-2 item-center  flex gap-2">
+                        <div className="w-8 h-8 bg-blue-100 rounded-sm flex items-center justify-center mx-auto ">
+                          <Clock className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <div className="flex flex-col">
+                          <div className="text-[18px] font-bold text-[#08121D]">
+                            3,298
+                          </div>
+                          <div className="text-sm text-[#717A84] font-normal">
+                            Total mentoring time
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="bg-white">
+                      <CardContent className="p-2 item-center  flex gap-2">
+                        <div className="w-8 h-8 bg-green-100 rounded-sm flex items-center justify-center mx-auto ">
+                          <Users className="w-6 h-6 text-green-600" />
+                        </div>
+                        <div className="flex flex-col">
+                          <div className="text-[18px] font-bold text-gray-900">
+                            56
+                          </div>
+                          <div className="text-sm text-gray-600 font-normal">
+                            Sessions completed
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="bg-white">
+                      <CardContent className="p-2 item-center  flex gap-2">
+                        <div className="w-8 h-8 bg-purple-100 rounded-sm flex items-center justify-center mx-auto ">
+                          <TrendingUp className="w-6 h-6 text-purple-600" />
+                        </div>
+                        <div className="flex flex-col">
+                          <div className="text-[18px] font-bold text-gray-900">
+                            100%
+                          </div>
+                          <div className="text-sm text-gray-600 font-normal">
+                            Average attendance
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+
                 {/* Top Areas of Impact */}
                 <div className="shadow-nav p-3 rounded-[12px]">
                   <h3 className="text-[16px] text-[#08121D] font-semibold mb-3">
@@ -278,8 +334,10 @@ const MentorsId = () => {
                     </div>
 
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                        <div className="w-6 h-6 bg-orange-500 rounded"></div>
+                      <div className="w-10 h-10 bg-[#FCEFE6] rounded-lg flex items-center justify-center">
+                        <div className=" rounded text-[#E98239]">
+                          <Briefcase />
+                        </div>
                       </div>
                       <div className="flex justify-between  w-full items-center">
                         <div>
