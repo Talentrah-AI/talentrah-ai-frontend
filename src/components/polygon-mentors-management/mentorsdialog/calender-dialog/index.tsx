@@ -39,6 +39,20 @@ export function AddAvailabilityModal() {
     { start: '13:00', end: '14:00' },
   ]);
 
+  // Add style to hide chevron
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      .select-trigger-icon {
+        display: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   // Generate time options from 00:00 to 23:30 in 30-minute increments
   const timeOptions = Array.from({ length: 48 }, (_, i) => {
     const hour = Math.floor(i / 2);
@@ -246,7 +260,7 @@ export function AddAvailabilityModal() {
                             handleTimeChange(index, 'start', value)
                           }
                         >
-                          <SelectTrigger className="inline-flex items-center justify-between px-4 py-3 text-[10px] border rounded-lg hover:bg-gray-50 w-[64px] h-[28px]">
+                          <SelectTrigger className="[&>svg]:hidden inline-flex items-center justify-between px-4 py-3 text-[12px] border rounded-lg hover:bg-gray-50 w-[64px] h-[28px]">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -266,7 +280,7 @@ export function AddAvailabilityModal() {
                             handleTimeChange(index, 'end', value)
                           }
                         >
-                          <SelectTrigger className="inline-flex items-center justify-between px-4 py-3 text-[12px] border rounded-lg hover:bg-gray-50 w-[64px] h-[28px]">
+                          <SelectTrigger className="[&>svg]:hidden inline-flex items-center justify-between px-4 py-3 text-[12px] border rounded-lg hover:bg-gray-50 w-[64px] h-[28px]">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>

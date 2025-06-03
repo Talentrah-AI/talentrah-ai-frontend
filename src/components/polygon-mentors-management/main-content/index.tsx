@@ -30,7 +30,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
-// import { CreateMentorDialog } from '@/components/polygon-mentors-management/mentorsdialog/create-mentor-modal/index';
+import { CreateMentorDialog } from '@/components/polygon-mentors-management/mentorsdialog/create-mentor-modal/index';
 import { DeleteMentorDialog } from '@/components/polygon-mentors-management/mentorsdialog/delete-mentor-modal/index';
 import { DeleteSuccessDialog } from '@/components/polygon-mentors-management/mentorsdialog/delete-success-modal/index';
 import { MentorCard } from '@/components/polygon-mentors-management/mentorsdialog/mentor-card/index';
@@ -43,7 +43,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { AddMentorModal } from './modals/AddMentorDialog';
-import { CreateMentorDialog } from '../mentorsdialog/create-mentor-modal';
+// import { CreateMentorDialog } from '../mentorsdialog/create-mentor-modal';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { AddAvailabilityModal } from '../mentorsdialog/calender-dialog';
 
@@ -56,7 +56,6 @@ export default function MentorsManagement() {
   const [deleteMentorOpen, setDeleteMentorOpen] = useState(false);
   const [deleteSuccessOpen, setDeleteSuccessOpen] = useState(false);
   const [mentorToDelete, setMentorToDelete] = useState<any>(null);
-  const [isAvailabilityOpen, setIsAvailabilityOpen] = useState(false);
 
   // State for filters and search
   const [searchQuery, setSearchQuery] = useState('');
@@ -369,21 +368,7 @@ export default function MentorsManagement() {
             <Plus className="h-4 w-4" />
             Add a mentor
           </Button>
-          <Dialog
-            open={isAvailabilityOpen}
-            onOpenChange={setIsAvailabilityOpen}
-          >
-            <DialogTrigger asChild>
-              <Button
-                className="rounded-[12px] border-[0.5px] border-[#0967D2] py-[5px] text-[16px] text-[#0967D2]"
-                onClick={() => setIsAvailabilityOpen(true)}
-              >
-                Add availability
-              </Button>
-            </DialogTrigger>
 
-            <AddAvailabilityModal />
-          </Dialog>
           {selectedMentors.length > 0 && (
             <>
               <Button
@@ -866,8 +851,8 @@ export default function MentorsManagement() {
       <CreateMentorDialog
         open={createMentorOpen}
         onOpenChange={setCreateMentorOpen}
-        onSubmit={handleCreateMentor}
         onClose={() => setCreateMentorOpen(false)}
+        onSubmit={handleCreateMentor}
       />
 
       <DeleteMentorDialog
