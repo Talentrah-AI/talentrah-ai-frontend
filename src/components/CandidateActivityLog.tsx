@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import React from 'react';
 
 const mockData = new Array(8).fill({
   device: "iPhone 12 Pro MAX, 256GB, Tony Red",

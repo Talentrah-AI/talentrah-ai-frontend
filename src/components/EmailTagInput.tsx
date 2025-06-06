@@ -5,7 +5,6 @@ export default function EmailTagInput() {
   const [emails, setEmails] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const[emailTo, setEmailTo] = useState<string[]>([]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if ((e.key === "Enter" || e.key === ",") && input.trim()) {
@@ -27,9 +26,9 @@ export default function EmailTagInput() {
   const validateEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const [showAll, setShowAll] = useState(false);
-  const visibleEmails = showAll ? emails : emails.slice(0, 3);
-  const remainingCount = emails.length - 3;
+  // const [showAll, setShowAll] = useState(false);
+  // const visibleEmails = showAll ? emails : emails.slice(0, 3);
+  // const remainingCount = emails.length - 3;
 
   return (
     <div className="border p-3 rounded-md w-full max-w-lg">

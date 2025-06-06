@@ -1,11 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import AdminHeader from '@/components/AdminHeader';
+// import AdminHeader from '@/components/AdminHeader';
 import CandidateSidebar from '@/components/CandidateSidebar';
-import DeactivateDialog from '@/components/DeactivateDialog';
-import { Download, MoreVertical, Trash, MailIcon, Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import DeactivateDialog from '@/components/DeactivateDialog1';
+import { Download, MoreVertical, Trash, Search } from 'lucide-react';
 import { Listbox } from '@headlessui/react';
 import Image from 'next/image';
 import sort from '@/assets/images/sort.png';
@@ -109,9 +108,9 @@ export default function JobManagementPage() {
   const applyFilter = () => console.log('Applying filters');
   const clearFilter = () => console.log('Clearing filters');
 
-  const handleActiveJob = () =>{
+  const router = useRouter()
 
-    const router = useRouter()
+  const handleActiveJob = () =>{
     router.push(`/job/${jobs.id}`)
     
   };
@@ -133,7 +132,7 @@ export default function JobManagementPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedCandidates, setSelectedCandidates] = useState<number[]>([]);
 
-  const handleToggleSidebar = () => setSidebarOpen(prev => !prev);
+  // const handleToggleSidebar = () => setSidebarOpen(prev => !prev);
 
   const handleSelectCandidate = (index: number) => {
     setSelectedCandidates(prev =>
@@ -148,7 +147,7 @@ export default function JobManagementPage() {
       <CandidateSidebar isOpen={sidebarOpen} />
 
       <main className='flex-1 flex flex-col overflow-hidden'>
-        <AdminHeader onToggleSidebar={handleToggleSidebar} />
+        {/* <AdminHeader onToggleSidebar={handleToggleSidebar} /> */}
 
         <div className='flex-1 p-6 overflow-auto'>
           <div className='flex justify-between items-center mb-6'>
@@ -369,7 +368,8 @@ export default function JobManagementPage() {
                       />
                     </td>
                     <td className='p-4 flex items-center gap-2'>
-                      <img src={job.logo} alt='logo' className='w-5 h-5' />
+                      <Image src={job.logo} alt='logo' width={20}
+                           height={20}  />
                       {job.company}
                     </td>
                     <td className='p-4'>{job.role}</td>

@@ -1,8 +1,8 @@
  "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import AdminHeader from '@/components/AdminHeader';
+// import AdminHeader from '@/components/AdminHeader';
 import CandidateSidebar from '@/components/CandidateSidebar';
 import JobItem from '@/components/JobItem'
 import Dashboard from '@/components/CandidateDashboard';
@@ -18,24 +18,18 @@ import ResumeCard from '@/components/ResumeCard';
 import CoverCard from '@/components/CoverCard';
 import ActivityTable from '@/components/CandidateActivityLog';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/Popover"
-import { Calendar } from "@/components/ui/Calendar"; // replace with your date picker
+//import {Calendar} from "@/components/ui/Calendar";  replace with your date picker
 import CandidateMentoship from '@/components/CandidateMentoship';
 import EmailPopup from '@/components/EmailPopup';
 import CandidateFeed from '@/components/CandidateFeedback';
 import { format } from "date-fns";
-import type { DateRange } from "react-day-picker";
+// import type { DateRange } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { Listbox } from '@headlessui/react';
 import sort from '@/assets/images/sort.png';
-import calendar from '@/assets/images/calendar.png'
+// import calendar from '@/assets/images/calendar.png'
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-// import {
-//   DropdownMenu,
-//   DropdownMenuTrigger,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-// } from "@/components/ui/dropdown-menu"
 
 
   function CandidatesPage () {
@@ -90,18 +84,18 @@ import { useParams } from 'next/navigation';
     router.push(`/candidates/${CandidatesId}?tab=${value}`);
   };
 
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const handleToggleSidebar = () => {
-    setSidebarOpen((prev) => !prev);
-  };
+  const [sidebarOpen] = useState(true); //setSidebarOpen
+  // const handleToggleSidebar = () => {
+  //   setSidebarOpen((prev) => !prev);
+  // };
 
   const [selectedFilter, setSelectedFilter] = useState("Today")
    //const [date, setDate] = useState<Date | undefined>(new Date())
-  const [showCalendar, setShowCalendar] = useState(false);
-  const [date, setDate] = useState<DateRange>({
-    from: new Date(),
-    to: undefined,
-  });
+  // const [showCalendar, setShowCalendar] = useState(false);
+  // const [date, setDate] = useState<DateRange>({
+  //   from: new Date(),
+  //   to: undefined,
+  // });
   
 
 //   useEffect(() => {
@@ -122,13 +116,14 @@ import { useParams } from 'next/navigation';
   const [Selected3, setSelected3] = useState(option3[0]);
   const showDateFilterTabs = ["Created-resumes", "Cover-letters-generated", "Mentorship", "Feedback"];
   const showListboxTabs = ["Job-Applied"];
-  const [activeTab, setActiveTab] = useState("Job-Applied");
-  useEffect(() => {
-    // Optional: reset calendar when switching back to a date filter tab
-    if (showDateFilterTabs.includes(activeTab)) {
-      setShowCalendar(false); // or true, depending on your desired default
-    }
-  }, [activeTab]);
+  
+  const [activeTab] = useState("Job-Applied"); //setActiveTab
+  // useEffect(() => {
+  //   // Optional: reset calendar when switching back to a date filter tab
+  //   if (showDateFilterTabs.includes(activeTab)) {
+  //     setShowCalendar(false); // or true, depending on your desired default
+  //   }
+  // }, [activeTab]);
 
 
   return (
@@ -138,7 +133,7 @@ import { useParams } from 'next/navigation';
 
       {/* Main content */}
       <main className="flex-1 flex flex-col overflow-hidden mb-2">
-        <AdminHeader onToggleSidebar={handleToggleSidebar} />
+        {/* <AdminHeader onToggleSidebar={handleToggleSidebar} /> */}
         <div className='flex-1 p-6 overflow-auto'>
         {/* CandidatesId={params.CandidatesId} */}
         <Dashboard />
@@ -217,7 +212,7 @@ import { useParams } from 'next/navigation';
         </PopoverTrigger>
         <PopoverContent className="w-auto p-4">
           {/* <div className="flex gap-2"> */}
-          <Calendar
+          {/* <Calendar
             mode="range"
             selected={date}
             onSelect={(range) => {
@@ -232,7 +227,7 @@ import { useParams } from 'next/navigation';
             onSelect={setDate}
             required={false}
             numberOfMonths={2}
-            />
+            /> */}
             
           {/* </div> */}
           <Button className="mt-2 w-full">Search duration</Button>

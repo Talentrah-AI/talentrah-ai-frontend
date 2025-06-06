@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import AdminHeader from '@/components/AdminHeader';
+import React, { useState } from 'react';
+// import AdminHeader from '@/components/AdminHeader';
 import CandidateSidebar from '@/components/CandidateSidebar';
 import { Download, MoreVertical, Trash, MailIcon, Search} from 'lucide-react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Calendar from '@/components/ui/Calendar';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
@@ -17,15 +17,15 @@ import sort from '@/assets/images/sort.png';
 import calendar from '@/assets/images/calendar.png'
 import Image from 'next/image';
 import { Listbox } from '@headlessui/react';
-import DeactivateDialog from '@/components/DeactivateDialog';
+import DeactivateDialog from '@/components/DeactivateDialog1';
 
 
 //check for the error
-type candidates = { 
-  id: number;
-  name: string;
+// type candidates = { 
+//   id: number;
+//   name: string;
 
-};
+// };
 
 
 function Page() {
@@ -67,14 +67,14 @@ function Page() {
   ];
   const [Selected4, setSelected4] = useState(option4[0]);
 
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
   const router = useRouter();
-  const tab = searchParams.get('tab') || 'Job-Applied';
+  // const tab = searchParams.get('tab') || 'Job-Applied';
 
   const [selectedCandidates, setSelectedCandidates] = React.useState<number[]>([]);
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  // const [itemsPerPage, setItemsPerPage] = useState(10);
   
 
   const handleTabChange = (value: string) => {
@@ -82,9 +82,9 @@ function Page() {
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const handleToggleSidebar = () => {
-    setSidebarOpen((prev) => !prev);
-  };
+  // const handleToggleSidebar = () => {
+  //   setSidebarOpen((prev) => !prev);
+  // };
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
@@ -109,22 +109,22 @@ function Page() {
   //   setSelectedCandidates([]);
   // };
 
-  const [selectedFilter, setSelectedFilter] = useState("Today")
+  // const [selectedFilter, setSelectedFilter] = useState("Today")
    //const [date, setDate] = useState<Date | undefined>(new Date())
-  const [showCalendar, setShowCalendar] = useState(false);
-  const [date, setDate] = useState(new Date());
-  const [openCandidate, setOpenCandidate] = useState(false)
+  // const [showCalendar, setShowCalendar] = useState(false);
+  // const [date, setDate] = useState(new Date());
+  // const [openCandidate, setOpenCandidate] = useState(false)
 
-  useEffect(() => {
-    if (selectedFilter === "Today") {
-        setDate(new Date());
-      } else if (selectedFilter === "30 Days") {
-        const thirtyDaysAgo = new Date();
-        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-        setDate(thirtyDaysAgo);
-      }
-  }, [selectedFilter]);
-  const [open, setOpen] = useState(false); //for email opening popup
+  // useEffect(() => {
+  //   if (selectedFilter === "Today") {
+  //       setDate(new Date());
+  //     } else if (selectedFilter === "30 Days") {
+  //       const thirtyDaysAgo = new Date();
+  //       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  //       setDate(thirtyDaysAgo);
+  //     }
+  // }, [selectedFilter]);
+  //const [open, setOpen] = useState(false); for email opening popup
 
   const exportData = () => {
     // Implement export functionality
@@ -149,7 +149,7 @@ function Page() {
 
       {/* Main content */}
       <main className="flex-1 flex flex-col overflow-hidden mb-2">
-        <AdminHeader onToggleSidebar={handleToggleSidebar} />
+        {/* <AdminHeader onToggleSidebar={handleToggleSidebar} /> */}
         <div className='flex-1 p-6 overflow-auto'>
           {/* <Dashboard /> */}
           <div className="flex justify-between items-center mb-6">

@@ -4,7 +4,6 @@ import Image from 'next/image';
 import polygon from '@/assets/images/Polygon.png';
 import { ClipboardList, LogOut, Home, Users, GraduationCap, Settings, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
-import CandidatesPage from '@/app/candidates/[CandidatesId]/page';
 
 
 function CandidateSidebar({ isOpen }: { isOpen: boolean }) {

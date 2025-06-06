@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react';
+import Image from 'next/image';
 
 const FeedbackCard = ({
   label = "Mentorship",
@@ -14,10 +15,12 @@ const FeedbackCard = ({
 
       <div className="flex gap-3 items-start">
         {/* Profile Image */}
-        <img
+        <Image
           src={imageUrl}
           alt="Profile"
-          className="w-10 h-10 rounded-full object-cover"
+          width={40}
+          height={40}
+          className=" rounded-full object-cover"
         />
 
         <div className="flex-1">

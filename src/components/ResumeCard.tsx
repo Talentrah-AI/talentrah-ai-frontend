@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
 import ResumeDialog from '@/components/CandidateResumeDialog';
-import resume from '@/assets/images/resume-preview.png'
+
 
 
 interface ResumeCardProps {

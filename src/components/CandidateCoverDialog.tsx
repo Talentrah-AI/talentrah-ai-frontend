@@ -1,13 +1,11 @@
 import {
     Dialog,
     DialogContent,
-    DialogHeader,
     DialogTitle,
     DialogClose,
   } from "@/components/ui/dialog";
   import { Button } from "@/components/ui/button";
-  import { Copy, X, Calendar, Download } from "lucide-react";
-  import { useState } from "react";
+  import { Copy, Calendar, Download } from "lucide-react";
   import { toast } from "sonner";
   
   interface CoverLetterDialogProps {

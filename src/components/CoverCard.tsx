@@ -8,7 +8,6 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
 import CoverLetterDialog from '@/components/CandidateCoverDialog';
-import resume from '@/assets/images/resume-preview.png'
 
 
 interface ResumeCardProps {

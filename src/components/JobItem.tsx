@@ -1,32 +1,13 @@
 import React from "react";
 import Image from "next/image";
-import {
-    FileText,
-    ClipboardList,
-    Search,
-    Mail,
-    LogOut,
-    Home,
-    Users,
-    Briefcase,
-    GraduationCap,
-    Settings,
-    MessageCircle,
-    XCircle,
-    FilePlus,
-    FileSignature,
-    CheckCircle, CalendarDaysIcon,
-    InfoIcon, GlobeIcon, CrownIcon, CalendarIcon,
-    X,
-    MoreVerticalIcon,
-    ChevronRightCircle,
+import { CalendarDaysIcon,
+     GlobeIcon, CrownIcon, CalendarIcon,
     MapPinIcon,
-    SortDescIcon,
     ClockIcon,
   } from 'lucide-react';
 
 
-const JobItem = ({ logo, title, method, methodType }) =>  {
+const JobItem = ({ logo, title, methodType }) =>  {
     return (
       <div className="flex items-start gap-4 bg-white rounded-xl p-0">
         {/* Company Logo */}
