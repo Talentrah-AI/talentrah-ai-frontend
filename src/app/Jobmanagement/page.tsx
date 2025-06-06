@@ -128,7 +128,7 @@ export default function JobManagementPage() {
   const [selected4, setSelected4] = useState(option4[0]);
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen] = useState(true); //setSidebarOpen'
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedCandidates, setSelectedCandidates] = useState<number[]>([]);
 

@@ -81,7 +81,7 @@ function Page() {
     router.push(`/candidates?tab=${value}`);
   };
 
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen] = useState(true); //setSidebarOpen'
   // const handleToggleSidebar = () => {
   //   setSidebarOpen((prev) => !prev);
   // };
