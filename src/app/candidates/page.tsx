@@ -32,7 +32,7 @@ function Page() {
 
   const handleActiveCandidate = () => {
     // check error
-    router.push(`/candidates/${candidates.id}`)
+    router.push(`/candidates/${candidates[0].id}`)
   };
 
    // Sample candidate data
@@ -86,7 +86,7 @@ function Page() {
   //   setSidebarOpen((prev) => !prev);
   // };
 
-  const handleSelectAll = (e) => {
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setSelectedCandidates(candidates.map(c => c.id));
     } else {

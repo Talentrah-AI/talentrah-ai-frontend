@@ -1,3 +1,15 @@
+
+export default function HomePage() {
+    return <div>Welcome to Talentrah!</div>;
+  }
+
+
+
+
+
+
+
+
 // import threeImage from '@/assets/images/threeImage.webp';
 // import heroImage from '@/assets/images/heroImage.png';
 // import { features } from '@/data/landing/features';

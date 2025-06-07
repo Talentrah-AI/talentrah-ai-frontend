@@ -1,6 +1,15 @@
 import { Star } from 'lucide-react';
 import Image from 'next/image';
 
+type FeedbackCardProps = {
+  label?: string;
+  name?: string;
+  rating?: number;
+  date?: string;
+  message?: string;
+  imageUrl?: string;
+};
+
 const FeedbackCard = ({
   label = "Mentorship",
   name = "Juliana Whalus",
@@ -8,7 +17,7 @@ const FeedbackCard = ({
   date = "12 April 2025, 06:59PM",
   message,
   imageUrl = "https://randomuser.me/api/portraits/women/44.jpg",
-}) => {
+}: FeedbackCardProps) =>  {
   return (
     <div className="border-b pb-4 mb-4">
       

@@ -22,7 +22,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/Popover
 import CandidateMentoship from '@/components/CandidateMentoship';
 import EmailPopup from '@/components/EmailPopup';
 import CandidateFeed from '@/components/CandidateFeedback';
-import { format } from "date-fns";
+// import { format } from "date-fns";
 // import type { DateRange } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { Listbox } from '@headlessui/react';
@@ -116,6 +116,9 @@ import { useParams } from 'next/navigation';
   const [Selected3, setSelected3] = useState(option3[0]);
   const showDateFilterTabs = ["Created-resumes", "Cover-letters-generated", "Mentorship", "Feedback"];
   const showListboxTabs = ["Job-Applied"];
+
+  
+
   
   const [activeTab] = useState("Job-Applied"); //setActiveTab
   // useEffect(() => {
@@ -197,17 +200,17 @@ import { useParams } from 'next/navigation';
       <Popover >
         <PopoverTrigger>
         <Button variant="outline" className="w-[300px] justify-start text-left font-normal" >
-        {date.from ? (
+        {/* {date.from ? (
             date.to ? (
               <>
-                {format(date.from, "LLL dd, y")} - {format(date.to, "LLL dd, y")}
+                {format(Date.from, "LLL dd, y")} - {format(Date.to, "LLL dd, y")}
               </>
             ) : (
-              format(date.from, "LLL dd, y")
+              format(Date.from, "LLL dd, y")
             )
           ) : (
             <span>Pick a date range</span>
-          )}
+          )} */}
             </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-4">
@@ -286,28 +289,28 @@ import { useParams } from 'next/navigation';
             <div className="text-lg font-semibold">No job applications yet</div> */}
             <div className="flex flex-col gap-7 text-sm -ml-8 text-gray-500">
             <JobItem
-              logo={image16} title="Senior UI/UX Designer" method="AI" methodType="AI" // or "Manual"
+              logo={image16} title="Senior UI/UX Designer"  methodType="AI" // or "Manual"
             />
             <JobItem
-              logo={image17} title="Senior UI/UX Designer" method="Manual" methodType="Manual" // or "Manual"
+              logo={image17} title="Senior UI/UX Designer" methodType="Manual" // or "Manual"
             />
             <JobItem
-              logo={image18} title="Senior UI/UX Designer" method="AI" methodType="AI" // or "Manual"
+              logo={image18} title="Senior UI/UX Designer"  methodType="AI" // or "Manual"
             />
             <JobItem
-              logo={image18} title="Senior UI/UX Designer" method="Manual" methodType="Manual" // or "Manual"
+              logo={image18} title="Senior UI/UX Designer"  methodType="Manual" // or "Manual"
             />
             <JobItem
-              logo={image16} title="Senior UI/UX Designer" method="AI" methodType="AI" // or "Manual"
+              logo={image16} title="Senior UI/UX Designer" methodType="AI" // or "Manual"
             />
             <JobItem
-              logo={image17} title="Senior UI/UX Designer" method="Manual" methodType="Manual" // or "Manual"
+              logo={image17} title="Senior UI/UX Designer"  methodType="Manual" // or "Manual"
             />
             <JobItem
-              logo={image18} title="Senior UI/UX Designer" method="AI" methodType="AI" // or "Manual"
+              logo={image18} title="Senior UI/UX Designer"  methodType="AI" // or "Manual"
             />
             <JobItem
-              logo={image16} title="Senior UI/UX Designer" method="AI" methodType="AI" // or "Manual"
+              logo={image16} title="Senior UI/UX Designer" methodType="AI" // or "Manual"
             />
 
             </div>

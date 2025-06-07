@@ -22,6 +22,7 @@ const jobs = [
     workModel: 'Remote',
     applicants: 2000,
     date: '12/05/2025, 10:00AM',
+    id:1,
   },
   {
     company: 'Concordia solutions',
@@ -32,6 +33,7 @@ const jobs = [
     workModel: 'Remote',
     applicants: 2000,
     date: '12/05/2025, 10:00AM',
+    id:2,
   },
   {
     company: 'Concordia solutions',
@@ -42,6 +44,7 @@ const jobs = [
     workModel: 'Remote',
     applicants: 2000,
     date: '12/05/2025, 10:00AM',
+    id:3
   },
   {
     company: 'Concordia solutions',
@@ -52,6 +55,7 @@ const jobs = [
     workModel: 'Remote',
     applicants: 2000,
     date: '12/05/2025, 10:00AM',
+    id:4,
   },
   {
     company: 'Concordia solutions',
@@ -62,6 +66,7 @@ const jobs = [
     workModel: 'Remote',
     applicants: 2000,
     date: '12/05/2025, 10:00AM',
+    id:5,
   },
   {
     company: 'Concordia solutions',
@@ -72,6 +77,7 @@ const jobs = [
     workModel: 'Remote',
     applicants: 2000,
     date: '12/05/2025, 10:00AM',
+    id:6,
   },
   {
     company: 'Concordia solutions',
@@ -82,6 +88,7 @@ const jobs = [
     workModel: 'Remote',
     applicants: 2000,
     date: '12/05/2025, 10:00AM',
+    id:7,
   },
   {
     company: 'Concordia solutions',
@@ -92,6 +99,7 @@ const jobs = [
     workModel: 'Remote',
     applicants: 2000,
     date: '12/05/2025, 10:00AM',
+    id:8,
   },
 ];
 
@@ -111,7 +119,7 @@ export default function JobManagementPage() {
   const router = useRouter()
 
   const handleActiveJob = () =>{
-    router.push(`/job/${jobs.id}`)
+    router.push(`/job/${jobs[0].id}`)
     
   };
 

@@ -1,19 +1,23 @@
 import React from "react";
 import Image from "next/image";
-import { CalendarDaysIcon,
-     GlobeIcon, CrownIcon, CalendarIcon,
-    MapPinIcon,
-    ClockIcon,
-  } from 'lucide-react';
+import { CalendarDaysIcon, GlobeIcon, CrownIcon, CalendarIcon, MapPinIcon, ClockIcon } from 'lucide-react';
+import type { StaticImageData } from 'next/image';
 
 
-const JobItem = ({ logo, title, methodType }) =>  {
+type JobItemProps = {
+  logo?:  string | StaticImageData,
+  title?: string,
+  methodType?: string,
+}
+
+
+const JobItem = ({ logo, title, methodType }: JobItemProps ) =>  {
     return (
       <div className="flex items-start gap-4 bg-white rounded-xl p-0">
         {/* Company Logo */}
         <div className='mt-3'>
         <Image
-          src={logo}
+          src={logo ?? "/default.jpg"}
           alt="Company Logo"
           width={35}
           height={35}
