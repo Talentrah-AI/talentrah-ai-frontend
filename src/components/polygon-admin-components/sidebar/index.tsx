@@ -1,21 +1,20 @@
 'use-client';
-import React, { useState } from 'react';
+
 import { NavItemList } from '@/data/polygon-data/nav-items';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import { LogOut } from 'lucide-react';
 
-
-export default function  SideBar () 
-{
+export default function SideBar() {
   const pathname = usePathname();
   return (
     <aside className="w-full  lg:w-[257px] bg-[#0752A8] text-white p-4  h-full ">
       <div className="h-[70px]">
-        <img
+        <Image
           src="https://res.cloudinary.com/dk5mfu099/image/upload/v1746014576/polygon_briuj9.png"
           alt="polygon logo"
+          width={100}
+          height={100}
         />
       </div>
       <ul className="space-y-4 mt-4 flex flex-col ">
@@ -49,5 +48,4 @@ export default function  SideBar ()
       </div> */}
     </aside>
   );
-};
-
+}

@@ -60,7 +60,6 @@ export function CreateMentorDialog({
   open,
   onClose,
   onOpenChange,
-  onSubmit,
 }: CreateMentorDialogProps) {
   const [formData, setFormData] = useState<FormData>({
     // Initialize all fields
@@ -100,31 +99,6 @@ export function CreateMentorDialog({
 
   const handleRoleChange = (value: string) => {
     setFormData((prev) => ({ ...prev, role: value }));
-  };
-
-  const allFieldsFilled = Object.entries(formData).every(([key, value]) => {
-    if (Array.isArray(value)) return value.length > 0; // Check arrays
-    if (typeof value === 'boolean') return true; // Skip booleans
-    if (typeof value === 'string') return value.trim() !== ''; // Only trim strings
-    return !!value; // Fallback for numbers/others
-  });
-
-  const handleArrayChange = (
-    field: keyof FormData,
-    value: string,
-    checked: boolean
-  ) => {
-    setFormData((prev) => {
-      const currentArray = Array.isArray(prev[field]) ? [...prev[field]] : [];
-      if (checked) {
-        return { ...prev, [field]: [...currentArray, value] };
-      } else {
-        return {
-          ...prev,
-          [field]: currentArray.filter((item) => item !== value),
-        };
-      }
-    });
   };
 
   const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -602,12 +576,12 @@ export function CreateMentorDialog({
             {currentStep === 4 && (
               <div className="space-y-6">
                 <h2 className="text-xl font-semibold text-center">
-                  Almost there! How would you like to be intro'd?
+                  Almost there! How would you like to be intro;d?
                 </h2>
 
                 <div className="space-y-4">
                   <Label className="block text-sm font-medium mb-1">
-                    Everyone has a story, what's yours? *
+                    Everyone has a story, what;s yours? *
                   </Label>
                   <textarea
                     className="w-full min-h-[120px] p-2 border rounded-lg"
@@ -630,7 +604,7 @@ export function CreateMentorDialog({
                   />
                   <label htmlFor="confirmation" className="text-sm">
                     By checking this box, I confirm that all the information
-                    I've provided is accurate and true to the best of my
+                    I;ve provided is accurate and true to the best of my
                     knowledge.
                   </label>
                 </div>

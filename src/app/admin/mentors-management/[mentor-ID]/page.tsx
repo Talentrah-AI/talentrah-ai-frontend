@@ -159,8 +159,8 @@ const MentorsId = () => {
                     I was leading both Product and Design teams in my previous
                     roles as the Regional Head of Product & Design of SFSA (FNB
                     Unicorn Bank) and Head of Product & Design at Interswitch
-                    Group (Africa's Fintech Unicorn). I am a recipient of the
-                    Excellence Awards 2021.
+                    Group (Africa&apos;s Fintech Unicorn). I am a recipient of
+                    the Excellence Awards 2021.
                   </p>
                 </div>
 

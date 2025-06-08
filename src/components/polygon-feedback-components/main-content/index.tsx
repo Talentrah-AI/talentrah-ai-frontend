@@ -2,11 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-import { useRouter } from 'next/navigation';
 import { useMediaQuery } from '@/hooks/use-mediaQuery/index';
-
-;
-
 
 import { toast } from '@/components/ui/use-toast';
 import FeedBakSection from '../feedBack-section';
@@ -16,11 +12,7 @@ import { DeleteFeedbackDialog } from '../feedbacks-modal/delete-feedback-modal';
 import { DeleteSuccessDialog } from '../feedbacks-modal/delete-success-modal';
 import { Feedback } from '@/lib/polygon-types';
 
-
-
-
 const MainFeedBackContent = () => {
-  const router = useRouter();
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   // State
@@ -233,9 +225,9 @@ const MainFeedBackContent = () => {
     setCurrentPage(1);
   };
 
-//   const handleViewDetails = (id: string) => {
-//     router.push(`/feedback-management/${id}`);
-//   };
+  //   const handleViewDetails = (id: string) => {
+  //     router.push(`/feedback-management/${id}`);
+  //   };
 
   const handleEditStatus = (feedback: Feedback) => {
     setCurrentFeedback(feedback);
@@ -267,66 +259,66 @@ const MainFeedBackContent = () => {
       year: 'numeric',
     });
   };
-    return (
-      <div>
-        <FeedBakSection
-          selectedFeedbacks={selectedFeedbacks}
-          setDeleteDialogOpen={setDeleteDialogOpen}
-          handleSendEmail={handleSendEmail}
-          handleExport={handleExport}
-          itemsPerPage={itemsPerPage}
-          setItemsPerPage={setItemsPerPage}
-          statusFilterOpen={statusFilterOpen}
-          setStatusFilterOpen={setStatusFilterOpen}
-          statusFilter={statusFilter}
-          setStatusFilter={setStatusFilter}
-          handleOpenCalendar={handleOpenCalendar}
-          formatDate={formatDate}
-          isMobile={isMobile}
-          handleApplyFilter={handleApplyFilter}
-          handleClearFilter={handleClearFilter}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          paginatedFeedbacks={paginatedFeedbacks}
-          handleSelectAll={handleSelectAll}
-          handleSelectFeedback={handleSelectFeedback}
-          handleEditStatus={handleEditStatus}
-          setCurrentFeedback={setCurrentFeedback}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          dateRange={dateRange}
-        />
+  return (
+    <div>
+      <FeedBakSection
+        selectedFeedbacks={selectedFeedbacks}
+        setDeleteDialogOpen={setDeleteDialogOpen}
+        handleSendEmail={handleSendEmail}
+        handleExport={handleExport}
+        itemsPerPage={itemsPerPage}
+        setItemsPerPage={setItemsPerPage}
+        statusFilterOpen={statusFilterOpen}
+        setStatusFilterOpen={setStatusFilterOpen}
+        statusFilter={statusFilter}
+        setStatusFilter={setStatusFilter}
+        handleOpenCalendar={handleOpenCalendar}
+        formatDate={formatDate}
+        isMobile={isMobile}
+        handleApplyFilter={handleApplyFilter}
+        handleClearFilter={handleClearFilter}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        paginatedFeedbacks={paginatedFeedbacks}
+        handleSelectAll={handleSelectAll}
+        handleSelectFeedback={handleSelectFeedback}
+        handleEditStatus={handleEditStatus}
+        setCurrentFeedback={setCurrentFeedback}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        dateRange={dateRange}
+      />
 
-        <EditStatusDialog
-          open={editStatusDialogOpen}
-          onOpenChange={setEditStatusDialogOpen}
-          feedback={currentFeedback}
-          onSave={handleSaveStatus}
-        />
+      <EditStatusDialog
+        open={editStatusDialogOpen}
+        onOpenChange={setEditStatusDialogOpen}
+        feedback={currentFeedback}
+        onSave={handleSaveStatus}
+      />
 
-        {/* Calendar Date Picker */}
-        <CalendarDatePicker
-          open={calendarOpen}
-          onOpenChange={setCalendarOpen}
-          onSelectDate={handleSelectDate}
-        />
+      {/* Calendar Date Picker */}
+      <CalendarDatePicker
+        open={calendarOpen}
+        onOpenChange={setCalendarOpen}
+        onSelectDate={handleSelectDate}
+      />
 
-        {/* Delete Confirmation Dialog */}
-        <DeleteFeedbackDialog
-          open={deleteDialogOpen}
-          onOpenChange={setDeleteDialogOpen}
-          count={selectedFeedbacks.length || 1}
-          onConfirm={handleDelete}
-        />
+      {/* Delete Confirmation Dialog */}
+      <DeleteFeedbackDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        count={selectedFeedbacks.length || 1}
+        onConfirm={handleDelete}
+      />
 
-        {/* Delete Success Dialog */}
-        <DeleteSuccessDialog
-          open={deleteSuccessDialogOpen}
-          onOpenChange={setDeleteSuccessDialogOpen}
-        />
-      </div>
-    );
+      {/* Delete Success Dialog */}
+      <DeleteSuccessDialog
+        open={deleteSuccessDialogOpen}
+        onOpenChange={setDeleteSuccessDialogOpen}
+      />
+    </div>
+  );
 };
 
 export default MainFeedBackContent;

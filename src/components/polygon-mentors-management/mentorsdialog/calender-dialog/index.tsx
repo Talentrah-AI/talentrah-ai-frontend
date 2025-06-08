@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
@@ -20,7 +19,6 @@ import {
   XIcon,
   ChevronLeft,
   ChevronRight,
-  ChevronDown,
   Plus as PlusIcon,
 } from 'lucide-react';
 
@@ -145,7 +143,7 @@ export function AddAvailabilityModal() {
                   Set your availability
                 </DialogTitle>
                 <DialogDescription className="text-gray-600 text-[10px] mt-2">
-                  Select the dates and times you're available to connect. This
+                  Select the dates and times you;re available to connect. This
                   helps mentees book sessions that fit your schedule seamlessly.
                 </DialogDescription>
               </div>

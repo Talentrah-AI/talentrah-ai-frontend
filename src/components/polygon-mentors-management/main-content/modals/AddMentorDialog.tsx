@@ -19,11 +19,7 @@ interface AddMentorModalProps {
   onSubmit: (data: string) => void;
 }
 
-export function AddMentorModal({
-  open,
-  onClose,
-  onSubmit,
-}: AddMentorModalProps) {
+export function AddMentorModal({ open, onClose }: AddMentorModalProps) {
   const [formData, setFormData] = React.useState({
     firstName: '',
     lastName: '',

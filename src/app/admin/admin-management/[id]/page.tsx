@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import Image from 'next/image';
 
 // interface PageProps {
 //   params: {
@@ -131,7 +132,7 @@ export default function AdminDetails() {
         'Submitted an application for the UX/UI Designer position at Company X',
     },
   ]);
-
+  setActivityLogs(activityLogs);
   // Add these new state variables for filtering and pagination
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
@@ -246,7 +247,7 @@ export default function AdminDetails() {
 
       <div className="relative -mt-16 mb-6 flex flex-col items-start gap-4 md:flex-row md:items-center">
         <div className="relative ml-4 h-24 w-24 overflow-hidden rounded-full border-4 border-white bg-white">
-          <img
+          <Image
             src={
               admin.profileImage ||
               'https://res.cloudinary.com/dk5mfu099/image/upload/v1746600767/profile-pic_zl0v3b.jpg'
@@ -595,6 +596,4 @@ export default function AdminDetails() {
       />
     </>
   );
-};
-
-
+}
