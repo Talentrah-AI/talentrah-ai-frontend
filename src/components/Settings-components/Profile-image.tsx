@@ -31,12 +31,9 @@ const ProfileImage: React.FC<ProfileImageProps> = ({
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (event) => {
-        const img = new Image();
+        const img = new window.Image(); // Use window.Image to avoid TS error
         img.onload = () => {
-          // Create canvas for resizing
           const canvas = document.createElement('canvas');
-
-          // Set dimensions (max 300px width/height while maintaining aspect ratio)
           const MAX_SIZE = 300;
           let width = img.width;
           let height = img.height;
@@ -56,7 +53,6 @@ const ProfileImage: React.FC<ProfileImageProps> = ({
           canvas.width = width;
           canvas.height = height;
 
-          // Draw resized image to canvas
           const ctx = canvas.getContext('2d');
           if (!ctx) {
             reject(new Error('Could not get canvas context'));
@@ -64,35 +60,21 @@ const ProfileImage: React.FC<ProfileImageProps> = ({
           }
 
           ctx.drawImage(img, 0, 0, width, height);
-
-          // Convert to data URL (PNG format with good quality)
-          const optimizedDataUrl = canvas.toDataURL('image/png', 0.9);
-          resolve(optimizedDataUrl);
+          resolve(canvas.toDataURL('image/png', 0.9));
         };
 
-        img.onerror = () => {
-          reject(new Error('Failed to load image'));
-        };
-
+        img.onerror = () => reject(new Error('Failed to load image'));
         img.src = event.target?.result as string;
       };
-
-      reader.onerror = () => {
-        reject(new Error('Failed to read file'));
-      };
-
+      reader.onerror = () => reject(new Error('Failed to read file'));
       reader.readAsDataURL(file);
     });
   };
 
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-
     if (!file) return;
 
-    // Check file type
     if (!file.type.startsWith('image/')) {
       toast({
         title: 'Invalid file type',
@@ -103,24 +85,15 @@ const ProfileImage: React.FC<ProfileImageProps> = ({
     }
 
     try {
-      // Show loading toast
       toast({
         title: 'Processing image',
         description: 'Please wait while we optimize your image...',
       });
 
-      // Optimize the image
       const optimizedImage = await optimizeImage(file);
-
-      // Update state with the new image
       setImage(optimizedImage);
+      onImageChange?.(optimizedImage);
 
-      // Call the callback if provided
-      if (onImageChange) {
-        onImageChange(optimizedImage);
-      }
-
-      // Show success toast
       toast({
         title: 'Image updated',
         description: 'Your profile image has been updated successfully.',
@@ -146,8 +119,9 @@ const ProfileImage: React.FC<ProfileImageProps> = ({
             src={image}
             alt="Profile"
             className="w-full h-full object-cover"
-            width={100}
-            height={100}
+            width={96}  // Match container size
+            height={96}
+            priority
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gray-200">
