@@ -16,6 +16,7 @@ import {
   import { useRef } from "react";
   import React, { useState } from 'react';
   import EmailTagInput from "@/components/EmailTagInput";
+  import EmailDialog from '@/components/EmailDialog';
  
   type EmailPopupProps = {
     open: boolean;
@@ -39,6 +40,8 @@ import {
       setSelectedFile(file);
     }
   };
+
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
@@ -154,7 +157,13 @@ import {
               <Button variant="outline" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
-              <Button>Send email</Button>
+              <Button onClick={() => setDialogOpen(true)}
+              >Send email
+                <EmailDialog 
+                   open={dialogOpen}
+                   onClose={() => setDialogOpen(false)}
+                />
+              </Button>
             </div>
           </div>
         </DialogContent>

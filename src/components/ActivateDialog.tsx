@@ -1,41 +1,49 @@
 'use client';
 
 import React from 'react';
-import {Dialog, DialogContent, DialogTitle,} from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-// import { RocketIcon } from 'lucide-react'; 
 
-interface DeactivateDialogProps {
+interface ActivateDialogProps {
     open: boolean;
-    onOpenChange: () => void;
+    onClose: () => void;
     onConfirm: () => void;
     count?: number;
   }
 
-const DeactivateDialog: React.FC<DeactivateDialogProps> = ({
-    open, onOpenChange, onConfirm, count = 4,
+  const ActivateDialog: React.FC<ActivateDialogProps> = ({
+    open,
+    onClose,
+    onConfirm,
   }) => {
   return (
-    <Dialog open={open} onOpenChange={onOpenChange} >
-      <div className='bg-[var(--background)]'>
+    <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md rounded-xl bg-[linear-gradient(to_bottom,_#0967F0_1%,_#E5F1FF,_#FFFFFF)]">
       <div className="flex justify-center items-center text-lg font-semibold">
         <DialogTitle className="flex justify-center gap-2 items-center text-2xl font-semibold">
-            {/* <RocketIcon className="h-5 w-5 text-white" /> */}
-            🚀 Account Deactivated
+           
+            🚀 Activated this user?
         </DialogTitle>
            </div>
         <div className="flex flex-col items-center justify-center text-sm text-gray-600 mt-4 text-center">
-            <p>
-          Are you sure you want to deactivate these account{count > 1 ? 's' : ''} ({count})?
-          </p>
-          <span className="mt-1 text-gray-600 font-medium">This action cannot be undone</span>
+            {/* <p>
+            You're about to activate this user's account.? 
+            They will regain full access to their dashboard, 
+            services, and notifications.
+          </p> */}
+          <span className=" text-gray-600 font-light">You&apos;re about to activate this user&apos;s account.?</span>
+          <span className=" text-gray-600 font-light">They will regain full access to their dashboard,</span>
+          <span className=" text-gray-600 font-light">services, and notifications.</span>
         </div>
         <div className="flex justify-between gap-2 mt-6 w-full">
         <Button
             variant="outline"
             className="w-50 cursor-pointer"
-            onClick={onOpenChange}
+            onClick={onClose}
         >
             Cancel
         </Button>
@@ -44,13 +52,12 @@ const DeactivateDialog: React.FC<DeactivateDialogProps> = ({
             className="w-50 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
             onClick={onConfirm}
         >
-            Deactivate
+            Activate
         </Button>
         </div>
       </DialogContent>
-      </div>
     </Dialog>
   );
 };
 
-export default DeactivateDialog;
+export default ActivateDialog;

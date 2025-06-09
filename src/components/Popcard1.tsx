@@ -25,7 +25,7 @@ const PopupCard: React.FC<PopupCardProps> = ({ isOpen, onClose, title, children 
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 transition-colors"
+          className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
         >
           <X size={20} />
         </button>

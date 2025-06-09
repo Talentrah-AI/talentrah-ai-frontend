@@ -30,6 +30,12 @@ import sort from '@/assets/images/sort.png';
 // import calendar from '@/assets/images/calendar.png'
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu"
 
 
   function CandidatesPage () {
@@ -156,17 +162,17 @@ import { useParams } from 'next/navigation';
   <TabsList >
   <ChevronLeftCircle className="shrink-0 text-gray-500" />
     <TabsTrigger value="Job-Applied" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-green-300 
-        data-[state=active]:text-white font-semibold px-4 py-2 rounded-md transition">Jobs Applied</TabsTrigger>
+        data-[state=active]:text-white font-semibold px-4 py-2 rounded-md transition cursor-pointer">Jobs Applied</TabsTrigger>
     <TabsTrigger value="Created-resumes"  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-green-300 
-        data-[state=active]:text-white font-semibold px-4 py-2 rounded-md transition">Created resumes</TabsTrigger>
+        data-[state=active]:text-white font-semibold px-4 py-2 rounded-md transition cursor-pointer">Created resumes</TabsTrigger>
     <TabsTrigger value="Cover-letters-generated" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-green-300 
-        data-[state=active]:text-white font-semibold px-4 py-2 rounded-md transition">Cover letters generated</TabsTrigger>
+        data-[state=active]:text-white font-semibold px-4 py-2 rounded-md transition cursor-pointer">Cover letters generated</TabsTrigger>
     <TabsTrigger value="Activity-logs" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-green-300 
-        data-[state=active]:text-white font-semibold px-4 py-2 rounded-md transition">Activity logs</TabsTrigger>
+        data-[state=active]:text-white font-semibold px-4 py-2 rounded-md transition cursor-pointer">Activity logs</TabsTrigger>
     <TabsTrigger value="Mentorship" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-green-300 
-        data-[state=active]:text-white font-semibold px-4 py-2 rounded-md transition">Mentorship</TabsTrigger>
+        data-[state=active]:text-white font-semibold px-4 py-2 rounded-md transition cursor-pointer">Mentorship</TabsTrigger>
     <TabsTrigger value="Feedback" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-green-300 
-        data-[state=active]:text-white font-semibold px-4 py-2 rounded-md transition">Feedback</TabsTrigger>    
+        data-[state=active]:text-white font-semibold px-4 py-2 rounded-md transition cursor-pointer">Feedback</TabsTrigger>    
     <ChevronRightCircle className=''/>
   </TabsList>
   </div>
@@ -247,7 +253,7 @@ import { useParams } from 'next/navigation';
                {/* dropdown with listbox for Subscription Type */}
             
           <Listbox value={Selected3} onChange={setSelected3}>
-          <div className="relative">
+          <div className="relative cursor-pointer">
           <Listbox.Button className="flex items-center justify-between px-3 py-2 rounded-md bg-white text-sm gap-2">
           <Image src={sort} width={17} height={17} alt='icon' className='' />
             {Selected3}
@@ -271,8 +277,8 @@ import { useParams } from 'next/navigation';
       )}
       
 
-      <Button onClick={() => setOpen(true)} className="flex items-center gap-1">
-          <Mail className="w-4 h-4" /> Send an email
+      <Button onClick={() => setOpen(true)} className="flex items-center gap-1 cursor-pointer">
+          <Mail className="w-4 h-4 " /> Send an email
       </Button>
       <EmailPopup open={open} setOpen={setOpen}/>
       </div>
@@ -364,8 +370,26 @@ import { useParams } from 'next/navigation';
                   <div className="text-sm font-medium text-gray-800">₦25,000.00</div>
                 </div>              
                 
-                <div className="text-gray-500 cursor-pointer">
-                 <MoreVerticalIcon className='flex justify-end w-4 h-4 text-gray-500 ' />
+                <div className="text-gray-500 ">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="text-gray-400 hover:text-gray-600 cursor-pointer">
+                      <MoreVerticalIcon size={16} />
+                    </button>
+                  </DropdownMenuTrigger>
+
+                  <DropdownMenuContent align="end" className="w-50">
+                    <DropdownMenuItem >
+                      Download invoice
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                  {/* <DeactivateDialog
+                    open={dialogOpen}
+                    onOpenChange={() => setDialogOpen(false)}
+                    onConfirm={exportData}
+                    count={4} // optional
+                  /> */}
+                </DropdownMenu>
                  </div>
               </div> 
 

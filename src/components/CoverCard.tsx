@@ -50,7 +50,6 @@ export default function ResumeCard({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40">
         <DropdownMenuItem onSelect={() => setOpenLetter(true)} className="data-[state=active]:from-blue-500">View Cover letter</DropdownMenuItem>
-        <DropdownMenuItem>Edit</DropdownMenuItem>
         <DropdownMenuItem>Download</DropdownMenuItem>
         <DropdownMenuItem className="text-red-500">Delete</DropdownMenuItem>
       </DropdownMenuContent>

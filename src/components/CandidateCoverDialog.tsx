@@ -53,9 +53,9 @@ import {
             <div className='flex justify-end px-2 mt-2 mb-4 gap-1'>
               <button
                 onClick={handleCopy}
-                className="text-xs px-2 py-2 text-gray-500 border-gray-500 flex items-center gap-2 rounded-md "
+                className="text-xs px-2 py-2 text-gray-500 border-gray-500 flex items-center gap-2 rounded-md cursor-pointer"
               >
-                <Copy className="w-4 h-4" />
+                <Copy className="w-4 h-4 " />
                  Copy
               </button>
 
@@ -68,10 +68,10 @@ import {
   
             <div className="flex justify-between mt-6 gap-4">
               <DialogClose asChild>
-                <Button variant="outline" className="w-70">Cancel</Button>
+                <Button variant="outline" className="w-70 cursor-pointer">Cancel</Button>
               </DialogClose>
               <a href={downloadUrl} download className="w-70">
-                <Button className="gap-2 w-full">
+                <Button className="gap-2 w-full cursor-pointer">
                   <Download />
                   Download
                 </Button>

@@ -45,15 +45,15 @@ export default function ResumeCard({
       </div>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="text-muted-foreground p-2 hover:bg-gray-100 rounded">
+        <button className="text-muted-foreground p-2 hover:bg-gray-100 rounded cursor-pointer">
           <MoreVertical className="w-5 h-5" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40">
-        <DropdownMenuItem onSelect={() => setOpenResume(true)} className="data-[state=active]:from-blue-500">View Resume</DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => setOpenResume(true)} className="data-[state=active]:from-blue-500 cursor-pointer">View Resume</DropdownMenuItem>
         <DropdownMenuItem>Edit</DropdownMenuItem>
         <DropdownMenuItem>Download</DropdownMenuItem>
-        <DropdownMenuItem className="text-red-500">Delete</DropdownMenuItem>
+        <DropdownMenuItem className="text-red-500 cursor-pointer">Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
     <ResumeDialog

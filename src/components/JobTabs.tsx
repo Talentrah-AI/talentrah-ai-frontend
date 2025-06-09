@@ -81,7 +81,7 @@ export function JobTabs() {
         <div>
           <Button
             variant="link"
-            className="rounded-[12px] p-[5px] bg-white shadow-md flex items-center gap-2"
+            className="rounded-[12px] p-[5px] bg-white shadow-md flex items-center gap-2 cursor-pointer"
           >
             <Image src="/sort.svg" alt="sort" width={16} height={16} />
             <span className="font-[Gabarito] font-normal text-[12px] leading-[16px] tracking-[0px] text-[#414A53]">
@@ -106,7 +106,7 @@ export function JobTabs() {
           className="w-[31px] h-[26px] px-[8px] py-[5px] gap-[10px] 
            rounded-[4px] bg-[#0967D2] hover:bg-[#0967D2] 
            font-[Gabarito] font-medium text-[12px] leading-[16px] 
-           tracking-[0px] text-white hover:text-white"
+           tracking-[0px] text-white hover:text-whitecursor-pointer"
         >
           +5
         </Button>

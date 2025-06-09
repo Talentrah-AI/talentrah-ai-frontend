@@ -18,6 +18,7 @@ import calendar from '@/assets/images/calendar.png'
 import Image from 'next/image';
 import { Listbox } from '@headlessui/react';
 import DeactivateDialog from '@/components/DeactivateDialog1';
+import ActivateDialog from '@/components/ActivateDialog';
 
 
 //check for the error
@@ -101,30 +102,15 @@ function Page() {
       setSelectedCandidates([...selectedCandidates, id]);
     }
   };
+   
+  const [fromDate, setFromDate] = useState<Date | null>(null);
+  const [toDate, setToDate] = useState<Date | null>(null);
+  const [activePicker, setActivePicker] = useState<'from' | 'to' | null>(null);
 
- 
-  
-  // const handleTabChange = (tab) => {
-  //   setActiveTab(tab);
-  //   setSelectedCandidates([]);
-  // };
-
-  // const [selectedFilter, setSelectedFilter] = useState("Today")
-   //const [date, setDate] = useState<Date | undefined>(new Date())
-  // const [showCalendar, setShowCalendar] = useState(false);
-  // const [date, setDate] = useState(new Date());
-  // const [openCandidate, setOpenCandidate] = useState(false)
-
-  // useEffect(() => {
-  //   if (selectedFilter === "Today") {
-  //       setDate(new Date());
-  //     } else if (selectedFilter === "30 Days") {
-  //       const thirtyDaysAgo = new Date();
-  //       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-  //       setDate(thirtyDaysAgo);
-  //     }
-  // }, [selectedFilter]);
-  //const [open, setOpen] = useState(false); for email opening popup
+  const formatDate = (date: Date | null) => {
+    if (!date) return 'Select date';
+    return `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
+  };
 
   const exportData = () => {
     // Implement export functionality
@@ -141,6 +127,7 @@ function Page() {
   };
   //deact
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen1, setDialogOpen1] = useState(false);
 
   return (
     <div className="flex h-screen bg-gray-200 overflow-hidden">
@@ -166,7 +153,7 @@ function Page() {
                   </button>
                   <DeactivateDialog
                     open={dialogOpen}
-                    onClose={() => setDialogOpen(false)}
+                    onOpenChange={() => setDialogOpen(false)}
                     onConfirm={exportData}
                     count={4} // optional
                   />
@@ -308,20 +295,55 @@ function Page() {
           </div>
         </div>
         
-        <div className="flex items-center border rounded-md">
-          <div className="px-3 py-2 text-sm text-gray-400">From:</div>
-          <div className="px-3 py-2 border-l text-sm text-gray-400 bg-white rounded-md flex items-center gap-1">
-          <Image src={calendar} width={15} height={15} alt='icon' className='' />
-            <Calendar/>
-            Select date</div>
-        </div>
+        {/* ////////////////////////calendar////////////////////////////////////////////////// */}
+        <div className="relative">
+            <div className="flex items-center border rounded-md">
+              <div className="px-3 py-2 text-sm text-gray-400">From:</div>
+              <div
+                onClick={() => setActivePicker(activePicker === 'from' ? null : 'from')}
+                className="px-3 py-2 border-l text-sm text-gray-400 bg-white rounded-md flex items-center gap-1 cursor-pointer"
+              >
+                <Image src={calendar} width={15} height={15} alt="icon" />
+                {formatDate(fromDate)}
+              </div>
+            </div>
+            {activePicker === 'from' && (
+              <div className="absolute z-50 bg-white shadow-xl rounded-lg p-4 mt-2">
+                <Calendar
+                  selectedDate={fromDate}
+                  onSelectDate={(date) => {
+                    if (date) setFromDate(date);
+                    setActivePicker(null);
+                  }}
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="relative">
+            <div className="flex items-center border rounded-md">
+              <div className="px-3 py-2 text-sm text-gray-400">To:</div>
+              <div
+                onClick={() => setActivePicker(activePicker === 'to' ? null : 'to')}
+                className="px-3 py-2 border-l text-sm text-gray-400 bg-white rounded-md flex items-center gap-1 cursor-pointer"
+              >
+                <Image src={calendar} width={15} height={15} alt="icon" />
+                {formatDate(toDate)}
+              </div>
+            </div>
+            {activePicker === 'to' && (
+              <div className="absolute z-50 bg-white shadow-xl rounded-lg p-4 mt-2">
+                <Calendar
+                  selectedDate={toDate}
+                  onSelectDate={(date) => {
+                    if (date) setToDate(date);
+                    setActivePicker(null);
+                  }}
+                />
+              </div>
+            )}
+          </div>
         
-        <div className="flex items-center border rounded-md">
-          <div className="px-3 py-2 text-sm text-gray-400">To:</div>
-          <div className="px-3 py-2 border-l text-sm text-gray-400 bg-white rounded-md flex items-center gap-1">
-          <Image src={calendar} width={15} height={15} alt='icon' className='' />
-            Select date</div>
-        </div>
         <button 
           onClick={applyFilter}
           className="bg-teal-500 text-white px-4 py-2 rounded-md text-sm cursor-pointer"
@@ -470,7 +492,7 @@ function Page() {
 
                   <DeactivateDialog
                     open={dialogOpen}
-                    onClose={() => setDialogOpen(false)}
+                    onOpenChange={() => setDialogOpen(false)}
                     onConfirm={exportData}
                     count={4} // optional
                   />
@@ -587,7 +609,126 @@ function Page() {
                 <DropdownMenuContent align="end" className="w-40">
                   <DropdownMenuItem  onClick={handleActiveCandidate} className="data-[state=active]:from-blue-500">
                     View details</DropdownMenuItem>
-                  <DropdownMenuItem>Activate User</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setDialogOpen1(true)}>Activate User</DropdownMenuItem>
+                </DropdownMenuContent>
+                <ActivateDialog
+                 open={dialogOpen1}
+                 onClose={()=>setDialogOpen1(false)}
+                 onConfirm={exportData}
+                 />
+              </DropdownMenu>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      </TabsContent>
+
+      {/* Deleted accounts */}
+      <TabsContent value="Deleted accounts">
+      <div className="border rounded-md overflow-hidden">
+        <table className="min-w-full bg-white">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="w-12 px-4 py-3 text-left">
+                <input 
+                  type="checkbox" 
+                  className="rounded"
+                  checked={selectedCandidates.length === candidates.length && candidates.length > 0}
+                  onChange={handleSelectAll}
+                />
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Full Name
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Email Address
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Usage Credit
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Job Application Metrics
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Subscription Type
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Sign-up Date
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                
+              </th>
+            </tr>
+          </thead>
+          {/* calling the list of candidates */}
+          <tbody className="divide-y divide-gray-200">
+            {candidates.map((candidate) => (
+              <tr key={candidate.id} className="hover:bg-gray-50">
+                <td className="px-4 py-3 whitespace-nowrap">
+                  <input 
+                    type="checkbox" 
+                    className="rounded"
+                    checked={selectedCandidates.includes(candidate.id)}
+                    onChange={() => handleSelectCandidate(candidate.id)}
+                  />
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">
+                  <div className="font-medium text-gray-900">{candidate.name}</div>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">
+                  <div className="text-gray-500">{candidate.email}</div>
+                </td>
+                <td className="px-4 py-2 whitespace-nowrap">
+                  <span className="inline-block text-xs text-green-600 bg-green-200 rounded p-1">{candidate.usageCredit}</span>
+                </td>
+                <td className="inline-block px-4 py-2 whitespace-nowrap ">
+                  <span className="flex items-center bg-white border border-black-200 rounded shadow-md p-1 gap-1">
+                    <div className="flex items-center">
+                      <div className="w-5 h-5 rounded-md bg-orange-100 flex items-center justify-center text-xs text-orange-500">{candidate.applicationMetrics.rejected}</div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-5 h-5 rounded-md bg-blue-100 flex items-center justify-center text-xs text-blue-500">{candidate.applicationMetrics.inProgress}</div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-5 h-5 rounded-md bg-green-100 flex items-center justify-center text-xs text-green-500">{candidate.applicationMetrics.completed}</div>
+                    </div>
+                  </span>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">
+                  <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                    candidate.subscriptionType === 'Premium' 
+                      ? 'bg-blue-100 text-blue-800' 
+                      : 'bg-teal-100 text-teal-800'
+                  }`}>
+                    {candidate.subscriptionType === 'Premium' && (
+                      <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-8.5a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                    {candidate.subscriptionType === 'Freemium' && (
+                      <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v14a1 1 0 001 1h8a1 1 0 001-1V3a1 1 0 00-1-1H6zm1 2h6v10H7V4z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                    {candidate.subscriptionType}
+                  </div>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">
+                  <div className="text-gray-500">{candidate.signUpDate}</div>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap text-right">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="text-gray-400 hover:text-gray-600">
+                    <MoreVertical size={16} />
+                  </button>
+                  </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-40">
+                  <DropdownMenuItem  onClick={handleActiveCandidate} className="data-[state=active]:from-blue-500">
+                    View details</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
                 </td>

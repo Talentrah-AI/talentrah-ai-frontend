@@ -4,13 +4,16 @@ import React, { useState } from 'react';
 // import AdminHeader from '@/components/AdminHeader';
 import CandidateSidebar from '@/components/CandidateSidebar';
 import DeactivateDialog from '@/components/DeactivateDialog1';
-import { Download, MoreVertical, Trash, Search } from 'lucide-react';
+import { Download, MoreVertical, Trash, ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { Listbox } from '@headlessui/react';
 import Image from 'next/image';
 import sort from '@/assets/images/sort.png';
 import calendar from '@/assets/images/calendar.png';
 import {DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem} from "@/components/ui/dropdown-menu";
-import { useRouter } from 'next/navigation';
+import JobDetailsPopup from '@/components/JobDetailsPopup';
+import { Button } from '@/components/ui/button';
+import DeleteJobDialog from '@/components/DeleteJobDialog';
+import Calendar from '@/components/ui/Calendar';
 
 const jobs = [
   {
@@ -103,9 +106,7 @@ const jobs = [
   },
 ];
 
-export default function JobManagementPage() {
-
-
+function JobManagementPage (){
 
 //   const handleActiveJob = () => {
 //         // check error
@@ -115,13 +116,6 @@ export default function JobManagementPage() {
   const exportData = () => console.log('Exporting data');
   const applyFilter = () => console.log('Applying filters');
   const clearFilter = () => console.log('Clearing filters');
-
-  const router = useRouter()
-
-  const handleActiveJob = () =>{
-    router.push(`/job/${jobs[0].id}`)
-    
-  };
 
   const options = [10, 25, 50, 100];
   const [selected, setSelected] = useState(options[0]);
@@ -138,7 +132,19 @@ export default function JobManagementPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sidebarOpen] = useState(true); //setSidebarOpen'
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen2, setDialogOpen2] = useState(false);
+  const [dialogOpen3, setDialogOpen3] = useState(false)
   const [selectedCandidates, setSelectedCandidates] = useState<number[]>([]);
+
+  
+  const [fromDate, setFromDate] = useState<Date | null>(null);
+  const [toDate, setToDate] = useState<Date | null>(null);
+  const [activePicker, setActivePicker] = useState<'from' | 'to' | null>(null);
+
+  const formatDate = (date: Date | null) => {
+    if (!date) return 'Select date';
+    return `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
+  };
 
   // const handleToggleSidebar = () => setSidebarOpen(prev => !prev);
 
@@ -165,14 +171,14 @@ export default function JobManagementPage() {
                 <>
                   <button
                     onClick={() => setDialogOpen(true)}
-                    className='border border-orange-300 text-orange-500 px-4 py-2 rounded-md flex items-center gap-3'
+                    className='border border-orange-300 text-orange-500 px-4 py-2 rounded-md flex items-center gap-3 cursor-pointer'
                   >
                     <Trash size={16} />
                     Deactivate
                   </button>
                   <DeactivateDialog
                     open={dialogOpen}
-                    onClose={() => setDialogOpen(false)}
+                    onOpenChange={() => setDialogOpen(false)}
                     onConfirm={exportData}
                     count={selectedCandidates.length}
                   />
@@ -291,21 +297,56 @@ export default function JobManagementPage() {
             </span>
           </div>
         </div>
-        
-        <div className="flex items-center border rounded-md">
-          <div className="px-3 py-2 text-sm text-gray-400">From:</div>
-          <div className="px-3 py-2 border-l text-sm text-gray-400 bg-white rounded-md flex items-center gap-1">
-          <Image src={calendar} width={15} height={15} alt='icon' className='' />
-            Select date</div>
-        </div>
-        
-        <div className="flex items-center border rounded-md">
-          <div className="px-3 py-2 text-sm text-gray-400">To:</div>
-          <div className="px-3 py-2 border-l text-sm text-gray-400 bg-white rounded-md flex items-center gap-1">
-          <Image src={calendar} width={15} height={15} alt='icon' className='' />
-            Select date</div>
-        </div>
-        <button 
+        {/* ////////////////////////calendar////////////////////////////////////////////////// */}
+        <div className="relative">
+            <div className="flex items-center border rounded-md">
+              <div className="px-3 py-2 text-sm text-gray-400">From:</div>
+              <div
+                onClick={() => setActivePicker(activePicker === 'from' ? null : 'from')}
+                className="px-3 py-2 border-l text-sm text-gray-400 bg-white rounded-md flex items-center gap-1 cursor-pointer"
+              >
+                <Image src={calendar} width={15} height={15} alt="icon" />
+                {formatDate(fromDate)}
+              </div>
+            </div>
+            {activePicker === 'from' && (
+              <div className="absolute z-50 bg-white shadow-xl rounded-lg p-4 mt-2">
+                <Calendar
+                  selectedDate={fromDate}
+                  onSelectDate={(date) => {
+                    if (date) setFromDate(date);
+                    setActivePicker(null);
+                  }}
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="relative">
+            <div className="flex items-center border rounded-md">
+              <div className="px-3 py-2 text-sm text-gray-400">To:</div>
+              <div
+                onClick={() => setActivePicker(activePicker === 'to' ? null : 'to')}
+                className="px-3 py-2 border-l text-sm text-gray-400 bg-white rounded-md flex items-center gap-1 cursor-pointer"
+              >
+                <Image src={calendar} width={15} height={15} alt="icon" />
+                {formatDate(toDate)}
+              </div>
+            </div>
+            {activePicker === 'to' && (
+              <div className="absolute z-50 bg-white shadow-xl rounded-lg p-4 mt-2">
+                <Calendar
+                  selectedDate={toDate}
+                  onSelectDate={(date) => {
+                    if (date) setToDate(date);
+                    setActivePicker(null);
+                  }}
+                />
+              </div>
+            )}
+          </div>
+
+         <button 
           onClick={applyFilter}
           className="bg-teal-500 text-white px-4 py-2 rounded-md text-sm cursor-pointer"
         >
@@ -389,40 +430,53 @@ export default function JobManagementPage() {
                 <td className='p-4'>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="text-gray-400 hover:text-gray-600">
-                      <MoreVertical size={16} />
+                    <button className="text-muted-foreground p-2 hover:bg-gray-100 rounded cursor-pointer">
+                      <MoreVertical className="w-5 h-5"/>
                     </button>
                   </DropdownMenuTrigger>
-
                   <DropdownMenuContent align="end" className="w-50">
-                    <DropdownMenuItem onClick={handleActiveJob}>
-                      View details
-                    </DropdownMenuItem>
-
-                    <DropdownMenuItem
-                      onClick={() => setDialogOpen(true)}
-                      className=" px-2 py-2 rounded-md flex items-center cursor-pointer gap-3"
-                    >
-                      Deactivate Candidate
-                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setDialogOpen2(true)} className="data-[state=active]:from-blue-500 cursor-pointer">View details</DropdownMenuItem>
+                    <DropdownMenuItem  onSelect={() => setDialogOpen3(true)} className=" px-2 py-2 rounded-md flex items-center cursor-pointer gap-3 cursor-pointer">Delete job</DropdownMenuItem>
                   </DropdownMenuContent>
-
-                  <DeactivateDialog
-                    open={dialogOpen}
-                    onClose={() => setDialogOpen(false)}
+                  <DeleteJobDialog 
+                  open={dialogOpen3}
+                  onClose={() => setDialogOpen3(false)}
+                  />
+                  <JobDetailsPopup
+                    open={dialogOpen2}
+                    onClose={() => setDialogOpen2(false)}
                     onConfirm={exportData}
-                    count={4} // optional
                   />
                 </DropdownMenu>
-
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
+            </div>
+             {/* Pagination */}
+             <div className="flex items-center justify-center gap-2 mt-4">
+                  <Button variant="outline" size="icon" className="rounded-full w-8 h-8">
+                  <ChevronLeft className="h-4 w-4" />
+                  </Button>
+
+                  {[1, 2, 3, "...", 10].map((item, idx) => (
+                  <Button
+                      key={idx}
+                      variant={item === 1 ? "default" : "ghost"}
+                      className={`rounded-full w-8 h-8 text-sm ${item === 1 ? "bg-blue-600 text-white" : ""}`}
+                  >
+                      {item}
+                  </Button>
+                  ))}
+
+                  <Button variant="outline" size="icon" className="rounded-full w-8 h-8">
+                  <ChevronRight className="h-4 w-4" />
+                  </Button>
+              </div>
         </div>
       </main>
     </div>
   );
-}
+};
+export default JobManagementPage
