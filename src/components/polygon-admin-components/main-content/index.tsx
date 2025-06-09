@@ -194,6 +194,7 @@ const MainContentDashboard = () => {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  
   const filteredAdmins = admins.filter((admin) => {
     const matchesSearch =
       admin.firstName.toLowerCase().includes(adminSearchQuery.toLowerCase()) ||
