@@ -112,7 +112,7 @@ const MentorsId = () => {
               onValueChange={setSelectedTab}
               className="w-full"
             >
-              <TabsList className="grid w-full grid-cols-4 bg-gray-50 px-4 h-auto ">
+              <TabsList className=" w-full flex flex-wrap  bg-gray-50 md:px-4  h-auto overflow-x-hidden">
                 <TabsTrigger
                   value="overview"
                   className={cn(
@@ -169,9 +169,9 @@ const MentorsId = () => {
                 {/* Stats Cards */}
                 <div className=" flex flex-col px-3 py-4 min-h-[100px] rounded-md shadow-nav">
                   <h2>Statistics</h2>
-                  <div className="flex gap-4  items-center ">
+                  <div className="flex md:gap-4  items-center flex-col md:flex-row ">
                     <Card className="bg-white">
-                      <CardContent className="p-2 item-center  flex gap-2">
+                      <CardContent className="p-2  item-center  flex gap-2">
                         <div className="w-8 h-8 bg-blue-100 rounded-sm flex items-center justify-center mx-auto ">
                           <Clock className="w-5 h-5 text-blue-600" />
                         </div>
