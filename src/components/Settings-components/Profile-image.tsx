@@ -31,7 +31,7 @@ const ProfileImage: React.FC<ProfileImageProps> = ({
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (event) => {
-        const img = new window.Image(); // Use window.Image to avoid TS error
+        const img = new window.Image(); 
         img.onload = () => {
           const canvas = document.createElement('canvas');
           const MAX_SIZE = 300;
