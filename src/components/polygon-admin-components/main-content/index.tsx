@@ -1,28 +1,35 @@
-'use client'
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { cn } from "@/lib/utils"
-import { FileText, Filter, Plus, Search } from "lucide-react"
-import { useState, useEffect } from "react"
-import RolesTab from "../roles-tab"
-import { toast } from "@/hooks/use-toast"
-import PermissionTab from "../permission-tab"
-import AdminTabPage from "../admin-tab-page"
-import { CreateRoleDialog, RoleProps } from "../dilogs-modal/create-role-modal"
-import { AdminFormData, CreateAdminDialog } from "../dilogs-modal/create-admin-modal"
-import { EditRoleDialog } from "../dilogs-modal/edit-role-modal"
-import { AddPermissionDialog } from "../dilogs-modal/add-permission-modal"
-import { EditPermissionDialog } from "../dilogs-modal/edit-permission-modal"
-import { RemovePermissionDialog } from "../dilogs-modal/remove-permission-modal"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import { AdminProps, RolesProps } from "@/lib/polygon-types"
+'use client';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { cn } from '@/lib/utils';
+import { Filter, Plus } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import RolesTab from '../roles-tab';
+import { toast } from '@/hooks/use-toast';
+import PermissionTab from '../permission-tab';
+import AdminTabPage from '../admin-tab-page';
+import { CreateRoleDialog, RoleProps } from '../dilogs-modal/create-role-modal';
+import {
+  AdminFormData,
+  CreateAdminDialog,
+} from '../dilogs-modal/create-admin-modal';
+import { EditRoleDialog } from '../dilogs-modal/edit-role-modal';
+import { AddPermissionDialog } from '../dilogs-modal/add-permission-modal';
+import { EditPermissionDialog } from '../dilogs-modal/edit-permission-modal';
+import { RemovePermissionDialog } from '../dilogs-modal/remove-permission-modal';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { AdminProps, RolesProps } from '@/lib/polygon-types';
 
-
-
-
-
-const MainContentDashboard = () =>
-{
+const MainContentDashboard = () => {
   const [activeTab, setActiveTab] = useState('roles');
   // const router = useRouter();
   const [createAdminOpen, setCreateAdminOpen] = useState<boolean>(false);
@@ -165,9 +172,11 @@ const MainContentDashboard = () =>
   // Add these new state variables for search, delete, and pagination
   const [adminSearchQuery, setAdminSearchQuery] = useState('');
   const [roleSearchQuery, setRoleSearchQuery] = useState('');
-  const [permissionSearchQuery, setPermissionSearchQuery] = useState("")
-  const [roleTypeFilter, setRoleTypeFilter] = useState<string | null>(null)
-  const [permissionsFilter, setPermissionsFilter] = useState<number | null>(null)
+  const [permissionSearchQuery, setPermissionSearchQuery] = useState('');
+  const [roleTypeFilter, setRoleTypeFilter] = useState<string | null>(null);
+  const [permissionsFilter, setPermissionsFilter] = useState<number | null>(
+    null
+  );
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
   const [calendarType, setCalendarType] = useState<'from' | 'to'>('from');
   const [dateRange, setDateRange] = useState<{
@@ -185,33 +194,27 @@ const MainContentDashboard = () =>
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
-  const [selectedAdmins, setSelectedAdmins] = useState<number[]>([])
+  
+  const filteredAdmins = admins.filter((admin) => {
+    const matchesSearch =
+      admin.firstName.toLowerCase().includes(adminSearchQuery.toLowerCase()) ||
+      admin.lastName.toLowerCase().includes(adminSearchQuery.toLowerCase()) ||
+      admin.email.toLowerCase().includes(adminSearchQuery.toLowerCase()) ||
+      admin.phone.toLowerCase().includes(adminSearchQuery.toLowerCase()) ||
+      admin.role.toLowerCase().includes(adminSearchQuery.toLowerCase());
 
-  const filteredAdmins = admins.filter(
-    (admin) =>
-    {
-      const matchesSearch =
-        admin.firstName.toLowerCase().includes(adminSearchQuery.toLowerCase()) ||
-        admin.lastName.toLowerCase().includes(adminSearchQuery.toLowerCase()) ||
-        admin.email.toLowerCase().includes(adminSearchQuery.toLowerCase()) ||
-        admin.phone.toLowerCase().includes(adminSearchQuery.toLowerCase()) ||
-        admin.role.toLowerCase().includes(adminSearchQuery.toLowerCase())
+    const matchesRoleType = !roleTypeFilter || admin.role === roleTypeFilter;
+    const matchesPermissions =
+      !permissionsFilter || admin.permissions === permissionsFilter;
+    const adminDate = new Date(admin.dateAdded.split(',')[0]);
+    const matchesDateRange =
+      (!dateRange.from || adminDate >= dateRange.from) &&
+      (!dateRange.to || adminDate <= dateRange.to);
 
-      const matchesRoleType = !roleTypeFilter || admin.role === roleTypeFilter
-      const matchesPermissions = !permissionsFilter || admin.permissions === permissionsFilter
-      const adminDate = new Date(admin.dateAdded.split(',')[0]);
-      const matchesDateRange =
-          (!dateRange.from || adminDate >= dateRange.from) &&
-          (!dateRange.to || adminDate <= dateRange.to);
-
-      return (
-        matchesSearch &&
-        matchesRoleType &&
-        matchesPermissions &&
-        matchesDateRange 
-      );
-    }
-  );
+    return (
+      matchesSearch && matchesRoleType && matchesPermissions && matchesDateRange
+    );
+  });
 
   // Filter roles based on search query
   const filteredRoles = roles.filter((role) =>
@@ -240,22 +243,20 @@ const MainContentDashboard = () =>
   );
 
   // Reset to first page when filters change
-  useEffect(() =>
-  {
+  useEffect(() => {
     setCurrentPage(1);
-  }, [adminSearchQuery,
+  }, [
+    adminSearchQuery,
     roleSearchQuery,
     permissionSearchQuery,
     activeTab,
     roleTypeFilter,
-    permissionsFilter
+    permissionsFilter,
   ]);
 
   // Handle delete admin
-  const handleDeleteAdmin = () =>
-  {
-    if (adminToDelete)
-    {
+  const handleDeleteAdmin = () => {
+    if (adminToDelete) {
       // Remove the admin from the list
       const updatedAdmins = admins.filter(
         (admin) => admin.id !== adminToDelete.id
@@ -270,8 +271,7 @@ const MainContentDashboard = () =>
       ).length;
 
       // If this was the last item on the page and not the first page, go to previous page
-      if (currentPageItemCount === 0 && currentPage > 1)
-      {
+      if (currentPageItemCount === 0 && currentPage > 1) {
         setCurrentPage(currentPage - 1);
       }
       setAdmins(updatedAdmins);
@@ -291,26 +291,21 @@ const MainContentDashboard = () =>
   };
 
   // Handle delete role
-  const handleDeleteRole = () =>
-  {
-    if (roleToDelete)
-    {
+  const handleDeleteRole = () => {
+    if (roleToDelete) {
       // Remove the role from the list
-      const updatedRoles = roles.filter(
-        (role) => role.name !== roleToDelete.name
-      );
+
       // Check if the current page would be empty after deletion
       const currentPageItemCount = filteredRoles.filter(
         (role) =>
           role.name !== roleToDelete.name &&
           filteredRoles.indexOf(role) >= indexOfFirstItem &&
-          filteredRoles.indexOf(role) < indexOfLastItem,
-      ).length
+          filteredRoles.indexOf(role) < indexOfLastItem
+      ).length;
 
       // If this was the last item on the page and not the first page, go to previous page
-      if (currentPageItemCount === 0 && currentPage > 1)
-      {
-        setCurrentPage(currentPage - 1)
+      if (currentPageItemCount === 0 && currentPage > 1) {
+        setCurrentPage(currentPage - 1);
       }
       // Update the roles state
       // This is a mock implementation since we're not actually updating the roles array in state
@@ -330,14 +325,12 @@ const MainContentDashboard = () =>
     }
   };
 
-  const handleEditRole = (roleName: string) =>
-  {
+  const handleEditRole = (roleName: string) => {
     setSelectedRole(roleName);
     setEditRoleOpen(true);
   };
 
-  const handleCreateAdmin = (data: AdminFormData) =>
-  {
+  const handleCreateAdmin = (data: AdminFormData) => {
     // In a real app, you would send this data to your API
     console.log('Creating admin with data:', data);
     setCreateAdminOpen(false);
@@ -357,35 +350,30 @@ const MainContentDashboard = () =>
     setAdmins([...admins, newAdmin]);
   };
 
-  const handleCreateRole = (data: RoleProps) =>
-  {
+  const handleCreateRole = (data: RoleProps) => {
     // In a real app, you would send this data to your API
     console.log('Creating role with data:', data);
     setCreateRoleOpen(false);
   };
 
-  const handleUpdateRole = (data: RoleProps) =>
-  {
+  const handleUpdateRole = (data: RoleProps) => {
     // In a real app, you would send this data to your API
     console.log('Updating role with data:', data);
     setEditRoleOpen(false);
   };
 
   // Add these handler functions inside the AdminManagement component, after the other handler functions
-  const handleAddPermission = (data: { name: string }) =>
-  {
+  const handleAddPermission = (data: { name: string }) => {
     // In a real app, you would send this data to your API
     console.log('Adding permission:', data.name);
     setPermissions([...permissions, data.name]);
     setAddPermissionOpen(false);
   };
 
-  const handleEditPermission = (data: { name: string }) =>
-  {
+  const handleEditPermission = (data: { name: string }) => {
     // In a real app, you would send this data to your API
     console.log('Editing permission:', selectedPermission, 'to', data.name);
-    if (selectedPermission)
-    {
+    if (selectedPermission) {
       const updatedPermissions = permissions.map((p) =>
         p === selectedPermission ? data.name : p
       );
@@ -394,12 +382,10 @@ const MainContentDashboard = () =>
     setEditPermissionOpen(false);
   };
 
-  const handleRemovePermission = () =>
-  {
+  const handleRemovePermission = () => {
     // In a real app, you would send this data to your API
     console.log('Removing permission:', selectedPermission);
-    if (selectedPermission)
-    {
+    if (selectedPermission) {
       const updatedPermissions = permissions.filter(
         (p) => p !== selectedPermission
       );
@@ -410,299 +396,269 @@ const MainContentDashboard = () =>
       (permission) =>
         permission !== selectedPermission &&
         filteredPermissions.indexOf(permission) >= indexOfFirstItem &&
-        filteredPermissions.indexOf(permission) < indexOfLastItem,
-    ).length
+        filteredPermissions.indexOf(permission) < indexOfLastItem
+    ).length;
 
     // If this was the last item on the page and not the first page, go to previous page
-    if (currentPageItemCount === 0 && currentPage > 1)
-    {
-      setCurrentPage(currentPage - 1)
+    if (currentPageItemCount === 0 && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
     setRemovePermissionOpen(false);
   };
 
-
-  const handleApplyFilter = () =>
-  {
+  const handleApplyFilter = () => {
     // This will trigger the useEffect to filter the data
     toast({
-      title: "Filters applied",
-      description: "The data has been filtered based on your criteria",
-    })
-  }
+      title: 'Filters applied',
+      description: 'The data has been filtered based on your criteria',
+    });
+  };
 
-  const handleClearFilter = () =>
-  {
-    setRoleTypeFilter(null)
-    setPermissionsFilter(null)
+  const handleClearFilter = () => {
+    setRoleTypeFilter(null);
+    setPermissionsFilter(null);
     setDateRange({ from: undefined, to: undefined });
-    setAdminSearchQuery("")
+    setAdminSearchQuery('');
 
     toast({
-      title: "Filters cleared",
-      description: "All filters have been reset",
-    })
-  }
-    // / Handle select all admins
-    const handleSelectAllAdmins = () =>
-    {
-      if (selectedAdmins.length === currentAdmins.length)
-      {
-        setSelectedAdmins([])
-        console.log('all admins')
-      } else
-      {
-        setSelectedAdmins(currentAdmins.map((admin) => admin.id))
-      }
+      title: 'Filters cleared',
+      description: 'All filters have been reset',
+    });
+  };
+  // / Handle select all admins
+
+  // Handle select admin
+
+  const handleOpenCalendar = (type: 'from' | 'to') => {
+    setCalendarType(type);
+    setCalendarOpen(true);
+  };
+
+  const handleSelectDate = (date: Date) => {
+    if (calendarType === 'from') {
+      setDateRange({ ...dateRange, from: date });
+    } else {
+      setDateRange({ ...dateRange, to: date });
     }
+  };
 
-    // Handle select admin
-    const handleSelectAdmin = (id: number) =>
-    {
-      if (selectedAdmins.includes(id))
-      {
-        console.log(' admin')
-        setSelectedAdmins(selectedAdmins.filter((adminId) => adminId !== id))
-      } else
-      {
-        setSelectedAdmins([...selectedAdmins, id])
-      }
-  }
-   const handleOpenCalendar = (type: 'from' | 'to') => {
-     setCalendarType(type);
-     setCalendarOpen(true);
-   };
+  const formatDate = (date?: Date) => {
+    if (!date) return 'Select date';
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  };
 
-   const handleSelectDate = (date: Date) => {
-     if (calendarType === 'from') {
-       setDateRange({ ...dateRange, from: date });
-     } else {
-       setDateRange({ ...dateRange, to: date });
-     }
-   };
-
-   const formatDate = (date?: Date) => {
-     if (!date) return 'Select date';
-     return date.toLocaleDateString('en-US', {
-       month: 'short',
-       day: 'numeric',
-       year: 'numeric',
-     });
-   };
-
-
-    return (
-      <div>
-        <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
-          <h1 className="text-[20px] md:text-2xl font-medium">
-            Admin Management
-          </h1>
-          <div className="flex gap-4 md:gap-2 ">
-            <Button
-              onClick={() => {
-                if (activeTab === 'admins') {
-                  setCreateAdminOpen(true);
-                } else if (activeTab === 'roles') {
-                  setCreateRoleOpen(true);
-                } else if (activeTab === 'permissions') {
-                  setAddPermissionOpen(true);
-                }
-              }}
-              className="flex-1 h-[40px] border border-[#0967D2] text-[#0967D2]"
-              variant="outline"
-            >
-              <Plus className="mr-2 h-4 w-4" />
-              {activeTab === 'admins'
-                ? 'Add an admin'
-                : activeTab === 'roles'
-                  ? 'Create a role'
-                  : 'Add permission'}
-            </Button>
-            <Button className="flex-1 h-[40px] flex items-center">
-              <Filter className=" h-4 w-4" />
-              <span>Export</span>
-            </Button>
-          </div>
+  return (
+    <div>
+      <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
+        <h1 className="text-[20px] md:text-2xl font-medium">
+          Admin Management
+        </h1>
+        <div className="flex gap-4 md:gap-2 ">
+          <Button
+            onClick={() => {
+              if (activeTab === 'admins') {
+                setCreateAdminOpen(true);
+              } else if (activeTab === 'roles') {
+                setCreateRoleOpen(true);
+              } else if (activeTab === 'permissions') {
+                setAddPermissionOpen(true);
+              }
+            }}
+            className="flex-1 h-[40px] border border-[#0967D2] text-[#0967D2]"
+            variant="outline"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            {activeTab === 'admins'
+              ? 'Add an admin'
+              : activeTab === 'roles'
+                ? 'Create a role'
+                : 'Add permission'}
+          </Button>
+          <Button className="flex-1 h-[40px] flex items-center">
+            <Filter className=" h-4 w-4" />
+            <span>Export</span>
+          </Button>
         </div>
-        <Tabs
-          defaultValue="roles"
-          value={activeTab}
-          onValueChange={setActiveTab}
-        >
-          <TabsList className="mb-6  shadow-md rounded-[12px] bg-white p-2 gap-2 h-[40px] transition-colors duration-500">
-            <TabsTrigger
-              value="roles"
-              className={cn(
-                'data-[state=active]:bg-gradient-to-r from-blue-500 to-teal-400 cursor-pointer data-[state=active]:text-white transition-colors duration-500'
-              )}
-            >
-              Roles
-            </TabsTrigger>
-            <TabsTrigger
-              value="admins"
-              className={cn(
-                'data-[state=active]:bg-gradient-to-r from-blue-500 to-teal-400  cursor-pointer data-[state=active]:text-white transition-colors duration-500'
-              )}
-            >
-              Admins
-            </TabsTrigger>
-            <TabsTrigger
-              value="permissions"
-              className={cn(
-                'data-[state=active]:bg-gradient-to-r from-blue-500 to-teal-400  cursor-pointer data-[state=active]:text-white transition-colors duration-500'
-              )}
-            >
-              Permissions
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="roles">
-            <RolesTab
-              currentRoles={currentRoles}
-              handleEditRole={handleEditRole}
-              setDeleteRoleOpen={setDeleteRoleOpen}
-              setRoleToDelete={setRoleToDelete}
-              filteredRoles={filteredRoles}
-              itemsPerPage={itemsPerPage}
-              indexOfFirstItem={indexOfFirstItem}
-              indexOfLastItem={indexOfLastItem}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              totalRolePages={totalRolePages}
-              roleSearchQuery={roleSearchQuery}
-              setRoleSearchQuery={setRoleSearchQuery}
-              setItemsPerPage={setItemsPerPage}
-              roles={roles}
-              setCreateRoleOpen={setCreateRoleOpen}
-            />
-          </TabsContent>
-          <TabsContent value="permissions">
-            <PermissionTab
-              itemsPerPage={itemsPerPage}
-              setItemsPerPage={setItemsPerPage}
-              permissionSearchQuery={permissionSearchQuery}
-              setPermissionSearchQuery={setPermissionSearchQuery}
-              currentPermissions={currentPermissions}
-              setSelectedPermission={setSelectedPermission}
-              setEditPermissionOpen={setEditPermissionOpen}
-              setRemovePermissionOpen={setRemovePermissionOpen}
-              filteredPermissions={filteredPermissions}
-              indexOfFirstItem={indexOfFirstItem}
-              indexOfLastItem={indexOfLastItem}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              totalPermissionPages={totalPermissionPages}
-              permissions={permissions}
-              setAddPermissionOpen={setAddPermissionOpen}
-            />
-          </TabsContent>
-          <TabsContent value="admins">
-            <AdminTabPage
-              itemsPerPage={itemsPerPage}
-              setItemsPerPage={setItemsPerPage}
-              adminSearchQuery={adminSearchQuery}
-              setAdminSearchQuery={setAdminSearchQuery}
-              currentAdmins={currentAdmins}
-              setAdminToDelete={setAdminToDelete}
-              setDeleteAdminOpen={setDeleteAdminOpen}
-              indexOfFirstItem={indexOfFirstItem}
-              filteredAdmins={filteredAdmins}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              indexOfLastItem={indexOfLastItem}
-              totalAdminPages={totalAdminPages}
-              setCreateAdminOpen={setCreateAdminOpen}
-              admins={admins}
-              setRoleTypeFilter={setRoleTypeFilter}
-              roleTypeFilter={roleTypeFilter}
-              permissionsFilter={permissionsFilter}
-              setPermissionsFilter={setPermissionsFilter}
-              handleApplyFilter={handleApplyFilter}
-              handleClearFilter={handleClearFilter}
-              dateRange={dateRange}
-              formatDate={formatDate}
-              handleOpenCalendar={handleOpenCalendar}
-              calendarOpen={calendarOpen}
-              setCalendarOpen={setCalendarOpen}
-              handleSelectDate={handleSelectDate}
-            />
-          </TabsContent>
-        </Tabs>
-
-        {/* keep the exixting dialog */}
-
-        <CreateRoleDialog
-          open={createRoleOpen}
-          onOpenChange={setCreateRoleOpen}
-          onSubmit={handleCreateRole}
-        />
-
-        <CreateAdminDialog
-          open={createAdminOpen}
-          onOpenChange={setCreateAdminOpen}
-          onSubmit={handleCreateAdmin}
-        />
-        <EditRoleDialog
-          open={editRoleOpen}
-          onOpenChange={setEditRoleOpen}
-          roleName={selectedRole || ''}
-          onSubmit={handleUpdateRole}
-        />
-
-        <AddPermissionDialog
-          open={addPermissionOpen}
-          onOpenChange={setAddPermissionOpen}
-          onSubmit={handleAddPermission}
-        />
-
-        <EditPermissionDialog
-          open={editPermissionOpen}
-          onOpenChange={setEditPermissionOpen}
-          permissionName={selectedPermission || ''}
-          onSubmit={handleEditPermission}
-        />
-
-        <RemovePermissionDialog
-          open={removePermissionOpen}
-          onOpenChange={setRemovePermissionOpen}
-          onConfirm={handleRemovePermission}
-          title={'Remove permission?'}
-          desc={'Are you sure you want to remove this permission?'}
-          deleteNote={' Yes, remove permission'}
-        />
-        <RemovePermissionDialog
-          open={deleteAdminOpen}
-          onOpenChange={setDeleteAdminOpen}
-          onConfirm={handleDeleteAdmin}
-          title={'Delete Admin'}
-          desc={
-            'Are you sure you want to delete this admin? This action cannot be undone.'
-          }
-          deleteNote={'Delete'}
-        />
-
-        {/* Add delete role dialog */}
-        <AlertDialog open={deleteRoleOpen} onOpenChange={setDeleteRoleOpen}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Delete Role</AlertDialogTitle>
-              <AlertDialogDescription>
-                Are you sure you want to delete this role? This action cannot be
-                undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={handleDeleteRole}
-                className="bg-red-600 hover:bg-red-700"
-              >
-                Delete
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
       </div>
-    );
-}
+      <Tabs defaultValue="roles" value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="mb-6  shadow-md rounded-[12px] bg-white p-2 gap-2 h-[40px] transition-colors duration-500">
+          <TabsTrigger
+            value="roles"
+            className={cn(
+              'data-[state=active]:bg-gradient-to-r from-blue-500 to-teal-400 cursor-pointer data-[state=active]:text-white transition-colors duration-500'
+            )}
+          >
+            Roles
+          </TabsTrigger>
+          <TabsTrigger
+            value="admins"
+            className={cn(
+              'data-[state=active]:bg-gradient-to-r from-blue-500 to-teal-400  cursor-pointer data-[state=active]:text-white transition-colors duration-500'
+            )}
+          >
+            Admins
+          </TabsTrigger>
+          <TabsTrigger
+            value="permissions"
+            className={cn(
+              'data-[state=active]:bg-gradient-to-r from-blue-500 to-teal-400  cursor-pointer data-[state=active]:text-white transition-colors duration-500'
+            )}
+          >
+            Permissions
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="roles">
+          <RolesTab
+            currentRoles={currentRoles}
+            handleEditRole={handleEditRole}
+            setDeleteRoleOpen={setDeleteRoleOpen}
+            setRoleToDelete={setRoleToDelete}
+            filteredRoles={filteredRoles}
+            itemsPerPage={itemsPerPage}
+            indexOfFirstItem={indexOfFirstItem}
+            indexOfLastItem={indexOfLastItem}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            totalRolePages={totalRolePages}
+            roleSearchQuery={roleSearchQuery}
+            setRoleSearchQuery={setRoleSearchQuery}
+            setItemsPerPage={setItemsPerPage}
+            roles={roles}
+            setCreateRoleOpen={setCreateRoleOpen}
+          />
+        </TabsContent>
+        <TabsContent value="permissions">
+          <PermissionTab
+            itemsPerPage={itemsPerPage}
+            setItemsPerPage={setItemsPerPage}
+            permissionSearchQuery={permissionSearchQuery}
+            setPermissionSearchQuery={setPermissionSearchQuery}
+            currentPermissions={currentPermissions}
+            setSelectedPermission={setSelectedPermission}
+            setEditPermissionOpen={setEditPermissionOpen}
+            setRemovePermissionOpen={setRemovePermissionOpen}
+            filteredPermissions={filteredPermissions}
+            indexOfFirstItem={indexOfFirstItem}
+            indexOfLastItem={indexOfLastItem}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            totalPermissionPages={totalPermissionPages}
+            permissions={permissions}
+            setAddPermissionOpen={setAddPermissionOpen}
+          />
+        </TabsContent>
+        <TabsContent value="admins">
+          <AdminTabPage
+            itemsPerPage={itemsPerPage}
+            setItemsPerPage={setItemsPerPage}
+            adminSearchQuery={adminSearchQuery}
+            setAdminSearchQuery={setAdminSearchQuery}
+            currentAdmins={currentAdmins}
+            setAdminToDelete={setAdminToDelete}
+            setDeleteAdminOpen={setDeleteAdminOpen}
+            indexOfFirstItem={indexOfFirstItem}
+            filteredAdmins={filteredAdmins}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            indexOfLastItem={indexOfLastItem}
+            totalAdminPages={totalAdminPages}
+            setCreateAdminOpen={setCreateAdminOpen}
+            admins={admins}
+            setRoleTypeFilter={setRoleTypeFilter}
+            roleTypeFilter={roleTypeFilter}
+            permissionsFilter={permissionsFilter}
+            setPermissionsFilter={setPermissionsFilter}
+            handleApplyFilter={handleApplyFilter}
+            handleClearFilter={handleClearFilter}
+            dateRange={dateRange}
+            formatDate={formatDate}
+            handleOpenCalendar={handleOpenCalendar}
+            calendarOpen={calendarOpen}
+            setCalendarOpen={setCalendarOpen}
+            handleSelectDate={handleSelectDate}
+          />
+        </TabsContent>
+      </Tabs>
 
-export default MainContentDashboard
+      {/* keep the exixting dialog */}
+
+      <CreateRoleDialog
+        open={createRoleOpen}
+        onOpenChange={setCreateRoleOpen}
+        onSubmit={handleCreateRole}
+      />
+
+      <CreateAdminDialog
+        open={createAdminOpen}
+        onOpenChange={setCreateAdminOpen}
+        onSubmit={handleCreateAdmin}
+      />
+      <EditRoleDialog
+        open={editRoleOpen}
+        onOpenChange={setEditRoleOpen}
+        roleName={selectedRole || ''}
+        onSubmit={handleUpdateRole}
+      />
+
+      <AddPermissionDialog
+        open={addPermissionOpen}
+        onOpenChange={setAddPermissionOpen}
+        onSubmit={handleAddPermission}
+      />
+
+      <EditPermissionDialog
+        open={editPermissionOpen}
+        onOpenChange={setEditPermissionOpen}
+        permissionName={selectedPermission || ''}
+        onSubmit={handleEditPermission}
+      />
+
+      <RemovePermissionDialog
+        open={removePermissionOpen}
+        onOpenChange={setRemovePermissionOpen}
+        onConfirm={handleRemovePermission}
+        title={'Remove permission?'}
+        desc={'Are you sure you want to remove this permission?'}
+        deleteNote={' Yes, remove permission'}
+      />
+      <RemovePermissionDialog
+        open={deleteAdminOpen}
+        onOpenChange={setDeleteAdminOpen}
+        onConfirm={handleDeleteAdmin}
+        title={'Delete Admin'}
+        desc={
+          'Are you sure you want to delete this admin? This action cannot be undone.'
+        }
+        deleteNote={'Delete'}
+      />
+
+      {/* Add delete role dialog */}
+      <AlertDialog open={deleteRoleOpen} onOpenChange={setDeleteRoleOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Role</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this role? This action cannot be
+              undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteRole}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
+};
+
+export default MainContentDashboard;

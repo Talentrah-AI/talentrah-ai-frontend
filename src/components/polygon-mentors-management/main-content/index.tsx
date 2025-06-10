@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { MoreVertical, Plus, Search, Mail, Trash2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+
 import { useMediaQuery } from '@/hooks/use-mediaQuery/index';
 
 // import { Layout } from '@/components/layout';
@@ -30,7 +30,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
-// import { CreateMentorDialog } from '@/components/polygon-mentors-management/mentorsdialog/create-mentor-modal/index';
+import { CreateMentorDialog } from '@/components/polygon-mentors-management/mentorsdialog/create-mentor-modal/index';
 import { DeleteMentorDialog } from '@/components/polygon-mentors-management/mentorsdialog/delete-mentor-modal/index';
 import { DeleteSuccessDialog } from '@/components/polygon-mentors-management/mentorsdialog/delete-success-modal/index';
 import { MentorCard } from '@/components/polygon-mentors-management/mentorsdialog/mentor-card/index';
@@ -42,18 +42,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { AddMentorModal } from './modals/AddMentorDialog';
-import { CreateMentorDialog } from '../mentorsdialog/create-mentor-modal';
+
+// import { CreateMentorDialog } from '../mentorsdialog/create-mentor-modal';
+
 
 export default function MentorsManagement() {
-  const router = useRouter();
+
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   // State for dialogs
   const [createMentorOpen, setCreateMentorOpen] = useState(false);
   const [deleteMentorOpen, setDeleteMentorOpen] = useState(false);
   const [deleteSuccessOpen, setDeleteSuccessOpen] = useState(false);
-  const [mentorToDelete, setMentorToDelete] = useState<any>(null);
+  const [mentorToDelete, setMentorToDelete] = useState<null>(null);
 
   // State for filters and search
   const [searchQuery, setSearchQuery] = useState('');
@@ -69,8 +70,17 @@ export default function MentorsManagement() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [selectedMentors, setSelectedMentors] = useState<string[]>([]);
 
+  interface Mentor {
+    id: string;
+    fullName: string;
+    email: string;
+    gender: 'Male' | 'Female' | 'Other'; 
+    country: string;
+    expertise: ('Product' | 'Design' | 'Marketing' | 'Development')[]; 
+  }
+
   // Mock data for mentors
-  const [mentors, setMentors] = useState<any[]>([
+  const [mentors, setMentors] = useState<Mentor[]>([
     {
       id: '1',
       fullName: 'Andrew Ereksosima',
@@ -226,31 +236,7 @@ export default function MentorsManagement() {
   };
 
   // Handle delete selected mentors
-  const handleDeleteSelected = () => {
-    if (selectedMentors.length > 0) {
-      // Remove the selected mentors from the list
-      const updatedMentors = mentors.filter(
-        (mentor) => !selectedMentors.includes(mentor.id)
-      );
-
-      // Check if the current page would be empty after deletion
-      const currentPageItemCount = filteredMentors.filter(
-        (mentor) =>
-          !selectedMentors.includes(mentor.id) &&
-          filteredMentors.indexOf(mentor) >= indexOfFirstItem &&
-          filteredMentors.indexOf(mentor) < indexOfLastItem
-      ).length;
-
-      // If this was the last item on the page and not the first page, go to previous page
-      if (currentPageItemCount === 0 && currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      }
-
-      setMentors(updatedMentors);
-      setSelectedMentors([]);
-      setDeleteSuccessOpen(true);
-    }
-  };
+  
 
   // Handle create mentor
   const handleCreateMentor = (data: {
@@ -329,7 +315,7 @@ export default function MentorsManagement() {
       </div>
       <h3 className="mb-2 text-lg font-medium">No results found</h3>
       <p className="mb-6 max-w-md text-sm text-gray-500">
-        No mentors matching "<span className="font-medium">{searchQuery}</span>"
+        No mentors matching&quot;<span className="font-medium">{searchQuery}</span>&quot;
         were found. Try adjusting your search or filter criteria.
       </p>
       <Button onClick={() => setCreateMentorOpen(true)}>
@@ -345,7 +331,7 @@ export default function MentorsManagement() {
       </div>
       <h3 className="mb-2 text-lg font-medium">No mentors yet</h3>
       <p className="mb-6 max-w-md text-sm text-gray-500">
-        You haven't added any mentors yet. Mentors can help guide candidates
+        You haven;t added any mentors yet. Mentors can help guide candidates
         through their career journey.
       </p>
       <Button onClick={() => setCreateMentorOpen(true)}>
@@ -366,6 +352,7 @@ export default function MentorsManagement() {
             <Plus className="h-4 w-4" />
             Add a mentor
           </Button>
+
           {selectedMentors.length > 0 && (
             <>
               <Button
@@ -848,8 +835,8 @@ export default function MentorsManagement() {
       <CreateMentorDialog
         open={createMentorOpen}
         onOpenChange={setCreateMentorOpen}
-        onSubmit={handleCreateMentor}
         onClose={() => setCreateMentorOpen(false)}
+        onSubmit={handleCreateMentor}
       />
 
       <DeleteMentorDialog

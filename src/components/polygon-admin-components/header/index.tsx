@@ -1,17 +1,18 @@
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Bell, ChevronDown, Globe, Menu } from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Bell, ChevronDown, Menu } from 'lucide-react';
 import Image from 'next/image';
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction } from 'react';
 
-
-type HaederProp =
-{
-setSidebarOpen:Dispatch<SetStateAction<boolean>>
-}
-const HeaderPolygon = ({
-  setSidebarOpen
-}:HaederProp ) => {
+type HaederProp = {
+  setSidebarOpen: Dispatch<SetStateAction<boolean>>;
+};
+const HeaderPolygon = ({ setSidebarOpen }: HaederProp) => {
   return (
     <div className="min-h-[70px] px-7 py-4 bg-white shadow-md flex justify-end items-center gap-6">
       <Button
@@ -78,4 +79,4 @@ const HeaderPolygon = ({
   );
 };
 
-export default HeaderPolygon
+export default HeaderPolygon;

@@ -1,21 +1,41 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Calendar, FileText, MoreVertical, Plus, Search } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Calendar, MoreVertical, Search } from 'lucide-react';
 import Link from 'next/link';
 import { AdminTabProps } from '@/lib/polygon-types';
 import { useMediaQuery } from '@/hooks/use-mediaQuery';
 import AdminMobileCard from './admin-mobile-table-card';
 import NoDataState from '../no-data-state';
 import EmptySearchState from '../empty-search-state';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { CalendarDatePicker } from '@/components/polygon-feedback-components/feedbacks-modal/calendar-date-picker-modal';
-
-
 
 const AdminTabPage = ({
   itemsPerPage,
@@ -278,6 +298,7 @@ const AdminTabPage = ({
           <div>
             {currentAdmins.map((admin) => (
               <AdminMobileCard
+                key={admin.id}
                 isMobile={isMobile}
                 setAdminToDelete={setAdminToDelete}
                 setDeleteAdminOpen={setDeleteAdminOpen}
@@ -422,4 +443,4 @@ const AdminTabPage = ({
   );
 };
 
-export default AdminTabPage
+export default AdminTabPage;

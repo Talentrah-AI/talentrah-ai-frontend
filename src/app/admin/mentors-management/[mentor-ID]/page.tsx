@@ -19,9 +19,8 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-
-
-
+import { AddAvailabilityModal } from '@/components/polygon-mentors-management/mentorsdialog/calender-dialog';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 
 const availabilitySlots = [
   { date: 'Mon 28 March, 2025', time: '09:00 - 10:00', available: true },
@@ -30,7 +29,6 @@ const availabilitySlots = [
   { date: 'Mon 28 March, 2025', time: '12:00 - 12:30', available: true },
   { date: 'Mon 28 March, 2025', time: '09:00 - 10:00', available: true },
 ];
-
 
 const MentorsId = () => {
   const [selectedTab, setSelectedTab] = useState('overview');
@@ -161,8 +159,8 @@ const MentorsId = () => {
                     I was leading both Product and Design teams in my previous
                     roles as the Regional Head of Product & Design of SFSA (FNB
                     Unicorn Bank) and Head of Product & Design at Interswitch
-                    Group (Africa's Fintech Unicorn). I am a recipient of the
-                    Excellence Awards 2021.
+                    Group (Africa&apos;s Fintech Unicorn). I am a recipient of
+                    the Excellence Awards 2021.
                   </p>
                 </div>
 
@@ -392,15 +390,21 @@ const MentorsId = () => {
                 <h3 className="text-lg font-semibold mb-4 text-[#08121D]">
                   Add More Availability
                 </h3>
+
                 <p className="text-[16px] text-[#515D68] mb-4">
                   Make it easier for candidates to book sessions with you by
                   updating your available dates and times.
                 </p>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="w-full mb-2 text-[#0967D2] hover:bg-[#0752A8] bg-transparent hover:text-white ring-1">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add availability
+                    </Button>
+                  </DialogTrigger>
 
-                <Button className="w-full mb-2 text-[#0967D2] hover:bg-[#0752A8] bg-transparent hover:text-white ring-1">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add availability
-                </Button>
+                  <AddAvailabilityModal />
+                </Dialog>
               </div>
 
               <div className="space-y-4 boder-[#E8EDF2] border rounded-md p-3">

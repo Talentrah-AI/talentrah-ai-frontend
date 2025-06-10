@@ -60,7 +60,6 @@ export function CreateMentorDialog({
   open,
   onClose,
   onOpenChange,
-  onSubmit,
 }: CreateMentorDialogProps) {
   const [formData, setFormData] = useState<FormData>({
     // Initialize all fields
@@ -102,31 +101,6 @@ export function CreateMentorDialog({
     setFormData((prev) => ({ ...prev, role: value }));
   };
 
-  const allFieldsFilled = Object.entries(formData).every(([key, value]) => {
-    if (Array.isArray(value)) return value.length > 0; // Check arrays
-    if (typeof value === 'boolean') return true; // Skip booleans
-    if (typeof value === 'string') return value.trim() !== ''; // Only trim strings
-    return !!value; // Fallback for numbers/others
-  });
-
-  const handleArrayChange = (
-    field: keyof FormData,
-    value: string,
-    checked: boolean
-  ) => {
-    setFormData((prev) => {
-      const currentArray = Array.isArray(prev[field]) ? [...prev[field]] : [];
-      if (checked) {
-        return { ...prev, [field]: [...currentArray, value] };
-      } else {
-        return {
-          ...prev,
-          [field]: currentArray.filter((item) => item !== value),
-        };
-      }
-    });
-  };
-
   const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, introduction: e.target.value }));
   };
@@ -148,9 +122,8 @@ export function CreateMentorDialog({
 
   return (
     <>
-      {/* ... existing mentor creation dialog ... */}
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="w-[884px] h-[473px] py-[25px] px-[28px] ">
+        <DialogContent className="fixed inset-0 m-auto w-[884px] h-[473px] py-[25px] px-[28px] z-50 ">
           <DialogTitle className="text-lg font-semibold">
             Add a mentor
           </DialogTitle>
@@ -232,19 +205,18 @@ export function CreateMentorDialog({
                 </SelectContent>
               </Select>
 
-              {allFieldsFilled && (
-                <p className="flex items-center text-[12px] text-[#0967D2] p-[5px] gap-[10px] rounded-[12px] border-[#9DC2ED] border-[2px] bg-[#E6F0FB]">
-                  <Image
-                    src="/images/information-circle.png"
-                    alt="information"
-                    className="w-[20px]!important h-[20px] "
-                    width={20}
-                    height={20}
-                  />
-                  Twenty three (23) permissions will be given to{' '}
-                  {formData.firstName} {formData.lastName} as a mentor
-                </p>
-              )}
+              <p className="flex items-center text-[12px] text-[#0967D2] p-[5px] gap-[10px] rounded-[12px] border-[#9DC2ED] border-[2px] bg-[#E6F0FB]">
+                <Image
+                  style={{ width: '20px', height: '20px' }}
+                  src="/images/information-circle.png"
+                  alt="information"
+                  className="w-[20px]!important h-[20px] "
+                  width={20}
+                  height={20}
+                />
+                Twenty three (23) permissions will be given to{' '}
+                {formData.firstName} {formData.lastName} as a mentor
+              </p>
             </div>
           </div>
 
@@ -252,6 +224,7 @@ export function CreateMentorDialog({
             <Button
               onClick={() => {
                 setShowOnboarding(true);
+                onClose();
               }}
             >
               + Add a mentor
@@ -262,11 +235,33 @@ export function CreateMentorDialog({
 
       {/* Onboarding Dialog */}
       <Dialog open={showOnboarding} onOpenChange={setShowOnboarding}>
-        <DialogContent className="w-[500px] py-[25px] px-[28px]">
+        <DialogContent className="fixed inset-0 m-auto max-w-[603px] max-h-[709px] w-full h-full py-[25px] px-[28px]">
           <div className="flex flex-col">
-            <DialogTitle className="text-2xl font-bold text-center mb-2">
+            <DialogTitle className="text-base font-bold md:text-[20px] md:font-[500] mb-2 border-none outline-none">
               Onboard in
             </DialogTitle>
+
+            {currentStep === 1 && (
+              <div className="w-full h-[14px] bg-gray-100 rounded-[12px] ">
+                <div className="w-[25%] h-full bg-blue-600 rounded-[12px]"></div>
+              </div>
+            )}
+            {currentStep === 2 && (
+              <div className="w-full h-[14px] bg-gray-100 rounded-[12px] ">
+                <div className="w-[50%] h-full bg-blue-600 rounded-[12px]"></div>
+              </div>
+            )}
+            {currentStep === 3 && (
+              <div className="w-full h-[14px] bg-gray-100 rounded-[12px] ">
+                <div className="w-[75%] h-full bg-blue-600 rounded-[12px]"></div>
+              </div>
+            )}
+            {currentStep === 4 && (
+              <div className="w-full h-[14px] bg-gray-100 rounded-[12px] ">
+                <div className="w-[100%] h-full bg-blue-600 rounded-[12px]"></div>
+              </div>
+            )}
+
             <div className="border-t border-gray-200 my-4"></div>
             <div className="text-sm text-center mb-6">
               STEP {currentStep} of 4
@@ -278,18 +273,21 @@ export function CreateMentorDialog({
                   Hello, Andrew Erekosima!
                 </h2>
 
-                <div className="space-y-4">
-                  <Label htmlFor="profilePhoto">
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="profilePhoto"
+                    className="text-sm font-medium text-gray-700"
+                  >
                     Upload profile photo <span className="text-red-500">*</span>
                   </Label>
                   <div className="flex items-center justify-center w-full">
                     <Label
                       htmlFor="dropzone-file"
-                      className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+                      className="flex flex-col items-center justify-center w-full p-4 border border-gray-300 rounded-lg cursor-pointer bg-white hover:bg-gray-50 transition-colors"
                     >
-                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                      <div className="flex flex-col items-center justify-center text-center">
                         <svg
-                          className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                          className="w-6 h-6 mb-2 text-gray-500"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -303,11 +301,12 @@ export function CreateMentorDialog({
                             d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                           />
                         </svg>
-                        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                          <span className="font-semibold">Select a file</span>{' '}
-                          or drag and drop
+                        <p className="text-sm text-gray-600">
+                          <span className="font-medium text-gray-900">
+                            Select a file
+                          </span>
                         </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <p className="mt-1 text-xs text-gray-500">
                           Make sure the file is below 2mb
                         </p>
                       </div>
@@ -315,6 +314,7 @@ export function CreateMentorDialog({
                         id="dropzone-file"
                         type="file"
                         className="hidden"
+                        accept="image/*"
                       />
                     </Label>
                   </div>
@@ -576,12 +576,12 @@ export function CreateMentorDialog({
             {currentStep === 4 && (
               <div className="space-y-6">
                 <h2 className="text-xl font-semibold text-center">
-                  Almost there! How would you like to be intro'd?
+                  Almost there! How would you like to be intro;d?
                 </h2>
 
                 <div className="space-y-4">
                   <Label className="block text-sm font-medium mb-1">
-                    Everyone has a story, what's yours? *
+                    Everyone has a story, what;s yours? *
                   </Label>
                   <textarea
                     className="w-full min-h-[120px] p-2 border rounded-lg"
@@ -604,7 +604,7 @@ export function CreateMentorDialog({
                   />
                   <label htmlFor="confirmation" className="text-sm">
                     By checking this box, I confirm that all the information
-                    I've provided is accurate and true to the best of my
+                    I;ve provided is accurate and true to the best of my
                     knowledge.
                   </label>
                 </div>
@@ -638,7 +638,14 @@ export function CreateMentorDialog({
 
       {/* Confirmation Dialog */}
       <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <DialogContent className="w-[500px] py-[25px] px-[28px] text-center">
+        <DialogContent className="fixed inset-0 m-auto w-[500px] h-[417px] py-[25px] px-[28px] gap-[32px] text-center flex flex-col justify-center ">
+          <Image
+            style={{ width: '85px', height: '85px', marginInline: 'auto' }}
+            src="/images/bell.png"
+            alt="bell icon"
+            width={85}
+            height={85}
+          />
           <DialogTitle className="text-2xl font-bold mb-4">
             Stay up to date with your sessions
           </DialogTitle>
@@ -648,13 +655,6 @@ export function CreateMentorDialog({
           </p>
           <Button className="w-full" onClick={handleCompleteOnboarding}>
             Yes, stay updated!
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full mt-2"
-            onClick={handleCompleteOnboarding}
-          >
-            Skip for now
           </Button>
         </DialogContent>
       </Dialog>
